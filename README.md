@@ -1,6 +1,6 @@
-# GameBoyEmulatorEnvironment
-GameBoy Emulator Environment / Front-end
+# GameBoy Emulator Environment - GBEE
 
+Front-End developed with Kotlin for my ![GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
 WIP
 
