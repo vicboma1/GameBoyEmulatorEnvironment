@@ -9,8 +9,8 @@ WIP
 
 This is a list of 1049 games released for the Game Boy handheld video game system, excluding any cancelled and unlicensed games campatible with GameBoy Emulator Environment - GBEE
 
-
-" ---  CADA  --- "          "BURAI FIGHTER DE"            "ELITE SOCCER    "           "HATRIS          "
+```kotlin
+" ---  CADA  --- "          "BURAI FIGHTER DE"            "ELITE SOCCER    "           "HATRIS          "
 "ACE STRIKER     "          "BURAI FIGHTER DX"            "EMPIRE STRIKES  "           "HEAD ON         "
 "ADDAMS FAMILY   "          "BURGER TIME     "            "ESPARKS         "           "HEIANKYO ALIEN  "
 "ADDAMS FAMILY 2 "          "BURNING PAPER   "            "F-1 HEROGB      "           "HEIANKYO ALIEN  "
@@ -240,8 +240,7 @@ This is a list of 1049 games released for the Game Boy handheld video game syste
 "URUSEIYATSURA   "          "WIZARDRY SOQ    "           "YOSHI'S COOKIE  "
 "VALATIONS       "          "WIZARDS WARRIORS"           "YOSSY NO TAMAGO "
 "VATTLE GIUCE    "          "WORDTRIS        "           "YOSSY NO TAMAGO "
-"VEEDIOTS        "          "WORDZAP         "           "YUUYUU-1        "
-
-
+"VEEDIOTS        "          "WORDZAP         "           "YUUYUU-1        "
+```
 
 @Author : Victor Bolinches Marin
