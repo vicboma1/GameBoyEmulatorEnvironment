@@ -7,6 +7,35 @@ WIP
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/GBEE_v.0.0.1.gif)
 
 
+# Resources (WIP)
+
+Folders 
+```
+cartridge 
+    |______ _bg.png
+    |______ *.png
+    
+cover
+    |______ _bg.png
+    |______ *.png
+    
+snapshot
+    |______ _bg.png
+    |______ *.png
+    
+rom
+    |______ ace_stri.gb
+    |______ addamsf.gb
+    |______ addamsf2.gb
+    |______ *.gb
+```
+
+where "_bg.png" is the pattern that contains the others images inside it.
+
+where "*.gb" is the specific name that contains the game inside the rom
+
+# Game List
+
 This is a list of 1049 games released for the Game Boy handheld video game system, excluding any cancelled and unlicensed games campatible with GameBoy Emulator Environment - GBEE
 
 ```kotlin
