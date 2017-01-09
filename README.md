@@ -13,15 +13,18 @@ Folders
 ```
 cartridge 
     |______ _bg.png
-    |______ *.png
+    |______ addamsf.png
+    |______ {romName}.png
     
 cover
     |______ _bg.png
-    |______ *.png
+    |______ addamsf.png
+    |______ {romName}.png
     
 snapshot
     |______ _bg.png
-    |______ *.png
+    |______ addamsf.png
+    |______ {romName}.png
     
 rom
     |______ ace_stri.gb
@@ -34,7 +37,20 @@ where "_bg.png" is the pattern that contains the others images inside it.
 
 where "*.gb" is the specific name that contains the game inside the rom
 
+###
 # Game List
+### 
+
+The information of each game is shown through a table
+
+
+|   Load        |   ROM Game    | Game Name | ROM Type | Size (in bytes)|
+| ------------- |:-------------:| --------- |----------| -------------- |
+| ------------- | ------------- | --------- | -------- | -------------- |
+###
+###
+###
+
 
 This is a list of 1049 games released for the Game Boy handheld video game system, excluding any cancelled and unlicensed games campatible with GameBoy Emulator Environment - GBEE
 
