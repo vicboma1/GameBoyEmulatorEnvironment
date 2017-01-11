@@ -289,3 +289,5 @@ This is a list of 1049 games released for the Game Boy handheld video game syste
 ```
 
 @Author : Victor Bolinches Marin
+
+# Note: This project does not contain ROM
