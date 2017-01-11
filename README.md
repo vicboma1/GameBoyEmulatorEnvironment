@@ -33,6 +33,8 @@ rom
     |______ *.gb
 ```
 
+where "{romName}.png" is the Game image
+
 where "_bg.png" is the pattern that contains the others images inside it.
 
 where "*.gb" is the specific name that contains the game inside the rom
