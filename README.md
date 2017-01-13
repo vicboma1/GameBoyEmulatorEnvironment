@@ -45,17 +45,6 @@ where :
 # Game List
 ### 
 
-The information of each game is shown through a table
-
-
-|   Load        |   ROM Game    | Game Name | ROM Type | Size (in bytes)|
-| ------------- |:-------------:| --------- |----------| -------------- |
-| ------------- | ------------- | --------- | -------- | -------------- |
-###
-###
-###
-
-
 This is a list of 1049 games released for the Game Boy handheld video game system, excluding any cancelled and unlicensed games campatible with GameBoy Emulator Environment - GBEE
 
 ```kotlin
