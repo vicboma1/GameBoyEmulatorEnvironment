@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+main.kotlin.utils.listGames.ListGames
+main.resources.app
+main.resources.cartridge
+main.resources.cover
+main.resources.rom
+main.resources.snapshot
+.idea
+.lib
