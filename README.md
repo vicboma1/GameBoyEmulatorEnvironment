@@ -11,6 +11,9 @@ WIP
 
 Folders 
 ```
+app
+    |______ main.png
+    
 cartridge 
     |______ _bg.png
     |______ addamsf.png
@@ -36,6 +39,7 @@ rom
 where :
 
 ```
+"main.png" is the icon
 "{romName}.png" is the Game image
 "_bg.png" is the pattern that contains the others images inside it.
 "*.gb" is the specific name that contains the game inside the rom
