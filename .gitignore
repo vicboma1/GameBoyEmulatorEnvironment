@@ -1,9 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
-main.kotlin.utils.listGames.ListGames
-main.resources.app
-main.resources.cartridge
-main.resources.cover
-main.resources.rom
-main.resources.snapshot
-.idea
-.lib
+/src/main/resources/cartridge
+/src/main/resources/snapshot
+/src/main/resources/cover
+/src/main/resources/app
+/src/main/resources/rom
+/src/main/kotlin/utils/listGames/ListGames.kt
+/lib
