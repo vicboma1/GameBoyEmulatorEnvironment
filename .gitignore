@@ -1,8 +1,15 @@
 # Created by .ignore support plugin (hsz.mobi)
+/cartridge/
+/snapshot/
+/cover/
+/app/
+/rom/
 /src/main/resources/cartridge
-/src/main/resources/snapshot
-/src/main/resources/cover
-/src/main/resources/app
-/src/main/resources/rom
-/src/main/kotlin/utils/listGames/ListGames.kt
 /lib
+/.idea
+/src/main/resources/snapshot
+/src/main/resources/rom
+/src/main/resources/cover
+/src/main/resources/cartridge/_bg.png
+/src/main/resources/cartridge/
+/src/main/resources/app
