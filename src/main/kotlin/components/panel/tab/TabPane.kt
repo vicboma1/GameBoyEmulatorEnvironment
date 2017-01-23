@@ -28,6 +28,6 @@ class TabPane internal constructor(changeListener: ChangeListener, private val d
         setMnemonicAt(index, key)
     }
 
-    fun scrollPane() : ScrollPane = ScrollPane.Companion.create(this, dimension)
+    fun scrollPane() : ScrollPane = ScrollPane.create(this, dimension)
 
 }

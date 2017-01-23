@@ -14,46 +14,42 @@ import javax.swing.table.TableCellRenderer
 /**
  * Created by vbolinch on 02/01/2017.
  */
-class TableImpl internal constructor(private val dm: TableModelImpl?,private val dimension : Dimension) : JTable(dm) {
+class TableImpl internal constructor(/*private val timer: TableDaemon, */private val dm: TableModelImpl?, private val dimension : Dimension) : JTable(dm) {
+
+    val scrollSize by lazy { ScrollPane.create(this, dimension) }
 
     companion object{
-        fun create( dm: TableModelImpl?, dimenasion : Dimension) : TableImpl{
-            return TableImpl(dm , dimenasion )
-        }
+        fun create(/*timer: TableDaemon,*/ dm: TableModelImpl?, dimenasion : Dimension) = TableImpl(/*timer,*/dm , dimenasion)
     }
 
     init {
 
         this.apply {
-            fillsViewportHeight = true
             showVerticalLines = false
             showHorizontalLines = false
             autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
         }
     }
 
-    override fun prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component   =
+    override fun prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component =
         super@TableImpl.prepareRenderer(renderer, row, column)
             .apply {
-                        val nameGame = this@TableImpl.model.getValueAt(row, 1).toString().toLowerCase().trim()
-                        val file = Thread.currentThread().getContextClassLoader().getResource("rom/$nameGame")
-                        when (file) {
-                            null -> {
-                                this@TableImpl.model.setValueAt(false, row, 0)
-                                isEnabled = false
-                            }
-                            else -> {
-                                val f = File(file.toURI())
-                                var setter = false
-
-                                if (f.exists() && !f.isDirectory()) {
-                                    setter = true
-                                    this@TableImpl.model.setValueAt(true, row, 0)
-                                }
-
-                                isEnabled = setter
-                            }
+                    val nameGame = this@TableImpl.model.getValueAt(row, 1).toString().toLowerCase().trim()
+                    val file = Thread.currentThread().getContextClassLoader().getResource("rom/$nameGame")
+                    when (file) {
+                        null -> {
+                            isEnabled = false
                         }
+                        else -> {
+                            val f = File(file.toURI())
+                            var setter = false
+
+                            if (f.exists() && !f.isDirectory())
+                                setter = true
+
+                            isEnabled = setter
+                        }
+                    }
                 }
 
     fun addMouseListenerColumn(mouseAdater : MouseAdapter ) =
@@ -63,11 +59,10 @@ class TableImpl internal constructor(private val dm: TableModelImpl?,private val
                 reorderingAllowed = true
             }
 
-
     fun addMouseListenerRow(mouseAdater : MouseAdapter ) =  this.addMouseListener(mouseAdater)
 
     fun addKeyListenerInput(keyListener : KeyListener) = this.addKeyListener(keyListener)
 
-    fun scrollPane() : JScrollPane = ScrollPane.create(this, dimension)
+    fun scrollPane() : JScrollPane = scrollSize
 
 }

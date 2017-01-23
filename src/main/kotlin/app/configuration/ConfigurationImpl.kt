@@ -11,18 +11,19 @@ import components.panel.multipleImages.PanelCover
 import components.panel.multipleImages.PanelSnapshot
 import components.panel.tab.TabPane
 import components.panel.tab.TabPaneListener
-import components.progressBar.*
+import components.progressBar.MenuBarImpl
+import components.progressBar.Split
+import components.progressBar.SplitImpl
+import components.progressBar.StatusBarImpl
 import components.table.TableImpl
 import components.table.comparator.TableHeaderComparator
-import components.table.listener.TableRowKeyListener
+import components.table.listener.rowKey.TableRowKeyListener
 import components.table.model.TableModelImpl
 import main.kotlin.utils.listGames.ListGames
 import java.awt.BorderLayout
 import java.awt.Container
 import java.awt.Dimension
-import java.util.*
 import javax.swing.ImageIcon
-import javax.swing.JMenuItem
 import javax.swing.UIManager
 
 /**
@@ -36,6 +37,7 @@ class ConfigurationImpl internal constructor(private val frame : Frame) {
 
      val table: TableImpl by lazy {
          TableImpl.create(
+            //TableDaemon.create(),
             TableModelImpl.create(ListGames.columnNames, ListGames.data),
             Dimension(Display.WIDHT, Display.HEIGTH)
          )
@@ -75,7 +77,7 @@ class ConfigurationImpl internal constructor(private val frame : Frame) {
     init {
 
         table.apply {
-            addMouseListenerColumn(TableColumnHeaderAdapter.create(table, ListGames.data, TableHeaderComparator.create()))
+            addMouseListenerColumn(TableColumnHeaderAdapter.create(table, TableHeaderComparator.create()))
             addMouseListenerRow(TableRowAdapter.create(table,statusBar,tabbedPane ))
             addKeyListenerInput(TableRowKeyListener.create(table,statusBar,tabbedPane))
         }

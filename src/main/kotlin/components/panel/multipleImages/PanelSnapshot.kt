@@ -18,8 +18,10 @@ class PanelSnapshot internal constructor(_back: String, val _front: String) : Pa
         super.paintComponents(g)
         var g2 = g as Graphics2D
 
-        g2.drawImage(list!![0], (this.width * 0.07).toInt() , (this.height * 0.07).toInt(), null)
-        g2.drawImage(list!![1],(this.width * 0.132).toInt() , (this.height * 0.182).toInt(),((Display.WIDHT / 3) * 1.055).toInt(), ((Display.HEIGTH / 2) * 1.058).toInt(), null)
+        if(list[0] != null)
+            g2.drawImage(list[0], (this.width * 0.07).toInt() , (this.height * 0.07).toInt(), null)
 
+        if(list[1] != null)
+            g2.drawImage(list[1],(this.width * 0.132).toInt() , (this.height * 0.182).toInt(),((Display.WIDHT / 3) * 1.055).toInt(), ((Display.HEIGTH / 2) * 1.058).toInt(), null)
     }
 }

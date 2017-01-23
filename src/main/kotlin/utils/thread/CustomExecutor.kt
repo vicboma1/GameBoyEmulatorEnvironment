@@ -34,14 +34,14 @@ class CustomExecutor<K>{
                             for (i in 0..size - 1) {
                                 poll = _priorityQueue.poll()
                                 // System.out.println("Invoke $count : ${poll!!.second.invoke().toString()}")
-                                val res = poll!!.second.invoke()
-                                poll!!.first.complete(res)
+                                val res = poll?.second?.invoke()
+                                poll?.first?.complete(res)
                                 //   System.out.println("Completed ${poll!!.first.toString()}")
                                 count++
                             }
                         }
                     } catch(e: Exception) {
-                        _priorityQueue.add(poll)
+                    //    _priorityQueue.add(poll)
                     } finally {
 
                         try {

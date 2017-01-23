@@ -17,9 +17,11 @@ class PanelCover internal constructor(_back: String, private val _front: String)
     override fun paintComponent(g: Graphics) {
         super.paintComponents(g)
         var g2 = g as Graphics2D
+        if(list[0] != null)
+            g2.drawImage(list[0], (this.width * 0.07).toInt() , (this.height * 0.07).toInt(), null)
 
-        g2.drawImage(list!![0], (this.width * 0.07).toInt() , (this.height * 0.07).toInt(), null)
-        g2.drawImage(list!![1],(this.width * 0.138).toInt() , (this.height * 0.14).toInt(),((Display.WIDHT / 3) * 1.04).toInt(), ((Display.HEIGTH / 2) * 1.20).toInt(), null)
+        if(list[1] != null)
+            g2.drawImage(list[1],(this.width * 0.138).toInt() , (this.height * 0.14).toInt(),((Display.WIDHT / 3) * 1.04).toInt(), ((Display.HEIGTH / 2) * 1.20).toInt(), null)
 
     }
 }

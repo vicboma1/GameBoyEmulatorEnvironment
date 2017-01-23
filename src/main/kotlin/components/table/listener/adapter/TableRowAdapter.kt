@@ -10,6 +10,7 @@ import javax.swing.JTable
 
  class TableRowAdapter internal constructor(val table: JTable, val statusBar: StatusBar, val tabbedPane: JTabbedPane) : MouseAdapter() {
 
+
      companion object {
          fun create(table: JTable, statusBar : JComponent,tabbedPane: JTabbedPane) = TableRowAdapter(table, statusBar as StatusBar,tabbedPane)
      }
@@ -19,6 +20,10 @@ import javax.swing.JTable
      }
 
     override fun mouseClicked(e: MouseEvent) {
+
         BaseInpuTableList.executeX(table,statusBar,tabbedPane,0)
     }
+
+
+
 }

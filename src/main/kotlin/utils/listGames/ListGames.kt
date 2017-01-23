@@ -1,9 +1,5 @@
 package main.kotlin.utils.listGames
 
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Paths
-
 /**
  * Created by vbolinch on 03/01/2017.
  */

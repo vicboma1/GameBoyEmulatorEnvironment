@@ -17,21 +17,28 @@ open class PanelMultipleImages internal constructor(private val back: String, pr
 
     init {
         layout = BorderLayout()
-        list.add(0,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), Thread.currentThread().getContextClassLoader().getResource(back)?.file.toString()))
-        list.add(1,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), Thread.currentThread().getContextClassLoader().getResource(front)?.file.toString()))
+        val resourceBack = Thread.currentThread().getContextClassLoader().getResource(back)
+        if(resourceBack != null)
+            list.add(0,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), resourceBack.file.toString()))
 
+        val resourceFront = Thread.currentThread().getContextClassLoader().getResource(front)
+        if(resourceFront != null)
+            list.add(1,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), resourceFront.file.toString()))
     }
 
     fun setBack(back:String) {
-        list.set(0,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), Thread.currentThread().getContextClassLoader().getResource(back)?.file.toString()))
+        val resourceSetBack = Thread.currentThread().getContextClassLoader().getResource(back)
+        if(resourceSetBack!=null)
+            list.set(0,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), resourceSetBack.file.toString()))
 
     }
 
     fun setFront(front:String) {
         var file : String = ""
-        val url = Thread.currentThread().getContextClassLoader().getResource(front)
-        if(null != url)
-         file = url.file.toString()
+        val resourceSetFront = Thread.currentThread().getContextClassLoader().getResource(front)
+
+        if(null != resourceSetFront)
+         file = resourceSetFront.file.toString()
 
         val buffered = ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(),file)
         list.set(1,buffered)

@@ -24,4 +24,10 @@ object ThreadMain {
             runnable.invoke()
         }
     }
+
+    private fun asyncPriority(runnable: () -> Unit) = CustomExecutor.instance.addPriority{
+        SwingUtilities.invokeLater {
+            runnable.invoke()
+        }
+    }
 }
