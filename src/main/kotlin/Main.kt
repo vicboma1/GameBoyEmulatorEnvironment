@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException
  */
 object Main {
 
-    val version = "v.0.1.0"
+    val version = "v.0.1.1"
 
     @JvmStatic fun main(args: Array<String>) {
         ThreadMain.asyncUI {

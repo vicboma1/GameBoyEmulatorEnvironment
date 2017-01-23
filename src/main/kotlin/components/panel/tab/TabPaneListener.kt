@@ -35,6 +35,10 @@ class TabPaneListener internal constructor(private val table: TableImpl) : Chang
                     val path = folder.plus("/$nameRom")
                     panel.setFront(path)
                     //panel.setBack("_bg.png")
+
+                    val IsVisible = source.isVisible
+                    if ( IsVisible )
+                        source.repaint();
                 }
             }
         }
