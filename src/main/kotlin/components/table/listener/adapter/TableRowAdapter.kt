@@ -20,7 +20,6 @@ import javax.swing.JTable
      }
 
     override fun mouseClicked(e: MouseEvent) {
-
         BaseInpuTableList.executeX(table,statusBar,tabbedPane,0)
     }
 

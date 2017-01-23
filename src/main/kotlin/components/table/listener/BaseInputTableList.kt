@@ -25,13 +25,8 @@ class BaseInpuTableList internal constructor() {
 
              statusBar.text("$nameRom\t\t\t$nameGame\t\t\t$romType\t\t\t$bytes")
 
-             val selectedIntdexTab = source.selectedIndex
-             val folder = source.getTitleAt(selectedIntdexTab).toLowerCase()
+             val (panel, path) = getPathAbsolute(nameRom, source)
 
-             val _nameRom = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-
-             val panel = source.getComponent(selectedIntdexTab) as PanelMultipleImages
-             val path = folder.plus("/$_nameRom")
              panel.setFront(path)
              //panel.setBack("_bg.png")
 
@@ -41,8 +36,10 @@ class BaseInpuTableList internal constructor() {
 
          }
 
+
+
         fun executeY( table: JTable, source: JTabbedPane, key: Int) {
-            val selectedRowIndex = table.getSelectedRow()
+            val selectedRowIndex  = table.getSelectedRow()
 
             if (isValid(selectedRowIndex, table)) return
 
@@ -54,9 +51,27 @@ class BaseInpuTableList internal constructor() {
             val tab = source.getComponentAt(index)
             source.selectedComponent = tab
 
+            val nameRom = table.model.getValueAt(selectedRowIndex, 1).toString()
+
+            val (panel, path) = getPathAbsolute(nameRom, source)
+
+            panel.setFront(path)
+
             val IsVisible = tab.isVisible
             if ( IsVisible )
                 tab.repaint();
+        }
+
+        private fun getPathAbsolute(nameRom: String, source: JTabbedPane): Pair<PanelMultipleImages, String> {
+            val selectedIntdexTab = source.selectedIndex
+            val folder = source.getTitleAt(selectedIntdexTab).toLowerCase()
+
+            val _nameRom = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
+
+            val panel = source.getComponent(selectedIntdexTab) as PanelMultipleImages
+            val path = folder.plus("/$_nameRom")
+
+            return Pair(panel, path)
         }
 
         private fun isValid(selectedRowIndex: Int, table: JTable): Boolean = (selectedRowIndex == -1 || selectedRowIndex >= table.rowCount)
