@@ -1,9 +1,9 @@
 package app.components
 
-import components.dialog.message.EnumDialog
-import components.dialog.message.MessageImpl
-import components.frame.Frame
-import components.progressBar.*
+import assets.dialog.message.EnumDialog
+import assets.dialog.message.MessageImpl
+import assets.frame.Frame
+import assets.progressBar.*
 import utils.thread.CustomExecutor
 import java.awt.Color
 import java.awt.event.KeyEvent

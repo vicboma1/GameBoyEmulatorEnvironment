@@ -1,13 +1,13 @@
 package menuBar.child.dialog
 
-import components.dialog.confirm.ConfirmImpl
-import components.dialog.message.EnumDialog
-import components.dialog.message.MessageImpl
-import components.frame.Frame
-import components.progressBar.Menu
-import components.progressBar.MenuBarImpl
-import components.progressBar.MenuImpl
-import components.progressBar.MenuItemImpl
+import assets.dialog.confirm.ConfirmImpl
+import assets.dialog.message.EnumDialog
+import assets.dialog.message.MessageImpl
+import assets.frame.Frame
+import assets.progressBar.Menu
+import assets.progressBar.MenuBarImpl
+import assets.progressBar.MenuImpl
+import assets.progressBar.MenuItemImpl
 import java.awt.event.KeyEvent
 import javax.swing.JOptionPane
 

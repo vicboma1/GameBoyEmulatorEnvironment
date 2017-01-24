@@ -1,10 +1,10 @@
-package components.menuBar.child.dialog
+package assets.menuBar.child.dialog
 
-import components.dialog.confirm.InputImpl
-import components.dialog.message.EnumDialog
-import components.dialog.message.MessageImpl
-import components.frame.Frame
-import components.progressBar.*
+import assets.dialog.confirm.InputImpl
+import assets.dialog.message.EnumDialog
+import assets.dialog.message.MessageImpl
+import assets.frame.Frame
+import assets.progressBar.*
 import utils.thread.CustomExecutor
 import java.awt.event.KeyEvent
 import java.util.*

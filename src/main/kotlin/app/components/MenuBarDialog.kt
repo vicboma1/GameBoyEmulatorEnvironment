@@ -1,11 +1,11 @@
 package app.components
 
-import components.frame.Frame
-import components.menuBar.child.dialog.MenuInput
-import components.menuBar.child.dialog.MenuMessage
-import components.progressBar.Menu
-import components.progressBar.MenuBarImpl
-import components.progressBar.MenuImpl
+import assets.frame.Frame
+import assets.menuBar.child.dialog.MenuInput
+import assets.menuBar.child.dialog.MenuMessage
+import assets.progressBar.Menu
+import assets.progressBar.MenuBarImpl
+import assets.progressBar.MenuImpl
 import menuBar.child.dialog.MenuConfirm
 
 /**

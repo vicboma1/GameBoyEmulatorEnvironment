@@ -1,6 +1,6 @@
 package src
 
-import components.frame.Frame
+import assets.frame.Frame
 import src.app.ApplicationImpl
 import src.configuration.ConfigurationImpl
 import utils.ThreadMain
