@@ -28,6 +28,9 @@ snapshot
     |______ _bg.png
     |______ addamsf.png
     |______ {romName}.png
+
+list
+    |______ listGame.json
     
 rom
     |______ ace_stri.gb
@@ -43,6 +46,7 @@ where :
 "{romName}.png" is the Game image
 "_bg.png" is the pattern that contains the others images inside it.
 "*.gb" is the specific name that contains the game inside the rom
+"listGame.json" is a Array<Array<Any>> than contains the column and rows
 ```
 
 ###
@@ -283,6 +287,26 @@ This is a list of 1049 games released for the Game Boy handheld video game syste
 "VALATIONS       "          "WIZARDS WARRIORS"           "YOSSY NO TAMAGO "
 "VATTLE GIUCE    "          "WORDTRIS        "           "YOSSY NO TAMAGO "
 "VEEDIOTS        "          "WORDZAP         "           "YUUYUU-1        "
+```
+###
+#Add new games ??
+###
+
+Now, you can put new games with the possibility of creating a Json with the list of games that you want.
+
+You only need to generate a list of items list.
+The index 0 corresponds to the columns and the rest of the elements to the rows.
+
+Automaticly will be generated the columns and rows of game list
+
+
+```kotlin
+[
+   ["Load",   "ROM Game",      "Game Name",        "ROM Type",    "Size (in bytes)"],
+   [false,    "YYYY.GB    "," ---  YYYY  --- ",    "XXX+ZZZZ  ",       65.536],
+   [ true,    "XXXX.GB    "," ---  XXXX  --- ",    "YYY+ZZZZ  ",       65.536],
+   [ ....,    ".....GB    "," ---  ....  --- ",    "  ......  ",       ......]
+]
 ```
 
 @Author : Victor Bolinches Marin
