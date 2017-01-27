@@ -1,7 +1,11 @@
 package assets.table.listener
 
+import assets.dialog.message.EnumDialog
+import assets.dialog.message.MessageImpl
 import assets.panel.multipleImages.base.PanelMultipleImages
 import assets.progressBar.StatusBar
+import java.awt.Frame
+import java.io.File
 import javax.swing.JTabbedPane
 import javax.swing.JTable
 
@@ -11,6 +15,16 @@ import javax.swing.JTable
 class BaseInpuTableList internal constructor() {
 
     companion object {
+        fun executeEnter(table: JTable) {
+            val selectedRowIndex = table.getSelectedRow()
+
+            val model = table.getModel()
+            val nameRom = model.getValueAt(selectedRowIndex, 1).toString()
+
+            val pathRom = File("rom/$nameRom").absolutePath
+            MessageImpl.create(Frame(),Pair("Load Rom", pathRom), EnumDialog.INFORMATION_MESSAGE) .showDialog()
+        }
+
          fun executeX(table: JTable, statusBar: StatusBar, source: JTabbedPane, key: Int) {
              val selectedRowIndex = table.getSelectedRow() + key
 

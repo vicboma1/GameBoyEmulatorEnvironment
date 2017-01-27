@@ -3,11 +3,10 @@ package assets.table.listener.rowKey
 import assets.progressBar.StatusBar
 import assets.table.listener.BaseInpuTableList
 import utils.ThreadMain
+import java.awt.event.ActionEvent
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
-import javax.swing.JComponent
-import javax.swing.JTabbedPane
-import javax.swing.JTable
+import javax.swing.*
 
 /**
  * Created by vicboma on 07/01/17.
@@ -22,7 +21,7 @@ class TableRowKeyListener internal constructor(private val table: JTable, privat
 
 
     init {
-
+        keyEvent_VK_Enter()
     }
 
     override fun keyTyped(e: KeyEvent?) {
@@ -35,7 +34,7 @@ class TableRowKeyListener internal constructor(private val table: JTable, privat
 
                 KeyEvent.VK_UP -> BaseInpuTableList.executeX(table, statusBar, tab, 0)
                 KeyEvent.VK_DOWN -> BaseInpuTableList.executeX(table, statusBar, tab, 0)
-                KeyEvent.VK_ENTER -> BaseInpuTableList.executeX(table, statusBar, tab, 0)
+                KeyEvent.VK_ENTER -> BaseInpuTableList.executeEnter(table)
                 KeyEvent.VK_LEFT -> BaseInpuTableList.executeY(table, tab, -1)
                 KeyEvent.VK_RIGHT -> BaseInpuTableList.executeY(table, tab, 1)
                 else -> {
@@ -49,5 +48,13 @@ class TableRowKeyListener internal constructor(private val table: JTable, privat
         //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    private fun keyEvent_VK_Enter() {
+        table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter")
+        table.actionMap.put("Enter", object : AbstractAction() {
+            override fun actionPerformed(ae: ActionEvent) {
+            }
+        })
+
+    }
 
 }
