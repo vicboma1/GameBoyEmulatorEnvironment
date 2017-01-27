@@ -13,7 +13,7 @@ Additional labels for pre-release and build metadata are available as extensions
 #### version 0.2.0 - WIP
 ```
 External dependencies of the list of games with json protocol (DDD)
-
+MessageDialog to show the absolutePath of the rom when press enter key
 ```
 
 #### version 0.1.1
