@@ -1,10 +1,10 @@
-#[GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic) Environment - GBEE  [v.0.1.1](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/Versioning.md#version-011)
+#[GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic) Environment - GBEE  [v.0.2.0](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/Versioning.md#version-011)
 
 Front-End developed with Kotlin for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
 WIP
 
-![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.1.1.gif)
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.0.gif)
 
 
 # Resources
