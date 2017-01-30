@@ -10,7 +10,12 @@ PATCH version when you make backwards-compatible bug fixes.
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 ```
 
-#### version 0.2.0 - WIP
+#### version 0.2.X  - WIP
+```
+
+```
+
+#### version 0.2.0
 ```
 External dependencies of the list of games with json protocol (DDD)
 MessageDialog to show the absolutePath of the rom when press enter key
