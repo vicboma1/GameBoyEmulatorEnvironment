@@ -82,7 +82,7 @@ class ConfigurationImpl internal constructor(private val frame : Frame) {
         table.apply {
             addMouseListenerColumn(TableColumnHeaderAdapter.create(table, TableHeaderComparator.create()))
             addMouseListenerRow(TableRowAdapter.create(table,statusBar,tabbedPane ))
-            addKeyListenerInput(TableRowKeyListener.create(table,statusBar,tabbedPane))
+            addKeyListenerInput(TableRowKeyListener.create(frame,table,statusBar,tabbedPane))
         }
 
         menuBar.addMenu(

@@ -1,11 +1,13 @@
 package assets.table.listener
 
-import assets.dialog.message.EnumDialog
-import assets.dialog.message.MessageImpl
+import assets.dialog.confirm.ConfirmImpl
 import assets.panel.multipleImages.base.PanelMultipleImages
 import assets.progressBar.StatusBar
+import utils.ThreadMain
 import java.awt.Frame
 import java.io.File
+import javax.swing.JFrame
+import javax.swing.JOptionPane
 import javax.swing.JTabbedPane
 import javax.swing.JTable
 
@@ -15,14 +17,25 @@ import javax.swing.JTable
 class BaseInpuTableList internal constructor() {
 
     companion object {
-        fun executeEnter(table: JTable) {
+        fun executeEnter(frame:Frame, table: JTable) {
             val selectedRowIndex = table.getSelectedRow()
 
             val model = table.getModel()
             val nameRom = model.getValueAt(selectedRowIndex, 1).toString()
 
             val pathRom = File("rom/$nameRom").absolutePath
-            MessageImpl.create(Frame(),Pair("Load Rom", pathRom), EnumDialog.INFORMATION_MESSAGE) .showDialog()
+
+            ThreadMain.asyncUI {
+                frame.setExtendedState(JFrame.ICONIFIED);
+                ConfirmImpl.create(Frame(),Pair("Load Rom", pathRom), JOptionPane.YES_NO_CANCEL_OPTION)
+                        .showDialog({
+                            frame.setExtendedState(JFrame.NORMAL)
+                        }, {
+                            frame.setExtendedState(JFrame.NORMAL)
+                        }, {
+                            frame.setExtendedState(JFrame.NORMAL)
+                        })
+            }
         }
 
          fun executeX(table: JTable, statusBar: StatusBar, source: JTabbedPane, key: Int) {

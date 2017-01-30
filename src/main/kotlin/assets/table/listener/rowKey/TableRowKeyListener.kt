@@ -1,5 +1,6 @@
 package assets.table.listener.rowKey
 
+import assets.frame.Frame
 import assets.progressBar.StatusBar
 import assets.table.listener.BaseInpuTableList
 import utils.ThreadMain
@@ -11,11 +12,11 @@ import javax.swing.*
 /**
  * Created by vicboma on 07/01/17.
  */
-class TableRowKeyListener internal constructor(private val table: JTable, private val statusBar: StatusBar, private val tab: JTabbedPane) : KeyListener {
+class TableRowKeyListener internal constructor(private val frame: Frame, private val table: JTable, private val statusBar: StatusBar, private val tab: JTabbedPane) : KeyListener {
 
     companion object {
-        fun create(table: JTable, statusBar : JComponent, tab : JTabbedPane) : KeyListener {
-            return TableRowKeyListener(table, statusBar as StatusBar, tab)
+        fun create(frame: Frame, table: JTable, statusBar : JComponent, tab : JTabbedPane) : KeyListener {
+            return TableRowKeyListener(frame,table, statusBar as StatusBar, tab)
         }
     }
 
@@ -34,7 +35,7 @@ class TableRowKeyListener internal constructor(private val table: JTable, privat
 
                 KeyEvent.VK_UP -> BaseInpuTableList.executeX(table, statusBar, tab, 0)
                 KeyEvent.VK_DOWN -> BaseInpuTableList.executeX(table, statusBar, tab, 0)
-                KeyEvent.VK_ENTER -> BaseInpuTableList.executeEnter(table)
+                KeyEvent.VK_ENTER -> BaseInpuTableList.executeEnter(frame,table)
                 KeyEvent.VK_LEFT -> BaseInpuTableList.executeY(table, tab, -1)
                 KeyEvent.VK_RIGHT -> BaseInpuTableList.executeY(table, tab, 1)
                 else -> {
