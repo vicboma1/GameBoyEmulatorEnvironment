@@ -13,13 +13,13 @@ import javax.swing.table.TableCellRenderer
 /**
  * Created by vicboma on 20/01/17.
  */
-class TableDaemon internal constructor() {
+class TableDaemon internal constructor(private val classLoader: ClassLoader) {
 
     private var table : TableImpl? = null
     private var queue: ConcurrentLinkedDeque<Map<String,*>> = ConcurrentLinkedDeque()
 
     companion object{
-        fun create() = TableDaemon()
+        fun create(classLoader: ClassLoader) = TableDaemon(classLoader)
     }
 
     init {
@@ -52,7 +52,7 @@ class TableDaemon internal constructor() {
                                             tableModel.isCellEditable(row, column)
 
                                             val nameGame = tableModel.getValueAt(row, 1).toString().toLowerCase().trim()
-                                            val file = Thread.currentThread().getContextClassLoader().getResource("rom/$nameGame")
+                                            val file = classLoader.getResource("rom/$nameGame")
                                             var setter = false
                                             when (file) {
                                                 null -> {

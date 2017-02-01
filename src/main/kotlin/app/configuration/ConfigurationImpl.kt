@@ -29,7 +29,7 @@ import javax.swing.UIManager
 /**
  * Created by vicboma on 02/12/16.
  */
-class ConfigurationImpl internal constructor(private val frame : Frame) {
+class ConfigurationImpl internal constructor(private val classLoader: ClassLoader, private val frame : Frame) {
 
      val statusBar: StatusBarImpl by lazy {
          StatusBarImpl.create(Display.WIDHT)
@@ -37,9 +37,10 @@ class ConfigurationImpl internal constructor(private val frame : Frame) {
 
      val table: TableImpl by lazy {
 
-         val listGames = ListGames.create("list/listGame.json")
+         val listGames = ListGames.create(classLoader,"list/listGame.json")
 
          TableImpl.create(
+            classLoader,
             //TableDaemon.create(),
             TableModelImpl.create(listGames.columnNames, listGames.rowNames),
             Dimension(Display.WIDHT, Display.HEIGTH)
@@ -53,9 +54,9 @@ class ConfigurationImpl internal constructor(private val frame : Frame) {
      val tabbedPane: TabPane by lazy {
          TabPane(TabPaneListener.create(table))
                  .apply{
-                     add("Cover",    ImageIcon(), PanelCover("cover/_bg.png", "cover/addamsf.png"),            0)
-                     add("Snapshot", ImageIcon(), PanelSnapshot("snapshot/_bg.png", "snapshot/addamsf.png"),    1)
-                     add("Cartridge", ImageIcon(),PanelCartridge("cartridge/_bg.png", "cartridge/addamsf.png"), 2)
+                     add("Cover",    ImageIcon(), PanelCover(classLoader,"cover/_bg.png", "cover/addamsf.png"),            0)
+                     add("Snapshot", ImageIcon(), PanelSnapshot(classLoader,"snapshot/_bg.png", "snapshot/addamsf.png"),    1)
+                     add("Cartridge", ImageIcon(),PanelCartridge(classLoader,"cartridge/_bg.png", "cartridge/addamsf.png"), 2)
                  }
      }
 
@@ -73,14 +74,13 @@ class ConfigurationImpl internal constructor(private val frame : Frame) {
     }
 
     companion object {
-        fun create(frame : Frame) = ConfigurationImpl(frame)
+        fun create(classLoader:ClassLoader,frame : Frame) = ConfigurationImpl(classLoader,frame)
     }
-
 
     init {
 
         table.apply {
-            addMouseListenerColumn(TableColumnHeaderAdapter.create(table, TableHeaderComparator.create()))
+            addMouseListenerColumn(TableColumnHeaderAdapter.create(classLoader,table, TableHeaderComparator.create()))
             addMouseListenerRow(TableRowAdapter.create(table,statusBar,tabbedPane ))
             addKeyListenerInput(TableRowKeyListener.create(frame,table,statusBar,tabbedPane))
         }

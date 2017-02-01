@@ -11,17 +11,19 @@ import java.util.concurrent.ExecutionException
  */
 object Main {
 
-    val version = "v.0.1.1"
+    val version = "v.0.2.0"
 
     @JvmStatic fun main(args: Array<String>) {
         ThreadMain.asyncUI {
 
             try {
 
+                //loader
+                val classLoader = Thread.currentThread().getContextClassLoader()
                 //Frame
                 val mainFrame = Frame.create()
                 //configuration
-                val configure = ConfigurationImpl.create(mainFrame)
+                val configure = ConfigurationImpl.create(classLoader,mainFrame)
                 //Application
                 val app = ApplicationImpl
                             .create(mainFrame)

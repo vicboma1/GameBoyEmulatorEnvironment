@@ -9,12 +9,12 @@ import javax.swing.JTable
 import javax.swing.event.TableModelEvent
 import javax.swing.table.TableColumnModel
 
-class TableColumnHeaderAdapter internal constructor(val table: JTable, val cmp : TableHeaderComparator) : MouseAdapter() {
+class TableColumnHeaderAdapter internal constructor(private val classLoader: ClassLoader, val table: JTable, val cmp : TableHeaderComparator) : MouseAdapter() {
 
      var sortCol = 0
 
      companion object {
-         fun create( table: JTable,  cmp : TableHeaderComparator)  = TableColumnHeaderAdapter( table,  cmp )
+         fun create(classLoader: ClassLoader,table: JTable,  cmp : TableHeaderComparator)  = TableColumnHeaderAdapter( classLoader, table,  cmp )
      }
 
      init {
@@ -62,7 +62,7 @@ class TableColumnHeaderAdapter internal constructor(val table: JTable, val cmp :
     fun repaint() {
         for(it in 0..table.model.rowCount-1) {
             val nameGame = table.model.getValueAt(it, 1).toString().toLowerCase().trim()
-            val file = Thread.currentThread().getContextClassLoader().getResource("rom/$nameGame")
+            val file = classLoader.getResource("rom/$nameGame")
             when (file) {
                 null -> {
                     table.model.setValueAt(false, it, 0)

@@ -8,10 +8,10 @@ import java.awt.Graphics2D
 /**
  * Created by vicboma on 08/01/17.
  */
-class PanelCover internal constructor(_back: String, private val _front: String) : PanelMultipleImages(_back,_front) {
+class PanelCover internal constructor(private val classLoader:ClassLoader,_back: String, private val _front: String) : PanelMultipleImages(classLoader,_back,_front) {
 
     companion object {
-        fun create(_back: String,_front: String) = PanelCover(_back,_front)
+        fun create(classLoader:ClassLoader,_back: String,_front: String) = PanelCover(classLoader,_back,_front)
     }
 
     override fun paintComponent(g: Graphics) {

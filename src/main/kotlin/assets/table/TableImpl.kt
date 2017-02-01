@@ -14,12 +14,12 @@ import javax.swing.table.TableCellRenderer
 /**
  * Created by vbolinch on 02/01/2017.
  */
-class TableImpl internal constructor(/*private val timer: TableDaemon, */private val dm: TableModelImpl?, private val dimension : Dimension) : JTable(dm) {
+class TableImpl internal constructor(private val classLoader: ClassLoader,/*private val timer: TableDaemon, */private val dm: TableModelImpl?, private val dimension : Dimension) : JTable(dm) {
 
     val scrollSize by lazy { ScrollPane.create(this, dimension) }
 
     companion object{
-        fun create(/*timer: TableDaemon,*/ dm: TableModelImpl?, dimenasion : Dimension) = TableImpl(/*timer,*/dm , dimenasion)
+        fun create(classLoader: ClassLoader,  dm: TableModelImpl?, dimenasion : Dimension) = TableImpl(classLoader,/*timer,*/dm , dimenasion)
     }
 
     init {
@@ -31,11 +31,11 @@ class TableImpl internal constructor(/*private val timer: TableDaemon, */private
         }
     }
 
-    override fun prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component =
-        super@TableImpl.prepareRenderer(renderer, row, column)
-            .apply {
+    override fun prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component {
+        return super@TableImpl.prepareRenderer(renderer, row, column)
+                .apply {
                     val nameGame = this@TableImpl.model.getValueAt(row, 1).toString().toLowerCase().trim()
-                    val file = Thread.currentThread().getContextClassLoader().getResource("rom/$nameGame")
+                    val file = classLoader.getResource("rom/$nameGame")
                     when (file) {
                         null -> {
                             isEnabled = false
@@ -51,6 +51,7 @@ class TableImpl internal constructor(/*private val timer: TableDaemon, */private
                         }
                     }
                 }
+    }
 
     fun addMouseListenerColumn(mouseAdater : MouseAdapter ) =
             tableHeader.apply {

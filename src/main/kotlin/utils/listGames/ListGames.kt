@@ -9,19 +9,19 @@ import java.util.*
 /**
  * Created by vbolinch on 03/01/2017.
  */
-class ListGames internal constructor(private val path: String) {
+class ListGames internal constructor(private val classLoader: ClassLoader, private val path: String) {
 
     var columnNames : Array<Any>? = null
     var rowNames : Array<Array<Any>>? = null
 
     companion object {
-        fun create(path: String) = ListGames(path)
+        fun create(classLoader: ClassLoader,path: String) = ListGames(classLoader,path)
     }
 
     init {
         val gson = Gson()
         val type = object : TypeToken<Array<Array<Any>>>() {}.type
-        val resource = Thread.currentThread().getContextClassLoader().getResource(path)
+        val resource = classLoader.getResource(path)
         val file = File(resource.toURI())
         val list = gson.fromJson<Array<Array<Any>>>(FileReader(file), type)
 
