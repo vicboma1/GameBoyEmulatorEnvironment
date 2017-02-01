@@ -2,7 +2,6 @@ package assets.panel.tab
 
 import assets.panel.multipleImages.base.PanelMultipleImages
 import assets.table.TableImpl
-import utils.ThreadMain
 import javax.swing.JTabbedPane
 import javax.swing.event.ChangeEvent
 import javax.swing.event.ChangeListener
@@ -17,7 +16,6 @@ class TabPaneListener internal constructor(private val table: TableImpl) : Chang
     }
 
     override fun stateChanged(e: ChangeEvent?) {
-        ThreadMain.asyncUI {
             val source = e?.getSource()
             if (source is JTabbedPane) {
 
@@ -41,7 +39,6 @@ class TabPaneListener internal constructor(private val table: TableImpl) : Chang
                         source.repaint();
                 }
             }
-        }
-    }
 
+    }
 }

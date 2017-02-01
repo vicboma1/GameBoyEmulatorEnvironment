@@ -4,7 +4,7 @@ import main.kotlin.utils.image.scale
 import src.configuration.Display
 import java.awt.BorderLayout
 import java.awt.image.BufferedImage
-import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 import javax.swing.ImageIcon
 import javax.swing.JPanel
 
@@ -13,7 +13,7 @@ import javax.swing.JPanel
  */
 open class PanelMultipleImages internal constructor(private val back: String, private val front:String) : JPanel() {
 
-    protected var list: ArrayList<BufferedImage?> = ArrayList()
+    protected var list: CopyOnWriteArrayList<BufferedImage?> = CopyOnWriteArrayList()
 
     init {
         layout = BorderLayout()
