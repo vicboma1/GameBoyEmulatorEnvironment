@@ -8,6 +8,6 @@ import javax.swing.JComponent
 interface MenuBar {
     fun createSubMenu(parent: MenuBar?, child: JComponent?)
     fun createSubMenu(parent: MenuBar?, child: MutableList<JComponent?>)
-    fun addMenu(menuList: List<Menu>)
+    fun addMenu(menuList: List<Menu>) : MenuBarImpl
     fun addMenu(menu: Menu)
 }

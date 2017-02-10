@@ -5,6 +5,7 @@ import TableRowAdapter
 import app.components.MenuChooser
 import app.components.MenuDialog
 import app.components.MenuFile
+import app.components.MenuView
 import assets.frame.Frame
 import assets.panel.multipleImages.PanelCartridge
 import assets.panel.multipleImages.PanelCover
@@ -60,7 +61,7 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
                  }
      }
 
-    val panel: SplitImpl<Container> by lazy {
+    val panelListView: SplitImpl<Container> by lazy {
         SplitImpl.create(
                 Split.HORIZONTAL,
                 Frame.create(table.scrollPane(), BorderLayout.CENTER).contentPane,
@@ -71,6 +72,14 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
 
     val menuBar: MenuBarImpl by lazy {
         MenuBarImpl.create()
+                    .addMenu(
+                            listOf(
+                                    MenuBarImpl.MenuFile(frame),
+                                    MenuBarImpl.MenuDialog(frame),
+                                    MenuBarImpl.MenuChooser(frame),
+                                    MenuBarImpl.MenuView(frame,panelListView)
+                            )
+                    )
     }
 
     companion object {
@@ -85,13 +94,6 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
             addKeyListenerInput(TableRowKeyListener.create(frame,table,statusBar,tabbedPane))
         }
 
-        menuBar.addMenu(
-                listOf(
-                    MenuBarImpl.MenuFile(frame),
-                    MenuBarImpl.MenuDialog(frame),
-                    MenuBarImpl.MenuChooser(frame)
-                )
-        )
     }
 
 }

@@ -33,9 +33,11 @@ class MenuBarImpl internal constructor(_name : String) : JMenuBar(), MenuBar {
         this.add(menu as MenuImpl)
     }
 
-    override fun addMenu(menuList: List<Menu>) {
+    override fun addMenu(menuList: List<Menu>) : MenuBarImpl {
         for (it in menuList)
             this.addMenu(it)
+
+        return this
     }
 
 }

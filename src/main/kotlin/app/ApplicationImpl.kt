@@ -1,6 +1,5 @@
 package src.app
 
-import src.configuration.Configuration
 import src.configuration.ConfigurationImpl
 import java.awt.BorderLayout
 import java.util.concurrent.CompletableFuture
@@ -27,7 +26,7 @@ class ApplicationImpl internal constructor(private val frame: JFrame) : Applicat
 
     private fun runAsync(result: CompletableFuture<Application>) : CompletableFuture<Application>  {
         CompletableFuture.runAsync {
-            this.apply {
+            this.let {
                 setLayout()
                 setTitle()
                 setCloseOp()
@@ -70,7 +69,7 @@ class ApplicationImpl internal constructor(private val frame: JFrame) : Applicat
     }
 
     private fun setContentPane() {
-        frame.contentPane.add(configuration?.panel, BorderLayout.WEST)
+        frame.contentPane.add(configuration?.panelListView, BorderLayout.WEST)
     }
 
     private fun setMenuBar() {
