@@ -1,31 +1,33 @@
 package app.components
 
+import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
 import assets.progressBar.*
-import utils.thread.CustomExecutor
-import java.awt.Container
+import utils.ThreadMain
 import java.awt.event.KeyEvent
 
 /**
  * Created by vicboma on 02/01/17.
  */
-fun MenuBarImpl.Companion.MenuView(frame : Frame,panelListView : SplitImpl<Container>): Menu {
+fun MenuBarImpl.Companion.MenuView(frame : Frame,contentPaneParentImpl : ContentPaneParentImpl): Menu {
+
+    fun visiblePanel(list : Boolean , grid :Boolean) {
+        contentPaneParentImpl.visiblePanelListView(list)
+        contentPaneParentImpl.visiblePanelGridView(grid)
+        frame.jMenuBar.visibility(true)
+    }
 
     val radioButtonList = listOf(
-                    RadioItemImpl.create("Grid", false, KeyEvent.VK_G, {
+                    RadioItemImpl.create("Grid", false, KeyEvent.VK_G) {
                         frame.jMenuBar.visibility(false)
-
-                        CustomExecutor.instance.addPriority {
-                            panelListView.isVisible = false
-                            frame.jMenuBar.visibility(true)
+                        ThreadMain.asyncUI {
+                            visiblePanel(false,true)
                         }
-                    }),
+                    },
                     RadioItemImpl.create("List", true,  KeyEvent.VK_L, {
                         frame.jMenuBar.visibility(false)
-
-                        CustomExecutor.instance.addPriority {
-                            panelListView.isVisible = true
-                            frame.jMenuBar.visibility(true)
+                        ThreadMain.asyncUI {
+                            visiblePanel(true,false)
                         }
                     })
             )
@@ -36,5 +38,4 @@ fun MenuBarImpl.Companion.MenuView(frame : Frame,panelListView : SplitImpl<Conta
             .apply{
                 addMenuItem(radioButtonList)
             }
-
 }

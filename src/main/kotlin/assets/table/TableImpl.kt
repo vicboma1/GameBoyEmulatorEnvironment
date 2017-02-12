@@ -16,7 +16,7 @@ import javax.swing.table.TableCellRenderer
  */
 class TableImpl internal constructor(private val classLoader: ClassLoader,/*private val timer: TableDaemon, */private val dm: TableModelImpl?, private val dimension : Dimension) : JTable(dm) {
 
-    val scrollSize by lazy { ScrollPane.create(this, dimension) }
+    private val scrollSize by lazy { ScrollPane.create(this, dimension) }
 
     companion object{
         fun create(classLoader: ClassLoader,  dm: TableModelImpl?, dimenasion : Dimension) = TableImpl(classLoader,/*timer,*/dm , dimenasion)

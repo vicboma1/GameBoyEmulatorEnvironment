@@ -14,7 +14,7 @@ class SplitImpl<K: Container> internal constructor(
           _rightComponent       : K ,
           newContinuousLayout   : Boolean = UIManager.getBoolean("SplitPane.continuousLayout"),
           _dividerLocation      : Int  = -1
-    ) : JSplitPane(newOrientation,newContinuousLayout, _leftComponent, _rightComponent) , Split {
+    ) : JSplitPane(newOrientation, newContinuousLayout, _leftComponent, _rightComponent) , Split {
 
     companion object {
 
@@ -26,14 +26,12 @@ class SplitImpl<K: Container> internal constructor(
 
         fun <K:Container> create(  newOrientation : Int,   _leftComponent: K,   _rightComponent : K,   newContinuousLayout : Boolean, _dividerLocation : Int ) =
              SplitImpl(newOrientation, _leftComponent, _rightComponent,newContinuousLayout, _dividerLocation)
-
     }
 
     init{
         oneTouchExpandable = true
         dividerLocation = _dividerLocation
         alignmentX = Component.CENTER_ALIGNMENT
-
     }
 
 }

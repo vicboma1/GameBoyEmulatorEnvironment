@@ -30,7 +30,6 @@ class ApplicationImpl internal constructor(private val frame: JFrame) : Applicat
                 setLayout()
                 setTitle()
                 setCloseOp()
-                setContentPane()
                 setMenuBar()
                 setStatusBar()
                 frame.pack()
@@ -66,10 +65,6 @@ class ApplicationImpl internal constructor(private val frame: JFrame) : Applicat
 
     private fun setVisible() {
         frame.isVisible = configuration?.display?.visible!!
-    }
-
-    private fun setContentPane() {
-        frame.contentPane.add(configuration?.panelListView, BorderLayout.WEST)
     }
 
     private fun setMenuBar() {

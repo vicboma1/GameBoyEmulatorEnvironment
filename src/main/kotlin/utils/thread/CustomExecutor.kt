@@ -80,7 +80,7 @@ class CustomExecutor<K>{
         return completableFuture
     }
 
-    fun addPriority(processSingle : () -> K)  : CompletableFuture<K> {
+    fun addPriority(processSingle: () -> K)  : CompletableFuture<K> {
         val completableFuture = CompletableFuture<K>()
         var _pair = Pair(completableFuture,processSingle)
         queue?.addFirst(_pair)

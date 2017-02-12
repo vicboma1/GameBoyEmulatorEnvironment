@@ -4,6 +4,7 @@ import utils.ThreadMain
 import java.awt.BorderLayout
 import java.awt.Dimension
 import javax.swing.*
+import javax.swing.border.BevelBorder
 
 /**
  * Created by vicboma on 05/12/16.
@@ -20,7 +21,7 @@ class StatusBarImpl internal constructor(private val _width : Int) : JPanel() , 
     }
 
     init{
-       // border = BevelBorder(BevelBorder.RAISED)
+        border = BevelBorder(BevelBorder.LOWERED)
         preferredSize = Dimension(_width, 19)
         layout = BoxLayout(this, BoxLayout.X_AXIS)
         this.add(JPanel().apply {
