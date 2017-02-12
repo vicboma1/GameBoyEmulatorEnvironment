@@ -10,9 +10,9 @@ PATCH version when you make backwards-compatible bug fixes.
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 ```
 
-#### version 0.2.X  - WIP
+#### version 0.2.1  - WIP
 ```
-
+Add MenutItemView { Grid - List }
 ```
 
 #### version 0.2.0
