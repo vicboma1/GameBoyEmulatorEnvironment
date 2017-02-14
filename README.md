@@ -4,7 +4,7 @@ Front-End developed with Kotlin for my [GameBoy Emulator](https://github.com/vic
 
 WIP
 
-![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.0.gif)
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.1.gif)
 
 
 # Resources
