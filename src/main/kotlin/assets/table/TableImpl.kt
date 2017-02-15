@@ -53,14 +53,14 @@ class TableImpl internal constructor(private val classLoader: ClassLoader,/*priv
                 }
     }
 
-    fun addMouseListenerColumn(mouseAdater : MouseAdapter ) =
+    fun addMouseListenerColumn(mouseAdapter : MouseAdapter ) =
             tableHeader.apply {
                 updateTableInRealTime = true
-                addMouseListener(mouseAdater)
+                addMouseListener(mouseAdapter)
                 reorderingAllowed = true
             }
 
-    fun addMouseListenerRow(mouseAdater : MouseAdapter ) =  this.addMouseListener(mouseAdater)
+    fun addMouseListenerRow(mouseAdapter : MouseAdapter ) =  this.addMouseListener(mouseAdapter)
 
     fun addKeyListenerInput(keyListener : KeyListener) = this.addKeyListener(keyListener)
 

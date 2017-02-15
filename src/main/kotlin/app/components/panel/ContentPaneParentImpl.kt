@@ -29,23 +29,25 @@ import javax.swing.UIManager
  */
 class ContentPaneParentImpl internal constructor(private val classLoader : ClassLoader, private val  frame : Frame, private val  statusBar: StatusBarImpl) {
 
-    private val dimension =  Dimension(Display.WIDHT, Display.HEIGTH)
+    private val dimension by lazy {
+        Dimension(Display.WIDHT, Display.HEIGTH)
+    }
+
+    private val tableModelImpl by lazy {
+        val listGames = ListGames.create(classLoader,"list/listGame.json")
+        TableModelImpl.create(listGames.columnNames, listGames.rowNames)
+    }
 
     /*************** GRID VIEW ***************/
+
     private val panelGridView : PanelGridLayoutImpl by lazy {
-        PanelGridLayoutImpl.create(50, 7,50,150, dimension)
+        PanelGridLayoutImpl.create(50, 2 ,50, 50, dimension, tableModelImpl)
     }
 
     /*************** LIST VIEW ***************/
 
     private val table: TableImpl by lazy {
-        val listGames = ListGames.create(classLoader,"list/listGame.json")
-        TableImpl.create(
-                classLoader,
-                //TableDaemon.create(),
-                TableModelImpl.create(listGames.columnNames, listGames.rowNames),
-                dimension
-        )
+        TableImpl.create( classLoader, tableModelImpl, dimension)
     }
 
     private val tabbedPane: TabPane by lazy {
@@ -96,3 +98,4 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         panelGridView.isVisible = state
     }
 }
+
