@@ -14,6 +14,7 @@ Additional labels for pre-release and build metadata are available as extensions
 ```
 Add MenutItemView { Grid - List }
 Grid {View - Model - Scroll}
+Model { Image - NameRom }
 ```
 
 #### version 0.2.0
