@@ -21,6 +21,7 @@ cartridge
     
 cover
     |______ _bg.png
+    |______ _gbNotFound.png
     |______ addamsf.png
     |______ {romName}.png
     
@@ -45,6 +46,7 @@ where :
 "main.png" is the icon
 "{romName}.png" is the Game image
 "_bg.png" is the pattern that contains the others images inside it.
+"_gbNotFound.png" is the pattern that represents the image not found. 
 "*.gb" is the specific name that contains the game inside the rom
 "listGame.json" is a Array<Array<Any>> than contains the column and rows
 ```
