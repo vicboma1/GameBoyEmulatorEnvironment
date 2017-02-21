@@ -4,12 +4,10 @@ import assets.frame.Frame
 import assets.scroll.ScrollPane
 import assets.table.model.TableModelImpl
 import main.kotlin.utils.image.scale
-import java.awt.BorderLayout
-import java.awt.Container
-import java.awt.Dimension
-import java.awt.GridLayout
+import java.awt.*
+import java.awt.image.BufferedImage
+import javax.swing.BoxLayout
 import javax.swing.ImageIcon
-import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
 
@@ -41,18 +39,22 @@ class PanelGridLayoutImpl internal constructor(
 
         for (row in 0.._rows - 1) {
             for (col in 0.._cols - 1) {
-                val nameGame = this.tableModelImpl.getValueAt((row * _cols) + col , 1).toString().toLowerCase().split(".")[0].toString().plus(".png")
+                val nameRom = this.tableModelImpl.getValueAt((row * _cols) + col, 1).toString()
+                val nameGame = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
+                println(nameGame)
                 val image = Thread.currentThread().contextClassLoader.getResource("cover/$nameGame")
-                if(image != null) {
-                    val bufferedImage = ImageIcon().scale(350, 300, image.file.toString())
-                    add(JLabel(ImageIcon(bufferedImage))).setLocation(row, col)
-                    }
-                else {
-                    val btn =  JButton().apply{
-                        preferredSize = Dimension(350, 300)
-                    }
-                    add(btn).setLocation(row, col)
-                    }
+                var bufferedImage : BufferedImage?
+                bufferedImage = when(image){
+                    null -> ImageIcon().scale(350, 300,Thread.currentThread().contextClassLoader.getResource("cover/_gbNotFound.png").file.toString())
+                    else -> ImageIcon().scale(350, 300, image.file.toString())
+                }
+                val panel = JPanel(GridBagLayout()).apply{
+                    layout = BoxLayout(this, BoxLayout.Y_AXIS)
+                    add(JLabel(ImageIcon(bufferedImage)).apply { setAlignmentX(Component.CENTER_ALIGNMENT) })
+                    add(JLabel(nameRom).apply { setAlignmentX(Component.CENTER_ALIGNMENT) })
+                }
+
+                add(panel).setLocation(row, col)
                 }
                 //b.addActionListener()
             }
