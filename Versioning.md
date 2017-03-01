@@ -13,7 +13,7 @@ Additional labels for pre-release and build metadata are available as extensions
 #### version 0.2.1  - WIP
 ```
 Add MenutItemView { Grid - List }
-Grid {View - Model - Scroll}
+Grid {View - Model - Scroll} based in Table with multiple rows
 Model { Image - NameRom }
 ```
 
