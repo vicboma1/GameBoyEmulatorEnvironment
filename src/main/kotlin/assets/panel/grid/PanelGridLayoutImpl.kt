@@ -51,6 +51,7 @@ class PanelGridLayoutImpl internal constructor(
                 val panel = JPanel(GridBagLayout()).apply{
                     layout = BoxLayout(this, BoxLayout.Y_AXIS)
                     add(JLabel(ImageIcon(bufferedImage)).apply { setAlignmentX(Component.CENTER_ALIGNMENT) })
+                    add(JLabel(" ").apply { setAlignmentX(Component.CENTER_ALIGNMENT) })
                     add(JLabel(nameRom).apply { setAlignmentX(Component.CENTER_ALIGNMENT) })
                 }
 
