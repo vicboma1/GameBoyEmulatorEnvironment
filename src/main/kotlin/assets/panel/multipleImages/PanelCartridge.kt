@@ -22,7 +22,7 @@ class PanelCartridge internal constructor(private val classLoader:ClassLoader,_b
             g2.drawImage(list[0], (this.width * 0.07).toInt() , (this.height * 0.07).toInt(), null)
         
         if(list[1] != null)
-        g2.drawImage(list[1],(this.width * 0.332).toInt() , (this.height * 0.39).toInt(),   ((Display.WIDHT / 3) * 0.495).toInt(), ((Display.HEIGTH / 2) * 0.495).toInt(), null)
+            g2.drawImage(list[1],(this.width * 0.337).toInt() , (this.height * 0.39).toInt(),   ((Display.WIDHT / 3) * 0.495).toInt(), ((Display.HEIGTH / 2) * 0.495).toInt(), null)
 
     }
 }
