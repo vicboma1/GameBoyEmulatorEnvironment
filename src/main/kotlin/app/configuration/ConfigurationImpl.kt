@@ -3,7 +3,7 @@ package src.configuration
 import app.components.MenuChooser
 import app.components.MenuDialog
 import app.components.MenuFile
-import app.components.MenuView
+import app.components.menuBar.view.MenuView
 import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
 import assets.progressBar.MenuBarImpl

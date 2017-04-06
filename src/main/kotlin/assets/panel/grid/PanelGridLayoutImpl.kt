@@ -41,11 +41,11 @@ class PanelGridLayoutImpl internal constructor(
             for (col in 0.._cols - 1) {
                 val nameRom = this.tableModelImpl.getValueAt((row * _cols) + col, 1).toString()
                 val nameGame = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-                println(nameGame)
+       //         println(nameGame)
                 val image = Thread.currentThread().contextClassLoader.getResource("cover/$nameGame")
                 var bufferedImage : BufferedImage?
                 bufferedImage = when(image){
-                    null -> ImageIcon().scale(350, 300,Thread.currentThread().contextClassLoader.getResource("cover/_gbNotFound.png").file.toString())
+                    null -> ImageIcon().scale(350, 300,Thread.currentThread().contextClassLoader.getResource("cover/_gbNotFound_.png").file.toString())
                     else -> ImageIcon().scale(350, 300, image.file.toString())
                 }
                 val panel = JPanel(GridBagLayout()).apply{
