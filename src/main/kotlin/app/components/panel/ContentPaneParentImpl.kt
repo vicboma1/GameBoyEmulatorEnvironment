@@ -85,7 +85,13 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
         CustomExecutor.instance.add {
 
-            val columnGrid = listGames.getColumnGrid(Array<Array<Any>>(listGames.rowNames!!.size) { arrayOf<Any>("","","","") } )
+            val columnsHeader = arrayOf<Any>("","","","")
+            var rows = listGames.rowNames!!.size / columnsHeader.size
+            val resto = listGames.rowNames!!.size % columnsHeader.size == 0
+            if(!resto)
+                rows++
+
+            val columnGrid = listGames.getColumnGrid(Array<Array<Any>>(rows) { arrayOf<Any>("","","","") } )
             TableModelImpl.create(arrayOf<Any>("","","",""), columnGrid)
 
         }.thenApplyAsync {
