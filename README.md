@@ -6,6 +6,12 @@ WIP
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2.gif)
 
+#### version 0.2.2  - news
+```
+Add MenuItemsView Grid by scale { 1x, 2x, 3x, 4x}
+Create Images in memory
+Asynchronous GridView
+```
 
 # Resources
 
