@@ -30,12 +30,10 @@ cover
     |______ _gbNotFound.png
     |______ addamsf.png
     |______ {romName}.png
-    
-snapshot
-    |______ _bg.png
-    |______ addamsf.png
-    |______ {romName}.png
 
+font
+    |______ _fontGrid.png 
+    
 list
     |______ listGame.json
     
@@ -44,6 +42,11 @@ rom
     |______ addamsf.gb
     |______ addamsf2.gb
     |______ *.gb
+    
+snapshot
+    |______ _bg.png
+    |______ addamsf.png
+    |______ {romName}.png
 ```
 
 where :
@@ -55,6 +58,7 @@ where :
 "_gbNotFound.png" is the pattern that represents the image not found. 
 "*.gb" is the specific name that contains the game inside the rom
 "listGame.json" is a Array<Array<Any>> than contains the column and rows
+"_fontGrid.png " is the font that represent the game cover
 ```
 
 ###
