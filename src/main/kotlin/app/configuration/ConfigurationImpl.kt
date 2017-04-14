@@ -5,9 +5,12 @@ import app.components.MenuDialog
 import app.components.MenuFile
 import app.components.menuBar.view.MenuView
 import app.components.panel.ContentPaneParentImpl
+import app.components.panel.grid.CacheGrid
 import assets.frame.Frame
 import assets.progressBar.MenuBarImpl
 import assets.progressBar.StatusBarImpl
+import main.kotlin.utils.listGames.ListGames
+import utils.thread.CustomExecutor
 import java.awt.BorderLayout
 
 /**
@@ -30,7 +33,14 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
     /*************** CONTENT PANE PANEL ***************/
 
     val contentPaneParent : ContentPaneParentImpl by lazy {
-        ContentPaneParentImpl.create(classLoader,frame, statusBar)
+        ContentPaneParentImpl.create(
+                classLoader,
+                frame,
+                statusBar,
+                CustomExecutor.instance.add {
+                            CacheGrid.createRefImage(listGames, classLoader,240,200)
+                }
+        )
     }
 
     /*************** MENU BAR ***************/
@@ -49,6 +59,10 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
 
     companion object {
         fun create(classLoader:ClassLoader,frame : Frame) = ConfigurationImpl(classLoader,frame)
+    }
+
+    private val listGames by lazy {
+        ListGames.create(classLoader, "list/listGame.json")
     }
 
     init {
