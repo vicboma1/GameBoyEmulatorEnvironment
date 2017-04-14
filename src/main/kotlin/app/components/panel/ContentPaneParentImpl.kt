@@ -18,15 +18,14 @@ import assets.table.TableImpl
 import assets.table.comparator.TableHeaderComparator
 import assets.table.listener.rowKey.TableRowKeyListener
 import assets.table.model.TableModelImpl
-import main.kotlin.utils.image.BufferedImageMemoryFromComponent
-import main.kotlin.utils.image.scale
 import main.kotlin.utils.listGames.ListGames
 import src.configuration.Display
+import utils.thread.CustomExecutor
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Container
 import java.awt.Dimension
-import java.lang.Thread.sleep
+import java.awt.image.BufferedImage
 import java.util.concurrent.CompletableFuture
 import javax.swing.*
 
@@ -101,7 +100,13 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         scrollGrid = TableGridScrollPaneImpl(jtable)
         visiblePanelGridView(true)
 
+        //getColumnGrid(rows)
+
         completableFuture.thenApplyAsync {
+        //    getColumnGrid(rows)
+        }
+
+        CustomExecutor.instance.add {
             getColumnGrid(rows)
         }
 
@@ -155,13 +160,21 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
     private val w = 240//340 4
     private val h = 200//300 4
 
-    val convertPanelToImage = BufferedImageMemoryFromComponent()
-    var imageDefault = ImageIcon().scale(w, h,classLoader.getResource("cover/_gbNotFound.png").file.toString())
+    //val convertPanelToImage = BufferedImageMemoryFromComponent()
+    //var imageDefault = ImageIcon().scale(w, h,classLoader.getResource("cover/_gbNotFound.png").file.toString())
 
 
     fun getColumnGrid(capacity :Int) {
 
-        val res = Array<Array<Any>>(capacity) { arrayOf<Any>(ImageIcon(),ImageIcon(),ImageIcon(),ImageIcon()) }
+        while(CacheGrid.queue.isNotEmpty()){
+            val poll = CacheGrid.queue.poll()
+            val bufferedImage = poll["bufferedPanel"] as BufferedImage
+            val row = poll["row"] as Int
+            val col = poll["column"] as Int
+            jtable.setValueAt(ImageIcon(bufferedImage), row, col)
+            Thread.sleep(100)
+        }
+       /* val res = Array<Array<Any>>(capacity) { arrayOf<Any>(ImageIcon(),ImageIcon(),ImageIcon(),ImageIcon()) }
 
         try {
             val rows = res.size
@@ -169,8 +182,9 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             for (row in 0..rows) {
                 for (col in 0..cols - 1) {
                     val key = listGames.rowNames!![(row * cols) + col][1].toString()
-                    jtable.setValueAt(CacheGrid.map[key],row,col)
-                    sleep(5)
+                    var image =
+                    jtable.setValueAt(ImageIcon(image?.get()),row,col)
+                    sleep(100)
                 }
             }
 
@@ -179,7 +193,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             println(e.message)
         }
         finally {
-        }
+        }*/
     }
 }
 

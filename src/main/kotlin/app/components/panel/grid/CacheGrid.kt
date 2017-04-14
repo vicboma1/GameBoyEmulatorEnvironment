@@ -10,7 +10,7 @@ import java.awt.Dimension
 import java.awt.image.BufferedImage
 import java.util.*
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentLinkedQueue
 import javax.swing.BoxLayout
 import javax.swing.ImageIcon
 import javax.swing.JLabel
@@ -21,44 +21,85 @@ import javax.swing.JPanel
  */
 object CacheGrid {
 
-    val map = object : ConcurrentHashMap<String, ImageIcon>(){}
+    val queue = ConcurrentLinkedQueue<Map<String, *>>()
 
     val convert = BufferedImageMemoryFromComponent()
 
-    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, w: Int, h: Int) : CompletableFuture<ConcurrentHashMap<String, ImageIcon>> {
-        val imageDefault = ImageIcon().scale(w, h, classLoader.getResource("cover/_gbNotFound.png").file.toString())
+    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, bufferedImage : BufferedImage) : CompletableFuture<Queue<Map<String, *>>> {
+        val imageDefault = ImageIcon().scale(bufferedDefault, classLoader.getResource("cover/_gbNotFound.png").file.toString())
 
         try {
+            val rows = listGames.rowNames?.size
+            var cols = listGames.rowNames!![0].size-1
+            for (row in 0..rows!!) {
+                for (col in 0..cols - 1) {
+                    val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
+                    val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
+                    val image = classLoader.getResource("cover/$nameImage")
+
+                    val panel = JPanel().apply {
+                        size = Dimension(bufferedImage.width, bufferedImage.height)
+                        isOpaque = false
+                        setBackground(Color(0, 0, 0))
+
+                        layout = boxLayout(this).apply {
+                            setBackground(Color(0, 0, 0))
+                            isOpaque = false
+                        }
+
+                        add(jLabelFactory(" "))
+                        add(jLabelFactory(ImageIcon(when (image) {
+                            null -> imageDefault
+                            else -> ImageIcon().scale(bufferedImage, image.file.toString())
+                        }))
+                        )
+                        add(jLabelFactory(" "))
+                        add(jLabelFactory(nameRom))
+                    }
+
+                    val bufferedPanel = convert.invoke(panel)
+                    queue.add(mapOf(Pair("bufferedPanel",bufferedPanel),Pair("row",row),Pair("column",col)))
+                    Thread.sleep(10)
+                }
+            }
+        } catch(e: Exception) {
+            println(e.message)
+            e.stackTrace
+        } finally {
+            println("****** FIN LOAD MODEL *******")
+            return CompletableFuture.completedFuture(queue)
+        }
+
+   /*     try {
             Arrays.stream(listGames.rowNames)
                    .filter {  it -> it != null }
                    .map { it -> it[1].toString() }
                    .forEach { it ->
                        val nameRom = it.toLowerCase().split(".")[0].toString().plus(".png")
                        val image = classLoader.getResource("cover/$nameRom")
-                       val bufferedImage: BufferedImage?
-                       bufferedImage = when (image) {
-                           null -> imageDefault
-                           else -> ImageIcon().scale(w, h, image.file.toString())
-                       }
-
                        val panel = JPanel().apply {
+                           size = Dimension(bufferedImage.width, bufferedImage.height)
+                           isOpaque = false
+                           setBackground(Color(0, 0, 0))
+
                            layout = boxLayout(this).apply {
                                setBackground(Color(0, 0, 0))
                                isOpaque = false
                            }
+
                            add(jLabelFactory(" "))
-                           add(jLabelFactory(ImageIcon(bufferedImage)))
+                           add(jLabelFactory(ImageIcon(when (image) {
+                               null -> imageDefault
+                               else -> ImageIcon().scale(bufferedImage, image.file.toString())
+                                }))
+                           )
                            add(jLabelFactory(" "))
                            add(jLabelFactory(it))
-                           size = Dimension(w, h)
-                           isOpaque = false
-                           setBackground(Color(0, 0, 0))
                        }
 
                        val bufferedPanel = convert.invoke(panel)
-                       map["$it"] = ImageIcon(bufferedPanel)
+                       map["$it"] = mapOf(Pair("bufferedPanel",bufferedPanel),Pair("row",),Pair("column",))
                        Thread.sleep(10)
-
                    }
         } catch(e: Exception) {
             println(e.message)
@@ -66,43 +107,10 @@ object CacheGrid {
         } finally {
             println("****** FIN LOAD MODEL *******")
             return CompletableFuture.completedFuture(map)
-        }
+        }*/
     }
 
-    /*   fun getImageIcon(listGames: Array<Array<Any>>, row: Int, cols: Int, col:Int,w: Int, h: Int, classLoader: ClassLoader, imageDefault: BufferedImage) : ImageIcon {
 
-        val nameRom = listGames[(row * cols) + col][1].toString()
-        val nameGame = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-
-        println(nameGame+" $row$col")
-
-        val image = classLoader.getResource("cover/$nameGame")
-        val bufferedImage: BufferedImage?
-        bufferedImage = when (image) {
-            null -> imageDefault
-            else -> ImageIcon().scale(w, h, image.file.toString())
-        }
-
-        val panel = JPanel().apply {
-            layout = boxLayout(this).apply {
-                setBackground(Color(0, 0, 0))
-                isOpaque = false
-            }
-            add(jLabelFactory(" "))
-            add(jLabelFactory(ImageIcon(bufferedImage)))
-            add(jLabelFactory(" "))
-            add(jLabelFactory(nameRom))
-            size = Dimension(w, h)
-            isOpaque = false
-            setBackground(Color(0, 0, 0))
-        }
-
-        val bufferedPanel = panel.bufferedImageMemory()
-        return ImageIcon(bufferedPanel)
-        //val componentIcon = FadeComponentExt()
-        //componentIcon.imageIcon = imageIcon
-    }
-    */
     private fun boxLayout(container : Container) = BoxLayout(container, BoxLayout.Y_AXIS)
 
     private fun jLabelFactory(name : String ) = JLabel(name).apply {

@@ -1,5 +1,6 @@
 package assets.panel.multipleImages.base
 
+import main.kotlin.utils.image.createBufferedImage
 import main.kotlin.utils.image.scale
 import src.configuration.Display
 import java.awt.BorderLayout
@@ -15,22 +16,28 @@ open class PanelMultipleImages internal constructor(private val classLoader: Cla
 
     protected var list: CopyOnWriteArrayList<BufferedImage?> = CopyOnWriteArrayList()
 
+
     init {
         layout = BorderLayout()
         val resourceBack = classLoader.getResource(back)
+        val bufferedImageBack = ImageIcon().createBufferedImage(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), BufferedImage.TYPE_INT_ARGB)
+
         if(resourceBack != null)
-            list.add(0,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), resourceBack.file.toString()))
+            list.add(0,ImageIcon().scale(bufferedImageBack, resourceBack.file.toString()))
 
         val resourceFront = classLoader.getResource(front)
+        val bufferedImageFront = ImageIcon().createBufferedImage(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), BufferedImage.TYPE_INT_ARGB)
+
         if(resourceFront != null)
-            list.add(1,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), resourceFront.file.toString()))
+            list.add(1,ImageIcon().scale(bufferedImageFront, resourceFront.file.toString()))
     }
 
     fun setBack(back:String) {
         val resourceSetBack = classLoader.getResource(back)
-        if(resourceSetBack!=null)
-            list.set(0,ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), resourceSetBack.file.toString()))
-
+        if(resourceSetBack!=null) {
+            val bufferedImageBack = ImageIcon().createBufferedImage(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), BufferedImage.TYPE_INT_ARGB)
+            list.set(0, ImageIcon().scale(bufferedImageBack, resourceSetBack.file.toString()))
+        }
     }
 
     fun setFront(front:String) {
@@ -40,7 +47,8 @@ open class PanelMultipleImages internal constructor(private val classLoader: Cla
         if(null != resourceSetFront)
          file = resourceSetFront.file.toString()
 
-        val buffered = ImageIcon().scale(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(),file)
+        val bufferedImageFront = ImageIcon().createBufferedImage(((Display.WIDHT / 3) * 1.25).toInt(), ((Display.HEIGTH / 2) * 1.45).toInt(), BufferedImage.TYPE_INT_ARGB)
+        val buffered = ImageIcon().scale(bufferedImageFront,file)
         list.set(1,buffered)
     }
 }

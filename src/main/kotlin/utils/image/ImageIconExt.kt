@@ -10,29 +10,30 @@ import javax.swing.ImageIcon
 /**
  * Created by vbolinch on 04/01/2017.
  */
+fun ImageIcon.createBufferedImage(width: Int, height: Int, imageType: Int) = BufferedImage(width, height, imageType)
 
-fun ImageIcon.scale(width: Int, height: Int, filename: String): BufferedImage? {
-    var bi: BufferedImage? = null
+fun ImageIcon.scale(
+            bufferedImage: BufferedImage,
+            filename: String,
+            rendereingHints: Map<*,*> = mapOf(
+                Pair(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY),
+                Pair(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON),
+                Pair(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED)
+                )
+            ): BufferedImage? {
 
     try {
         val imageIcon = ImageIcon(filename)
-        bi = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
-        bi.createGraphics().addRenderingHints(
-                mapOf(
-                        Pair(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY),
-                        Pair(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON),
-                        Pair(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED)
-            )
-        )
-
-        bi.createGraphics().drawImage(imageIcon.image, 0, 0, width, height, null)
+        bufferedImage.createGraphics().apply{
+            addRenderingHints(rendereingHints)
+            drawImage(imageIcon.image, 0, 0, bufferedImage.width, bufferedImage.height, null)
+        }
 
     } catch (e: Exception) {
         e.printStackTrace()
-        bi = null
     }
     finally{
-        return bi
+        return bufferedImage
     }
 }
 

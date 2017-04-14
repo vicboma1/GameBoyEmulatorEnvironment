@@ -1,20 +1,9 @@
 package assets.panel.grid
 
-import assets.frame.Frame
-import assets.scroll.ScrollPane
-import assets.table.model.TableModelImpl
-import main.kotlin.utils.image.scale
-import java.awt.*
-import java.awt.image.BufferedImage
-import javax.swing.BoxLayout
-import javax.swing.ImageIcon
-import javax.swing.JLabel
-import javax.swing.JPanel
-
 /**
  * Created by vicboma on 12/02/17.
  */
-class PanelGridLayoutImpl internal constructor(
+/*class PanelGridLayoutImpl internal constructor(
         private val _rows: Int,
         private val _cols: Int,
         private val _hgap: Int,
@@ -68,4 +57,4 @@ class PanelGridLayoutImpl internal constructor(
         container.setVisible(aFlag)
     }
 
-}
+}*/

@@ -9,9 +9,12 @@ import app.components.panel.grid.CacheGrid
 import assets.frame.Frame
 import assets.progressBar.MenuBarImpl
 import assets.progressBar.StatusBarImpl
+import main.kotlin.utils.image.createBufferedImage
 import main.kotlin.utils.listGames.ListGames
 import utils.thread.CustomExecutor
 import java.awt.BorderLayout
+import java.awt.image.BufferedImage
+import javax.swing.ImageIcon
 
 /**
  * Created by vicboma on 02/12/16.
@@ -38,7 +41,9 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
                 frame,
                 statusBar,
                 CustomExecutor.instance.add {
-                            CacheGrid.createRefImage(listGames, classLoader,240,200)
+                    val bufferedImageDefault = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
+                    val bufferedImage = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
+                    CacheGrid.createRefImage(listGames, classLoader,bufferedImageDefault, bufferedImage)
                 }
         )
     }
