@@ -31,10 +31,10 @@ object CacheGrid {
         try {
             Arrays.stream(listGames.rowNames)
                    .filter {  it -> it != null }
-                   .map { it -> it[1].toString().toLowerCase().split(".")[0].toString().plus(".png") }
+                   .map { it -> it[1].toString() }
                    .forEach { it ->
-                      // map[it] = "cover/$it"
-                       val image = classLoader.getResource("cover/$it")
+                       val nameRom = it.toLowerCase().split(".")[0].toString().plus(".png")
+                       val image = classLoader.getResource("cover/$nameRom")
                        val bufferedImage: BufferedImage?
                        bufferedImage = when (image) {
                            null -> imageDefault

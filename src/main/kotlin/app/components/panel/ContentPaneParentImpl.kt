@@ -3,6 +3,7 @@ package app.components.panel
 import TableColumnHeaderAdapter
 import TableRowAdapter
 import app.components.panel.grid.CacheGrid
+import app.components.panel.grid.TableGridScrollPaneImpl
 import assets.frame.Frame
 import assets.panel.multipleImages.PanelCartridge
 import assets.panel.multipleImages.PanelCover
@@ -12,6 +13,7 @@ import assets.panel.tab.TabPaneListener
 import assets.progressBar.Split
 import assets.progressBar.SplitImpl
 import assets.progressBar.StatusBarImpl
+import assets.table.TableGridImpl
 import assets.table.TableImpl
 import assets.table.comparator.TableHeaderComparator
 import assets.table.listener.rowKey.TableRowKeyListener
@@ -21,6 +23,7 @@ import main.kotlin.utils.image.scale
 import main.kotlin.utils.listGames.ListGames
 import src.configuration.Display
 import java.awt.BorderLayout
+import java.awt.Component
 import java.awt.Container
 import java.awt.Dimension
 import java.lang.Thread.sleep
@@ -72,8 +75,8 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
     fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, completableFuture: CompletableFuture<Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,completableFuture)
     }
 
+    var scrollGrid = JScrollPane()
     val panel = JPanel()
-    var pane = JScrollPane()
     var jtable = JTable()
 
     init {
@@ -86,34 +89,21 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
         visiblePanelListView(false)
 
+        val columnsHeader = arrayOf<Any>("","","","")
+        var rows = listGames.rowNames!!.size / columnsHeader.size
+        val resto = listGames.rowNames!!.size % columnsHeader.size == 0
+        if(!resto)
+            rows++
+
+
+        val tableModel = TableModelImpl.create(arrayOf<Any>("", "", "", ""), Array<Array<Any>>(rows) { arrayOf<Any>("", "", "", "") })
+        jtable = TableGridImpl(classLoader ,tableModel, listGames)
+        scrollGrid = TableGridScrollPaneImpl(jtable)
+        visiblePanelGridView(true)
+
         completableFuture.thenApplyAsync {
-
-                val columnsHeader = arrayOf<Any>("","","","")
-                var rows = listGames.rowNames!!.size / columnsHeader.size
-                val resto = listGames.rowNames!!.size % columnsHeader.size == 0
-                if(!resto)
-                    rows++
-
-                jtable = JTable(TableModelImpl.create(arrayOf<Any>("", "", "", ""), Array<Array<Any>>(rows) { arrayOf<Any>("", "", "", "") }))
-                        .apply {
-                            showVerticalLines = false
-                            showHorizontalLines = false
-                            autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
-                            setRowHeight(250)
-
-                        }
-                pane = JScrollPane(jtable).apply {
-                    getVerticalScrollBar().setUnitIncrement(16)
-
-                }
-
-                visiblePanelGridView(true)
-
-
-                getColumnGrid(rows)
-
+            getColumnGrid(rows)
         }
-
 
         /* CustomExecutor.instance.add {
 
@@ -146,27 +136,21 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
     }
 
-    fun visiblePanelListView(state : Boolean){
+    fun visiblePanelView(state : Boolean, component: Component){
+        if(state) frame.contentPane.add(component)
+        else    frame.contentPane.remove(component)
 
-        if(state) frame.contentPane.add(panelListView)
-        else    frame.contentPane.remove(panelListView)
-
-        repaint()
-    }
-
-    fun visiblePanelGridView(state : Boolean){
-
-        if(state) frame.contentPane.add(pane)
-        else    frame.contentPane.remove(pane)
-
-        repaint()
-    }
-
-    private fun repaint()  {
         (frame.contentPane as JPanel).revalidate()
         frame.repaint()
     }
 
+    fun visiblePanelGridView(state : Boolean){
+        visiblePanelView(state,scrollGrid)
+    }
+
+    fun visiblePanelListView(state : Boolean){
+        visiblePanelView(state,panelListView)
+    }
 
     private val w = 240//340 4
     private val h = 200//300 4
@@ -184,9 +168,9 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             var cols = res[0].size
             for (row in 0..rows) {
                 for (col in 0..cols - 1) {
-                    val nameRom = listGames.rowNames!![(row * cols) + col][1].toString().toLowerCase().split(".")[0].toString().plus(".png")
-                    jtable.setValueAt(CacheGrid.map[nameRom],row,col)
-                    sleep(27)
+                    val key = listGames.rowNames!![(row * cols) + col][1].toString()
+                    jtable.setValueAt(CacheGrid.map[key],row,col)
+                    sleep(5)
                 }
             }
 
