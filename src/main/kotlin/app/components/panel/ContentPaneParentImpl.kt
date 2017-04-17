@@ -3,6 +3,7 @@ package app.components.panel
 import TableColumnHeaderAdapter
 import TableRowAdapter
 import app.components.panel.grid.CacheGrid
+import app.components.panel.grid.CacheState
 import app.components.panel.grid.TableGridScrollPaneImpl
 import assets.frame.Frame
 import assets.panel.multipleImages.PanelCartridge
@@ -166,14 +167,16 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
     fun getColumnGrid(capacity :Int) {
 
-        while(CacheGrid.queue.isNotEmpty()){
+        while(CacheGrid.state == CacheState.LOADING){
             val poll = CacheGrid.queue.poll()
             val bufferedImage = poll["bufferedPanel"] as BufferedImage
             val row = poll["row"] as Int
             val col = poll["column"] as Int
             jtable.setValueAt(ImageIcon(bufferedImage), row, col)
-            Thread.sleep(100)
+            Thread.sleep(50)
         }
+
+        println("Empty Queue! state: ${CacheGrid.state} ")
        /* val res = Array<Array<Any>>(capacity) { arrayOf<Any>(ImageIcon(),ImageIcon(),ImageIcon(),ImageIcon()) }
 
         try {

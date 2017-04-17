@@ -21,11 +21,14 @@ import javax.swing.JPanel
  */
 object CacheGrid {
 
+    var state = CacheState.STOP
+
     val queue = ConcurrentLinkedQueue<Map<String, *>>()
 
     val convert = BufferedImageMemoryFromComponent()
 
     fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, bufferedImage : BufferedImage) : CompletableFuture<Queue<Map<String, *>>> {
+        state = CacheState.LOADING
         val imageDefault = ImageIcon().scale(bufferedDefault, classLoader.getResource("cover/_gbNotFound.png").file.toString())
 
         try {
@@ -67,6 +70,7 @@ object CacheGrid {
             e.stackTrace
         } finally {
             println("****** FIN LOAD MODEL *******")
+            state == CacheState.FINISH
             return CompletableFuture.completedFuture(queue)
         }
 
@@ -124,4 +128,9 @@ object CacheGrid {
                     isOpaque = false
                     setAlignmentX(Component.CENTER_ALIGNMENT)
                 }
+
+}
+
+enum class CacheState {
+    STOP, LOADING, FINISH
 }
