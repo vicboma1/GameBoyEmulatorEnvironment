@@ -3,7 +3,6 @@ package app.components.panel
 import TableColumnHeaderAdapter
 import TableRowAdapter
 import app.components.panel.grid.CacheGrid
-import app.components.panel.grid.CacheState
 import app.components.panel.grid.TableGridScrollPaneImpl
 import assets.frame.Frame
 import assets.panel.multipleImages.PanelCartridge
@@ -26,7 +25,6 @@ import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Container
 import java.awt.Dimension
-import java.awt.image.BufferedImage
 import java.util.concurrent.CompletableFuture
 import javax.swing.*
 
@@ -95,50 +93,15 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         if(!resto)
             rows++
 
-
         val tableModel = TableModelImpl.create(arrayOf<Any>("", "", "", ""), Array<Array<Any>>(rows) { arrayOf<Any>("", "", "", "") })
         jtable = TableGridImpl(classLoader ,tableModel, listGames)
         scrollGrid = TableGridScrollPaneImpl(jtable)
+
         visiblePanelGridView(true)
 
-        //getColumnGrid(rows)
-
-        completableFuture.thenApplyAsync {
-        //    getColumnGrid(rows)
-        }
-
         CustomExecutor.instance.add {
-            getColumnGrid(rows)
+            showImageIconAsync()
         }
-
-        /* CustomExecutor.instance.add {
-
-           val columnsHeader = arrayOf<Any>("","","","")
-           var rows = listGames.rowNames!!.size / columnsHeader.size
-           val resto = listGames.rowNames!!.size % columnsHeader.size == 0
-           if(!resto)
-               rows++
-
-           val columnGrid = getColumnGrid(rows)
-           TableModelImpl.create(arrayOf<Any>("","","",""), columnGrid)
-
-       }.thenApplyAsync {
-
-           pane = JScrollPane(
-                   JTable(it as TableModel)
-                           .apply {
-                               showVerticalLines = false
-                               showHorizontalLines = false
-                               autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
-                               setRowHeight(250)
-
-                           }
-           ).apply {
-               getVerticalScrollBar().setUnitIncrement(16);
-           }
-
-           visiblePanelGridView(true)
-       } */
 
     }
 
@@ -158,45 +121,23 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         visiblePanelView(state,panelListView)
     }
 
-    private val w = 240//340 4
-    private val h = 200//300 4
+    fun showImageIconAsync() {
 
-    //val convertPanelToImage = BufferedImageMemoryFromComponent()
-    //var imageDefault = ImageIcon().scale(w, h,classLoader.getResource("cover/_gbNotFound.png").file.toString())
-
-
-    fun getColumnGrid(capacity :Int) {
-
-        while(CacheGrid.state == CacheState.LOADING){
-            val poll = CacheGrid.queue.poll()
-            val bufferedImage = poll["bufferedPanel"] as BufferedImage
-            val row = poll["row"] as Int
-            val col = poll["column"] as Int
-            jtable.setValueAt(ImageIcon(bufferedImage), row, col)
-            Thread.sleep(50)
-        }
-
-        println("Empty Queue! state: ${CacheGrid.state} ")
-       /* val res = Array<Array<Any>>(capacity) { arrayOf<Any>(ImageIcon(),ImageIcon(),ImageIcon(),ImageIcon()) }
-
-        try {
-            val rows = res.size
-            var cols = res[0].size
-            for (row in 0..rows) {
-                for (col in 0..cols - 1) {
-                    val key = listGames.rowNames!![(row * cols) + col][1].toString()
-                    var image =
-                    jtable.setValueAt(ImageIcon(image?.get()),row,col)
-                    sleep(100)
-                }
+        var size = CacheGrid.limit
+        while(size > 0){
+            size --
+            CacheGrid.queue.poll().thenAcceptAsync {
+                val row = it["row"] as Int
+                val col = it["column"] as Int
+                val imageIcon = it["imageIcon"] as ImageIcon
+                jtable.setValueAt(imageIcon, row, col)
+                Thread.sleep(35)
             }
+        }
 
-        }
-        catch(e: Exception){
-            println(e.message)
-        }
-        finally {
-        }*/
+        //println("Empty Queue! state: ${CacheGrid.state} ")
     }
+
+
 }
 
