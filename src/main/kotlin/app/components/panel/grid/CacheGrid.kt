@@ -26,7 +26,7 @@ object CacheGrid {
     var limit = 0
     val queue = ConcurrentLinkedQueue<CompletableFuture<Map<String, Serializable>>>()
 
-    val convert = BufferedImageMemoryFromComponent()
+    val bufferedImageMemoryFromComponent = BufferedImageMemoryFromComponent()
 
     fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, bufferedImage : BufferedImage) : CompletableFuture<Queue<CompletableFuture<Map<String, Serializable>>>> {
         limit = listGames.rowNames?.size!!
@@ -43,33 +43,35 @@ object CacheGrid {
                     if( index > rows)
                         break
 
-                    queue.add( CompletableFuture.supplyAsync {
-                        print("($row * $cols) + $col = ${(row * cols) + col}")
+                    queue.add( CompletableFuture.supplyAsync() {
                         val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
                         val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-                        val image = classLoader.getResource("cover/$nameImage")
-                        println(" $nameRom - $nameImage - ${image.toURI()}")
-                        val panel = JPanel().apply {
-                            size = Dimension(bufferedImage.width, bufferedImage.height)
-                            isOpaque = false
-                            setBackground(Color(0, 0, 0))
-
-                            layout = boxLayout(this).apply {
-                                setBackground(Color(0, 0, 0))
-                                isOpaque = false
-                            }
-
-                            add(jLabelFactory(" "))
-                            add(jLabelFactory(ImageIcon(when (image) {
-                                null -> imageDefault
-                                else -> ImageIcon().scale(bufferedImage, image.file.toString())
-                            }))
-                            )
-                            add(jLabelFactory(" "))
-                            add(jLabelFactory(nameRom))
+                        val resource = classLoader.getResource("cover/$nameImage")
+                        val image = when (resource) {
+                            null -> imageDefault
+                            else -> ImageIcon().scale(bufferedImage, resource.file.toString())
                         }
 
-                        val bufferedPanel = convert.invoke(panel)
+                        println(StringBuffer("($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+
+                        val bufferedPanel = bufferedImageMemoryFromComponent.invoke(
+                                JPanel().apply {
+                                    size = Dimension(bufferedImage.width, bufferedImage.height)
+                                    isOpaque = false
+                                    setBackground(Color(0, 0, 0))
+
+                                    layout = boxLayout(this).apply {
+                                        setBackground(Color(0, 0, 0))
+                                        isOpaque = false
+                                    }
+
+                                    add(jLabelFactory(" "))
+                                    add(jLabelFactory(ImageIcon(image)))
+                                    add(jLabelFactory(" "))
+                                    add(jLabelFactory(nameRom))
+                                }
+                        )
+
                         val imageIcon = ImageIcon(bufferedPanel)
                         // val weak = WeakReference(imageIcon)
                         mapOf(Pair("imageIcon", imageIcon), Pair("row", row), Pair("column", col))
@@ -84,45 +86,6 @@ object CacheGrid {
             state = CacheState.FINISH
             return CompletableFuture.completedFuture(queue)
         }
-
-   /*     try {
-            Arrays.stream(listGames.rowNames)
-                   .filter {  it -> it != null }
-                   .map { it -> it[1].toString() }
-                   .forEach { it ->
-                       val nameRom = it.toLowerCase().split(".")[0].toString().plus(".png")
-                       val image = classLoader.getResource("cover/$nameRom")
-                       val panel = JPanel().apply {
-                           size = Dimension(bufferedImage.width, bufferedImage.height)
-                           isOpaque = false
-                           setBackground(Color(0, 0, 0))
-
-                           layout = boxLayout(this).apply {
-                               setBackground(Color(0, 0, 0))
-                               isOpaque = false
-                           }
-
-                           add(jLabelFactory(" "))
-                           add(jLabelFactory(ImageIcon(when (image) {
-                               null -> imageDefault
-                               else -> ImageIcon().scale(bufferedImage, image.file.toString())
-                                }))
-                           )
-                           add(jLabelFactory(" "))
-                           add(jLabelFactory(it))
-                       }
-
-                       val bufferedPanel = convert.invoke(panel)
-                       map["$it"] = mapOf(Pair("bufferedPanel",bufferedPanel),Pair("row",),Pair("column",))
-                       Thread.sleep(10)
-                   }
-        } catch(e: Exception) {
-            println(e.message)
-            e.stackTrace
-        } finally {
-            println("****** FIN LOAD MODEL *******")
-            return CompletableFuture.completedFuture(map)
-        }*/
     }
 
 

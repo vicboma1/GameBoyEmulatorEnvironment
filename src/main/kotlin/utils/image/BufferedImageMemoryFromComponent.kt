@@ -13,23 +13,21 @@ class BufferedImageMemoryFromComponent internal constructor() {
     fun invoke(cmp: Component): BufferedImage {
 
         fun layoutComponent(c: Component) {
-                synchronized(c.getTreeLock()) {
-                    c.doLayout()
-                    if (c is Container)
-                        for (child in c.getComponents())
-                            layoutComponent(child)
-                }
+                c.doLayout()
+                if (c is Container)
+                    for (child in c.getComponents())
+                        layoutComponent(child)
+            }
+
+        synchronized(cmp.getTreeLock()) {
+            cmp.setSize(cmp.getPreferredSize())
+            layoutComponent(cmp)
+            val img = BufferedImage(cmp.getWidth(), cmp.getHeight(), BufferedImage.TYPE_INT_ARGB)
+            val crp = CellRendererPane()
+            crp.add(cmp)
+            crp.paintComponent(img.createGraphics(), cmp, crp, cmp.getBounds())
+            return img
         }
-
-        cmp.setSize(cmp.getPreferredSize())
-        layoutComponent(cmp)
-        val img = BufferedImage(cmp.getWidth(), cmp.getHeight(), BufferedImage.TYPE_INT_ARGB)
-        val crp = CellRendererPane()
-        crp.add(cmp)
-        crp.paintComponent(img.createGraphics(), cmp, crp, cmp.getBounds())
-
-        return img
     }
-
 
 }
