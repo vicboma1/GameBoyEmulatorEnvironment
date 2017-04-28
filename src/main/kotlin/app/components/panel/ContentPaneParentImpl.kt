@@ -126,16 +126,16 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         var size = CacheGrid.limit
         while(size > 0){
             size --
-            CacheGrid.queue.poll().thenAcceptAsync {
+            val completable = CacheGrid.queue.poll()
+            completable.thenApplyAsync {
                 val row = it["row"] as Int
                 val col = it["column"] as Int
                 val imageIcon = it["imageIcon"] as ImageIcon
+                println(StringBuffer("$row + $col ").toString())
                 jtable.setValueAt(imageIcon, row, col)
-                Thread.sleep(35)
             }
         }
-
-        //println("Empty Queue! state: ${CacheGrid.state} ")
+        println("Empty Queue! state: ${CacheGrid.state} ")
     }
 
 

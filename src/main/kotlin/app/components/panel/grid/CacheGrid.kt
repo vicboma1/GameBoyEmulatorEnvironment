@@ -1,6 +1,7 @@
 package app.components.panel.grid
 
 import main.kotlin.utils.image.BufferedImageMemoryFromComponent
+import main.kotlin.utils.image.createBufferedImage
 import main.kotlin.utils.image.scale
 import main.kotlin.utils.listGames.ListGames
 import java.awt.Color
@@ -12,6 +13,7 @@ import java.io.Serializable
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Semaphore
 import javax.swing.BoxLayout
 import javax.swing.ImageIcon
 import javax.swing.JLabel
@@ -22,13 +24,13 @@ import javax.swing.JPanel
  */
 object CacheGrid {
 
+    val semaphore = Semaphore(1,true)
+
     var state = CacheState.STOP
     var limit = 0
     val queue = ConcurrentLinkedQueue<CompletableFuture<Map<String, Serializable>>>()
 
-    val bufferedImageMemoryFromComponent = BufferedImageMemoryFromComponent()
-
-    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, bufferedImage : BufferedImage) : CompletableFuture<Queue<CompletableFuture<Map<String, Serializable>>>> {
+    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage) : CompletableFuture<Queue<CompletableFuture<Map<String, Serializable>>>> {
         limit = listGames.rowNames?.size!!
         state = CacheState.LOADING
         val imageDefault = ImageIcon().scale(bufferedDefault, classLoader.getResource("cover/_gbNotFound.png").file.toString())
@@ -43,46 +45,56 @@ object CacheGrid {
                     if( index > rows)
                         break
 
-                    queue.add( CompletableFuture.supplyAsync() {
-                        val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
-                        val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-                        val resource = classLoader.getResource("cover/$nameImage")
-                        val image = when (resource) {
-                            null -> imageDefault
-                            else -> ImageIcon().scale(bufferedImage, resource.file.toString())
-                        }
+                    val map = mutableMapOf<String,Serializable>(Pair("imageIcon", ""), Pair("row", row), Pair("column", col))
 
-                        println(StringBuffer("($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+                    queue.add(
+                            CompletableFuture.supplyAsync() {
 
-                        val bufferedPanel = bufferedImageMemoryFromComponent.invoke(
-                                JPanel().apply {
-                                    size = Dimension(bufferedImage.width, bufferedImage.height)
-                                    isOpaque = false
-                                    setBackground(Color(0, 0, 0))
+                                semaphore.acquire()
 
-                                    layout = boxLayout(this).apply {
-                                        setBackground(Color(0, 0, 0))
-                                        isOpaque = false
-                                    }
-
-                                    add(jLabelFactory(" "))
-                                    add(jLabelFactory(ImageIcon(image)))
-                                    add(jLabelFactory(" "))
-                                    add(jLabelFactory(nameRom))
+                                val bufferImage = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
+                                val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
+                                val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
+                                val resource = classLoader.getResource("cover/$nameImage")
+                                val image = when (resource) {
+                                    null -> imageDefault
+                                    else -> ImageIcon().scale(bufferImage, resource.file.toString())
                                 }
-                        )
 
-                        val imageIcon = ImageIcon(bufferedPanel)
-                        // val weak = WeakReference(imageIcon)
-                        mapOf(Pair("imageIcon", imageIcon), Pair("row", row), Pair("column", col))
-                    })
+                                println(StringBuffer("INIT ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+
+                                map["imageIcon"] = ImageIcon(
+                                        BufferedImageMemoryFromComponent.invoke(
+                                            JPanel().apply {
+                                                size = Dimension(bufferImage.width, bufferImage.height)
+                                                isOpaque = false
+                                                setBackground(Color(0, 0, 0))
+
+                                                layout = boxLayout(this).apply {
+                                                    setBackground(Color(0, 0, 0))
+                                                    isOpaque = false
+                                                }
+
+                                                add(jLabelFactory(" "))
+                                                add(jLabelFactory(ImageIcon(image)))
+                                                add(jLabelFactory(" "))
+                                                add(jLabelFactory(nameRom))
+                                            }
+                                        )
+                                )
+
+                                println(StringBuffer("END ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+                                semaphore.release()
+                                map
+                            }
+                    )
                 }
             }
         } catch(e: Exception) {
             println(e.message)
             e.stackTrace
         } finally {
- //           println("****** FIN LOAD MODEL *******")
+       //     println("****** FIN LOAD MODEL *******")
             state = CacheState.FINISH
             return CompletableFuture.completedFuture(queue)
         }

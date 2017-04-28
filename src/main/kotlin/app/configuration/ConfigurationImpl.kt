@@ -42,8 +42,7 @@ class ConfigurationImpl internal constructor(private val classLoader: ClassLoade
                 statusBar,
                 CustomExecutor.instance.add {
                     val bufferedImageDefault = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
-                    val bufferedImage = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
-                    CacheGrid.createRefImage(listGames, classLoader,bufferedImageDefault, bufferedImage)
+                    CacheGrid.createRefImage(listGames, classLoader,bufferedImageDefault)
                 }
         )
     }
