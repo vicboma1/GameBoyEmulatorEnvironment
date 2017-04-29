@@ -18,13 +18,14 @@ import assets.table.TableImpl
 import assets.table.comparator.TableHeaderComparator
 import assets.table.listener.rowKey.TableRowKeyListener
 import assets.table.model.TableModelImpl
+import main.kotlin.utils.image.createBufferedImage
 import main.kotlin.utils.listGames.ListGames
 import src.configuration.Display
-import utils.thread.CustomExecutor
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Container
 import java.awt.Dimension
+import java.awt.image.BufferedImage
 import java.util.concurrent.CompletableFuture
 import javax.swing.*
 
@@ -75,7 +76,8 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
     var scrollGrid = JScrollPane()
     val panel = JPanel()
-    var jtable = JTable()
+    var tableModel = TableModelImpl(arrayOf<Any>(),Array<Array<Any>>(0) { arrayOf<Any>() })
+    var jtable = JTable(tableModel)
 
     init {
 
@@ -85,24 +87,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             addKeyListenerInput(TableRowKeyListener.create(frame, this, statusBar, tabbedPane))
         }
 
-        visiblePanelListView(false)
-
-        val columnsHeader = arrayOf<Any>("","","","")
-        var rows = listGames.rowNames!!.size / columnsHeader.size
-        val resto = listGames.rowNames!!.size % columnsHeader.size == 0
-        if(!resto)
-            rows++
-
-        val tableModel = TableModelImpl.create(arrayOf<Any>("", "", "", ""), Array<Array<Any>>(rows) { arrayOf<Any>("", "", "", "") })
-        jtable = TableGridImpl(classLoader ,tableModel, listGames)
-        scrollGrid = TableGridScrollPaneImpl(jtable)
-
-        visiblePanelGridView(true)
-
-        CustomExecutor.instance.add {
-            showImageIconAsync()
-        }
-
+        coverScreen(false, true, 4)
     }
 
     fun visiblePanelView(state : Boolean, component: Component){
@@ -113,6 +98,30 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         frame.repaint()
     }
 
+    fun coverScreen(listViewVisible:Boolean, listGridVisible:Boolean , row : Int) {
+
+        val column = row
+        visiblePanelListView(listViewVisible)
+
+        var size = listGames.rowNames!!.size / column
+        val resto = listGames.rowNames!!.size % column == 0
+        if(!resto)
+            size++
+
+        tableModel = TableModelImpl.create(column, size, row )
+        jtable = TableGridImpl(classLoader ,tableModel, listGames)
+        scrollGrid = TableGridScrollPaneImpl(jtable)
+
+        visiblePanelGridView(listGridVisible)
+
+        val bufferedImageDefault = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
+        CacheGrid.createRefImage(listGames, classLoader,bufferedImageDefault,jtable)
+
+
+        //Thread.sleep(10000)
+        //CacheGrid.showImageIconAsync(jtable)
+    }
+
     fun visiblePanelGridView(state : Boolean){
         visiblePanelView(state,scrollGrid)
     }
@@ -120,24 +129,6 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
     fun visiblePanelListView(state : Boolean){
         visiblePanelView(state,panelListView)
     }
-
-    fun showImageIconAsync() {
-
-        var size = CacheGrid.limit
-        while(size > 0){
-            size --
-            val completable = CacheGrid.queue.poll()
-            completable.thenApplyAsync {
-                val row = it["row"] as Int
-                val col = it["column"] as Int
-                val imageIcon = it["imageIcon"] as ImageIcon
-                println(StringBuffer("$row + $col ").toString())
-                jtable.setValueAt(imageIcon, row, col)
-            }
-        }
-        println("Empty Queue! state: ${CacheGrid.state} ")
-    }
-
 
 }
 

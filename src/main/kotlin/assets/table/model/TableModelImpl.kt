@@ -1,6 +1,7 @@
 package assets.table.model
 
 import assets.table.comparator.TableHeaderComparator
+import java.util.stream.IntStream
 import javax.swing.table.AbstractTableModel
 
 /**
@@ -10,7 +11,19 @@ import javax.swing.table.AbstractTableModel
 class TableModelImpl internal constructor(val columnNames : Array<Any>?, val data: Array<Array<Any>>?, var isEditable : Boolean = false ): AbstractTableModel() {
 
     companion object {
+
+        fun factoryArrayOf(size:Int, elements :Int) : Array<Array<Any>>? {
+            return Array<Array<Any>>(size) { factoryArrayOf(elements) }
+        }
+
+        fun factoryArrayOf(elements :Int) : Array<Any> {
+            val list = arrayListOf("")
+            IntStream.range(0,elements-1).forEach { list.add("") }
+            return list.toArray()
+        }
+
         fun create(columnNames: Array<Any>?, data: Array<Array<Any>>?) = TableModelImpl(columnNames, data)
+        fun create(columnNames: Int, size:Int, rows:Int) = TableModelImpl( factoryArrayOf(columnNames), factoryArrayOf(size,rows))
     }
 
     init {

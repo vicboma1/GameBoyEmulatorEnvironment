@@ -9,15 +9,10 @@ import java.awt.Component
 import java.awt.Container
 import java.awt.Dimension
 import java.awt.image.BufferedImage
-import java.io.Serializable
-import java.util.*
+import java.security.SecureRandom
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Semaphore
-import javax.swing.BoxLayout
-import javax.swing.ImageIcon
-import javax.swing.JLabel
-import javax.swing.JPanel
+import javax.swing.*
 
 /**
  * Created by vicboma on 13/04/17.
@@ -25,12 +20,12 @@ import javax.swing.JPanel
 object CacheGrid {
 
     val semaphore = Semaphore(1,true)
-
+    val random = SecureRandom()
     var state = CacheState.STOP
     var limit = 0
-    val queue = ConcurrentLinkedQueue<CompletableFuture<Map<String, Serializable>>>()
+    //val queue = ConcurrentLinkedQueue<CompletableFuture<Map<String, Serializable>>>()
 
-    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage) : CompletableFuture<Queue<CompletableFuture<Map<String, Serializable>>>> {
+    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, jTable:JTable) {//: CompletableFuture<Queue<CompletableFuture<Map<String, Serializable>>>> {
         limit = listGames.rowNames?.size!!
         state = CacheState.LOADING
         val imageDefault = ImageIcon().scale(bufferedDefault, classLoader.getResource("cover/_gbNotFound.png").file.toString())
@@ -45,49 +40,61 @@ object CacheGrid {
                     if( index > rows)
                         break
 
-                    val map = mutableMapOf<String,Serializable>(Pair("imageIcon", ""), Pair("row", row), Pair("column", col))
+                    //val map = mutableMapOf<String,Serializable>(Pair("imageIcon", ""), Pair("row", row), Pair("column", col))
 
-                    queue.add(
+//                    queue.add(
                             CompletableFuture.supplyAsync() {
 
-                                semaphore.acquire()
+                                try {
+                                    semaphore.acquire()
 
-                                val bufferImage = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
-                                val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
-                                val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-                                val resource = classLoader.getResource("cover/$nameImage")
-                                val image = when (resource) {
-                                    null -> imageDefault
-                                    else -> ImageIcon().scale(bufferImage, resource.file.toString())
+                                    val bufferImage = ImageIcon().createBufferedImage(240, 200, BufferedImage.TYPE_INT_ARGB)
+                                    val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
+                                    val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
+                                    val resource = classLoader.getResource("cover/$nameImage")
+                                    val image = when (resource) {
+                                        null -> imageDefault
+                                        else -> ImageIcon().scale(bufferImage, resource.file.toString())
+                                    }
+
+                                    println(StringBuffer("($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+
+                                    //map["imageIcon"] =
+                                    val imageIcon = ImageIcon(
+                                            BufferedImageMemoryFromComponent.invoke(
+                                                    JPanel().apply {
+                                                        size = Dimension(bufferImage.width, bufferImage.height)
+                                                        isOpaque = false
+                                                        setBackground(Color(0, 0, 0))
+
+                                                        layout = boxLayout(this).apply {
+                                                            setBackground(Color(0, 0, 0))
+                                                            isOpaque = false
+                                                        }
+
+                                                        add(jLabelFactory(" "))
+                                                        add(jLabelFactory(ImageIcon(image)))
+                                                        add(jLabelFactory(" "))
+                                                        add(jLabelFactory(nameRom))
+                                                    }
+                                            )
+                                    )
+
+                            //        println(StringBuffer("END ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+
+                                   // if (resource == null) {
+                                    Thread.sleep((random.nextInt(100)+1).toLong())
+                                    jTable.setValueAt(/*map["imageIcon"]*/imageIcon, row, col)
+                                   // (jTable.model as AbstractTableModel).fireTableCellUpdated(row, col)
+                                    //}
+                                   // map
+                                }
+                                finally{
+                                    semaphore.release()
                                 }
 
-                                println(StringBuffer("INIT ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
-
-                                map["imageIcon"] = ImageIcon(
-                                        BufferedImageMemoryFromComponent.invoke(
-                                            JPanel().apply {
-                                                size = Dimension(bufferImage.width, bufferImage.height)
-                                                isOpaque = false
-                                                setBackground(Color(0, 0, 0))
-
-                                                layout = boxLayout(this).apply {
-                                                    setBackground(Color(0, 0, 0))
-                                                    isOpaque = false
-                                                }
-
-                                                add(jLabelFactory(" "))
-                                                add(jLabelFactory(ImageIcon(image)))
-                                                add(jLabelFactory(" "))
-                                                add(jLabelFactory(nameRom))
-                                            }
-                                        )
-                                )
-
-                                println(StringBuffer("END ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
-                                semaphore.release()
-                                map
                             }
-                    )
+                   // )
                 }
             }
         } catch(e: Exception) {
@@ -96,10 +103,25 @@ object CacheGrid {
         } finally {
        //     println("****** FIN LOAD MODEL *******")
             state = CacheState.FINISH
-            return CompletableFuture.completedFuture(queue)
+          //  return CompletableFuture.completedFuture(queue)
         }
     }
 
+    fun showImageIconAsync(jtable:JTable) {
+
+    /*    var size = limit
+        while(size > 0){
+            size --
+            val completable = queue.poll()
+            completable.thenApplyAsync {
+                val row = it["row"] as Int
+                val col = it["column"] as Int
+                val imageIcon = it["imageIcon"] as ImageIcon
+                jtable.setValueAt(imageIcon, row, col)
+            }
+        }
+        println("Empty Queue! state: ${CacheGrid.state} ")*/
+    }
 
     private fun boxLayout(container : Container) = BoxLayout(container, BoxLayout.Y_AXIS)
 
