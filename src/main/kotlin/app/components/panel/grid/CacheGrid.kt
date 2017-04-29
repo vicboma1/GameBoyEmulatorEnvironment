@@ -19,7 +19,10 @@ import javax.swing.*
  */
 object CacheGrid {
 
-    val semaphore = Semaphore(1,true)
+    val W = 240
+    val H = 200
+
+    val semaphore = Semaphore(10,true)
     val random = SecureRandom()
     var state = CacheState.STOP
     var limit = 0
@@ -30,9 +33,10 @@ object CacheGrid {
         state = CacheState.LOADING
         val imageDefault = ImageIcon().scale(bufferedDefault, classLoader.getResource("cover/_gbNotFound.png").file.toString())
 
+        Thread.sleep(4000)
         try {
             val rows = listGames.rowNames?.size
-            var cols = listGames.rowNames!![0].size-1
+            var cols = jTable.model.columnCount
             for (row in 0..rows!!) {
                 for (col in 0..cols - 1) {
 
@@ -40,15 +44,13 @@ object CacheGrid {
                     if( index > rows)
                         break
 
-                    //val map = mutableMapOf<String,Serializable>(Pair("imageIcon", ""), Pair("row", row), Pair("column", col))
-
 //                    queue.add(
                             CompletableFuture.supplyAsync() {
 
                                 try {
                                     semaphore.acquire()
 
-                                    val bufferImage = ImageIcon().createBufferedImage(240, 200, BufferedImage.TYPE_INT_ARGB)
+                                    val bufferImage = ImageIcon().createBufferedImage(W, H, BufferedImage.TYPE_INT_ARGB)
                                     val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
                                     val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
                                     val resource = classLoader.getResource("cover/$nameImage")
@@ -83,7 +85,7 @@ object CacheGrid {
                             //        println(StringBuffer("END ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
 
                                    // if (resource == null) {
-                                    Thread.sleep((random.nextInt(100)+1).toLong())
+                                    Thread.sleep((random.nextInt(700)+1).toLong())
                                     jTable.setValueAt(/*map["imageIcon"]*/imageIcon, row, col)
                                    // (jTable.model as AbstractTableModel).fireTableCellUpdated(row, col)
                                     //}

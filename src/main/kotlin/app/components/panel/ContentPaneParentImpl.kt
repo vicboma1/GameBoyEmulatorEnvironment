@@ -71,8 +71,12 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
 
     companion object {
-    fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, completableFuture: CompletableFuture<Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,completableFuture)
+        fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, completableFuture: CompletableFuture<Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,completableFuture)
     }
+
+    fun visiblePanelGridView(state : Boolean) = visiblePanelView(state,scrollGrid)
+
+    fun visiblePanelListView(state : Boolean) = visiblePanelView(state,panelListView)
 
     var scrollGrid = JScrollPane()
     val panel = JPanel()
@@ -87,7 +91,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             addKeyListenerInput(TableRowKeyListener.create(frame, this, statusBar, tabbedPane))
         }
 
-        coverScreen(false, true, 4)
+        coverScreen(false, true, 13)
     }
 
     fun visiblePanelView(state : Boolean, component: Component){
@@ -99,36 +103,29 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
     }
 
     fun coverScreen(listViewVisible:Boolean, listGridVisible:Boolean , row : Int) {
+        fun recalculeSize(column: Int): Int {
+            var size = listGames.rowNames!!.size / column
+            val resto = listGames.rowNames!!.size % column == 0
+            if (!resto)
+                size++
+
+            return size
+        }
 
         val column = row
         visiblePanelListView(listViewVisible)
 
-        var size = listGames.rowNames!!.size / column
-        val resto = listGames.rowNames!!.size % column == 0
-        if(!resto)
-            size++
-
-        tableModel = TableModelImpl.create(column, size, row )
-        jtable = TableGridImpl(classLoader ,tableModel, listGames)
+        tableModel = TableModelImpl.create(column, recalculeSize(column), row)
+        jtable = TableGridImpl(classLoader, tableModel, listGames)
         scrollGrid = TableGridScrollPaneImpl(jtable)
 
         visiblePanelGridView(listGridVisible)
 
-        val bufferedImageDefault = ImageIcon().createBufferedImage(240,200, BufferedImage.TYPE_INT_ARGB)
-        CacheGrid.createRefImage(listGames, classLoader,bufferedImageDefault,jtable)
-
+        val bufferedImageDefault = ImageIcon().createBufferedImage(CacheGrid.W, CacheGrid.H, BufferedImage.TYPE_INT_ARGB)
+        CacheGrid.createRefImage(listGames, classLoader, bufferedImageDefault, jtable)
 
         //Thread.sleep(10000)
         //CacheGrid.showImageIconAsync(jtable)
     }
-
-    fun visiblePanelGridView(state : Boolean){
-        visiblePanelView(state,scrollGrid)
-    }
-
-    fun visiblePanelListView(state : Boolean){
-        visiblePanelView(state,panelListView)
-    }
-
 }
 
