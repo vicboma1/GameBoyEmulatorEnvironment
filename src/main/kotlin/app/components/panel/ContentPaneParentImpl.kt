@@ -91,7 +91,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             addKeyListenerInput(TableRowKeyListener.create(frame, this, statusBar, tabbedPane))
         }
 
-        coverScreen(false, true, 13)
+        coverScreen(false, true, 3)
     }
 
     fun visiblePanelView(state : Boolean, component: Component){

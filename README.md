@@ -2,7 +2,7 @@
 
 Front-End developed with Kotlin for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
-WIP
+WIP - version 0.2.3
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-1.gif)
 
@@ -22,6 +22,19 @@ Asynchronous GridView
 ## x4 Cover 
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-3.png)
+
+## x3 Cover 
+
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-4.png)
+
+## x2 Cover 
+
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-5.png)
+
+## x1 Cover 
+
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-6.png)
+
 
 
 # Resources
