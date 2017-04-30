@@ -13,7 +13,7 @@ Create Images in memory
 Asynchronous GridView
 ```
 
-# Grid
+# Grid Async
 
 ## Rom Name
 
