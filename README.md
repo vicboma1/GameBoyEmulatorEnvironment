@@ -13,6 +13,12 @@ Create Images in memory
 Asynchronous GridView
 ```
 
+# GridView
+
+## Rom Name
+
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-2.png)
+
 # Resources
 
 Folders 
@@ -60,6 +66,7 @@ where :
 "listGame.json" is a Array<Array<Any>> than contains the column and rows
 "_fontGrid.png " is the font that represent the game cover
 ```
+
 
 ###
 # Game List
