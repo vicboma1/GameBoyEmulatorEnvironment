@@ -13,11 +13,16 @@ Create Images in memory
 Asynchronous GridView
 ```
 
-# GridView
+# Grid
 
 ## Rom Name
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-2.png)
+
+## x4 Cover 
+
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-3.png)
+
 
 # Resources
 
