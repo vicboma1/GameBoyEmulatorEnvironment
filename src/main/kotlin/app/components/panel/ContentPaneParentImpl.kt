@@ -13,6 +13,7 @@ import assets.panel.tab.TabPaneListener
 import assets.progressBar.Split
 import assets.progressBar.SplitImpl
 import assets.progressBar.StatusBarImpl
+import assets.table.GRID_COVER
 import assets.table.TableGridImpl
 import assets.table.TableImpl
 import assets.table.comparator.TableHeaderComparator
@@ -74,9 +75,6 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, completableFuture: CompletableFuture<Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,completableFuture)
     }
 
-    fun visiblePanelGridView(state : Boolean) = visiblePanelView(state,scrollGrid)
-
-    fun visiblePanelListView(state : Boolean) = visiblePanelView(state,panelListView)
 
     var scrollGrid = JScrollPane()
     val panel = JPanel()
@@ -91,8 +89,18 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             addKeyListenerInput(TableRowKeyListener.create(frame, this, statusBar, tabbedPane))
         }
 
-        coverScreen(false, true, 3)
+        CacheGrid.delayLoadAsync = 1
+        coverScreen(false, true, 13, GRID_COVER.FOUR)
+                .thenRunAsync {
+                    println("****** FIN COMPLETABLE FUTURES *******")
+                }
+
+        //CacheGrid.state = CacheState.STOP
     }
+
+    fun visiblePanelGridView(state : Boolean) = visiblePanelView(state,scrollGrid)
+
+    fun visiblePanelListView(state : Boolean) = visiblePanelView(state,panelListView)
 
     fun visiblePanelView(state : Boolean, component: Component){
         if(state) frame.contentPane.add(component)
@@ -102,7 +110,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         frame.repaint()
     }
 
-    fun coverScreen(listViewVisible:Boolean, listGridVisible:Boolean , row : Int) {
+    fun coverScreen(listViewVisible:Boolean, listGridVisible:Boolean , row : Int, coverIndex: GRID_COVER) : CompletableFuture<Void>  {
         fun recalculeSize(column: Int): Int {
             var size = listGames.rowNames!!.size / column
             val resto = listGames.rowNames!!.size % column == 0
@@ -116,16 +124,14 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         visiblePanelListView(listViewVisible)
 
         tableModel = TableModelImpl.create(column, recalculeSize(column), row)
-        jtable = TableGridImpl(classLoader, tableModel, listGames)
+        jtable = TableGridImpl(classLoader, tableModel, coverIndex)
         scrollGrid = TableGridScrollPaneImpl(jtable)
 
         visiblePanelGridView(listGridVisible)
 
-        val bufferedImageDefault = ImageIcon().createBufferedImage(CacheGrid.W, CacheGrid.H, BufferedImage.TYPE_INT_ARGB)
-        CacheGrid.createRefImage(listGames, classLoader, bufferedImageDefault, jtable)
-
-        //Thread.sleep(10000)
-        //CacheGrid.showImageIconAsync(jtable)
+        val sizeImage = CacheGrid.mapSizeImageCover.get(coverIndex)
+        val bufferedImageDefault = ImageIcon().createBufferedImage(sizeImage!!.first,sizeImage!!.second, BufferedImage.TYPE_INT_ARGB)
+        return CacheGrid.createRefImage(listGames, classLoader, bufferedImageDefault, jtable,coverIndex)
     }
 }
 

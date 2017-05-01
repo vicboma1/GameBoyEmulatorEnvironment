@@ -18,7 +18,7 @@ class TableColumnHeaderAdapter internal constructor(private val classLoader: Cla
      }
 
      init {
-         selectedColumnHeaderSort(1)
+    //     selectedColumnHeaderSort(1)
      }
 
     private fun selectedColumnHeaderSort (selectedColumn:Int) {

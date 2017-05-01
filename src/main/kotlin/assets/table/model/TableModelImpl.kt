@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel
  * Created by vbolinch on 02/01/2017.
  */
 
-class TableModelImpl internal constructor(val columnNames : Array<Any>?, val data: Array<Array<Any>>?, var isEditable : Boolean = false ): AbstractTableModel() {
+class TableModelImpl internal constructor(val columnNames : Array<Any>?, val data: Array<Array<Any>>?, var isEditable : Boolean = false ) : AbstractTableModel() {
 
     companion object {
 
@@ -47,6 +47,12 @@ class TableModelImpl internal constructor(val columnNames : Array<Any>?, val dat
     }
 
     fun sortWith(cmp : TableHeaderComparator) = data?.sortWith(cmp)
+
+    fun removeAll() {
+        for (i in getRowCount() - 1 downTo 0)
+            data!![i] = arrayOf()
+    }
+
 
     fun toString(rowIndex: Int): String {
          return "${getValueAt(rowIndex,0)} ${getValueAt(rowIndex,1)} ${getValueAt(rowIndex,2)} ${getValueAt(rowIndex,3)} ${getValueAt(rowIndex,4)}"

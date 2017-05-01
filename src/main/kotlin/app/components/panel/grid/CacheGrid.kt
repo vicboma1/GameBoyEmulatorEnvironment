@@ -1,5 +1,6 @@
 package app.components.panel.grid
 
+import assets.table.GRID_COVER
 import main.kotlin.utils.image.BufferedImageMemoryFromComponent
 import main.kotlin.utils.image.createBufferedImage
 import main.kotlin.utils.image.scale
@@ -10,6 +11,7 @@ import java.awt.Container
 import java.awt.Dimension
 import java.awt.image.BufferedImage
 import java.security.SecureRandom
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Semaphore
 import javax.swing.*
@@ -19,21 +21,20 @@ import javax.swing.*
  */
 object CacheGrid {
 
-    val W = 240
-    val H = 200
-
+    val mapSizeImageCover = mapOf(Pair(GRID_COVER.FOUR,Pair(240,200)),Pair(GRID_COVER.THREE,Pair(320,300)),Pair(GRID_COVER.TWO,Pair(550,500)),Pair(GRID_COVER.ONE,Pair(680,650)))
+    var delayLoadAsync = 10
     val semaphore = Semaphore(10,true)
     val random = SecureRandom()
     var state = CacheState.STOP
-    var limit = 0
-    //val queue = ConcurrentLinkedQueue<CompletableFuture<Map<String, Serializable>>>()
 
-    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, jTable:JTable) {//: CompletableFuture<Queue<CompletableFuture<Map<String, Serializable>>>> {
-        limit = listGames.rowNames?.size!!
+    fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, jTable:JTable, coverSize : GRID_COVER ) : CompletableFuture<Void> {
+
+        val futures = ArrayList<CompletableFuture<Boolean>>()
+
         state = CacheState.LOADING
+
         val imageDefault = ImageIcon().scale(bufferedDefault, classLoader.getResource("cover/_gbNotFound.png").file.toString())
 
-        Thread.sleep(4000)
         try {
             val rows = listGames.rowNames?.size
             var cols = jTable.model.columnCount
@@ -41,88 +42,75 @@ object CacheGrid {
                 for (col in 0..cols - 1) {
 
                     val index = (row * cols) + col
-                    if( index > rows)
+                    if( index > rows || state == CacheState.STOP )
                         break
 
-//                    queue.add(
-                            CompletableFuture.supplyAsync() {
+                    futures.add(CompletableFuture.supplyAsync {
 
-                                try {
-                                    semaphore.acquire()
+                        try {
+                            semaphore.acquire()
 
-                                    val bufferImage = ImageIcon().createBufferedImage(W, H, BufferedImage.TYPE_INT_ARGB)
-                                    val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
-                                    val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
-                                    val resource = classLoader.getResource("cover/$nameImage")
-                                    val image = when (resource) {
-                                        null -> imageDefault
-                                        else -> ImageIcon().scale(bufferImage, resource.file.toString())
-                                    }
-
-                                    println(StringBuffer("($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
-
-                                    //map["imageIcon"] =
-                                    val imageIcon = ImageIcon(
-                                            BufferedImageMemoryFromComponent.invoke(
-                                                    JPanel().apply {
-                                                        size = Dimension(bufferImage.width, bufferImage.height)
-                                                        isOpaque = false
-                                                        setBackground(Color(0, 0, 0))
-
-                                                        layout = boxLayout(this).apply {
-                                                            setBackground(Color(0, 0, 0))
-                                                            isOpaque = false
-                                                        }
-
-                                                        add(jLabelFactory(" "))
-                                                        add(jLabelFactory(ImageIcon(image)))
-                                                        add(jLabelFactory(" "))
-                                                        add(jLabelFactory(nameRom))
-                                                    }
-                                            )
-                                    )
-
-                            //        println(StringBuffer("END ($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
-
-                                   // if (resource == null) {
-                                    Thread.sleep((random.nextInt(700)+1).toLong())
-                                    jTable.setValueAt(/*map["imageIcon"]*/imageIcon, row, col)
-                                   // (jTable.model as AbstractTableModel).fireTableCellUpdated(row, col)
-                                    //}
-                                   // map
-                                }
-                                finally{
-                                    semaphore.release()
-                                }
-
+                            val pairSize = mapSizeImageCover.get(coverSize)
+                            val bufferImage = ImageIcon().createBufferedImage(pairSize!!.first, pairSize!!.second, BufferedImage.TYPE_INT_ARGB)
+                            val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
+                            val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
+                            val resource = classLoader.getResource("cover/$nameImage")
+                            val image = when (resource) {
+                                null -> imageDefault
+                                else -> ImageIcon().scale(bufferImage, resource.file.toString())
                             }
-                   // )
+
+          //                  println(StringBuffer("($row * $cols) + $col = ${(row * cols) + col}").append(" $nameRom - $nameImage ").toString())
+
+                            val imageIcon = ImageIcon(
+                                    BufferedImageMemoryFromComponent.invoke(
+                                            JPanel().apply {
+                                                size = Dimension(bufferImage.width, bufferImage.height)
+                                                isOpaque = false
+                                                setBackground(Color(0, 0, 0))
+
+                                                layout = boxLayout(this).apply {
+                                                    setBackground(Color(0, 0, 0))
+                                                    isOpaque = false
+                                                }
+
+                                                add(jLabelFactory(" "))
+                                                add(jLabelFactory(ImageIcon(image)))
+                                                add(jLabelFactory(" "))
+                                                add(jLabelFactory(nameRom))
+                                            }
+                                    )
+                            )
+
+                           // println(delayLoadAsync)
+                            Thread.sleep((random.nextInt(delayLoadAsync) + 1).toLong())
+                            if (state != CacheState.STOP)
+                                jTable.setValueAt(imageIcon, row, col)
+
+                            semaphore.release()
+
+                            true
+                        }catch(e:Exception ){
+                //            println(e.message)
+                            false
+                        }
+                        finally{
+
+                        }
+                    })
+
                 }
             }
+
+
         } catch(e: Exception) {
             println(e.message)
             e.stackTrace
         } finally {
-       //     println("****** FIN LOAD MODEL *******")
+            println("****** FIN LOAD MODEL *******")
             state = CacheState.FINISH
-          //  return CompletableFuture.completedFuture(queue)
+            return CompletableFuture.allOf(*futures.toTypedArray())
         }
-    }
-
-    fun showImageIconAsync(jtable:JTable) {
-
-    /*    var size = limit
-        while(size > 0){
-            size --
-            val completable = queue.poll()
-            completable.thenApplyAsync {
-                val row = it["row"] as Int
-                val col = it["column"] as Int
-                val imageIcon = it["imageIcon"] as ImageIcon
-                jtable.setValueAt(imageIcon, row, col)
-            }
-        }
-        println("Empty Queue! state: ${CacheGrid.state} ")*/
     }
 
     private fun boxLayout(container : Container) = BoxLayout(container, BoxLayout.Y_AXIS)
