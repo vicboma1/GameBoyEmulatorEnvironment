@@ -2,7 +2,10 @@ package assets.menuBar.child.dialog
 
 import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
-import assets.progressBar.*
+import assets.progressBar.MenuBarImpl
+import assets.progressBar.MenuItem
+import assets.progressBar.MenuItemImpl
+import assets.progressBar.visibility
 import utils.ThreadMain
 import java.awt.event.KeyEvent
 

@@ -90,12 +90,10 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         }
 
         CacheGrid.delayLoadAsync = 1
-        coverScreen(false, true, 13, GRID_COVER.FOUR)
+        coverScreen({ visiblePanelListView(false) }, true, 13, GRID_COVER.FOUR)
                 .thenRunAsync {
                     println("****** FIN COMPLETABLE FUTURES *******")
                 }
-
-        //CacheGrid.state = CacheState.STOP
     }
 
     fun visiblePanelGridView(state : Boolean) = visiblePanelView(state,scrollGrid)
@@ -103,14 +101,16 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
     fun visiblePanelListView(state : Boolean) = visiblePanelView(state,panelListView)
 
     fun visiblePanelView(state : Boolean, component: Component){
-        if(state) frame.contentPane.add(component)
-        else    frame.contentPane.remove(component)
+        if(state)
+            frame.contentPane.add(component)
+        else
+            frame.contentPane.remove(component)
 
         (frame.contentPane as JPanel).revalidate()
         frame.repaint()
     }
 
-    fun coverScreen(listViewVisible:Boolean, listGridVisible:Boolean , row : Int, coverIndex: GRID_COVER) : CompletableFuture<Void>  {
+    fun coverScreen(componentVisible:() -> Unit, listGridVisible:Boolean , row : Int, coverIndex: GRID_COVER) : CompletableFuture<Void>  {
         fun recalculeSize(column: Int): Int {
             var size = listGames.rowNames!!.size / column
             val resto = listGames.rowNames!!.size % column == 0
@@ -121,7 +121,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         }
 
         val column = row
-        visiblePanelListView(listViewVisible)
+        componentVisible.invoke()
 
         tableModel = TableModelImpl.create(column, recalculeSize(column), row)
         jtable = TableGridImpl(classLoader, tableModel, coverIndex)
