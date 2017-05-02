@@ -14,20 +14,18 @@ import javax.swing.JSlider
  */
 fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : ContentPaneParentImpl) : Menu {
 
-    fun visiblePanel(list: Boolean, grid: Boolean,row : Int, cover: GRID_COVER) {
-        contentPaneParentImpl
-                .coverScreen(list,grid,row,cover)
-                .thenRunAsync {
-                    println("****** FIN COMPLETABLE FUTURES *******")
-                    frame.jMenuBar.visibility(true)
-                }
-
-    }
-
     fun actionVisibility(frame: Frame, row : Int, cover: GRID_COVER) {
-        frame.jMenuBar.visibility(false)
+        //frame.jMenuBar.visibility(false)
         ThreadMain.asyncUI {
-            visiblePanel(false, true, row, cover)
+            contentPaneParentImpl
+                    .coverScreen({
+                        contentPaneParentImpl.visiblePanelListView(false)
+                        contentPaneParentImpl.visiblePanelGridView(false)
+                    },true,row,cover)
+                    .thenRunAsync {
+                        println("****** FIN COMPLETABLE FUTURES *******")
+             //           frame.jMenuBar.visibility(true)
+                    }
         }
     }
 
@@ -43,6 +41,9 @@ fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : 
             }),
             RadioItemImpl.create("4x cover", false, KeyEvent.VK_4, {
                 actionVisibility(frame, 4, GRID_COVER.FOUR)
+            }),
+            RadioItemImpl.create("rom Name", false, KeyEvent.VK_5, {
+                actionVisibility(frame, 13, GRID_COVER.FOUR)
             })
     )
 
@@ -52,6 +53,7 @@ fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : 
             .apply {
                 addMenuItem(radioButtonList)
                 putSeparator()
+
                 addMenuItem(JSlider(JSlider.HORIZONTAL,0,1000,500).apply{
                     setLabelTable(this@apply.createStandardLabels(500))
                     setMinorTickSpacing(100)
