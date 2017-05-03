@@ -13,7 +13,7 @@ Additional labels for pre-release and build metadata are available as extensions
 #### version 0.2.3  - WIP
 ```
 MenuBar Options
-    MenuItemView { Delay load Async - Permits } / Dynamic configuration
+    MenuItemView { Delay load Async - Permits } / Dynamic configuration with sliderBar
 Custom Sempahore
 Add MenuItemsView Grid by Rom Name
 ```
