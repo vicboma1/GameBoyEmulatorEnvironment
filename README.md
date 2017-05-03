@@ -2,7 +2,7 @@
 
 Front-End developed with Kotlin for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
-WIP - version 0.2.3
+[WIP - version 0.2.3](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/Versioning.md#version-023----wip)
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-1.gif)
 
