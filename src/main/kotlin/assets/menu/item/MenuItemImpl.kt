@@ -26,4 +26,8 @@ class MenuItemImpl internal constructor(private val _name: String, private val s
         this.addActionListener(action)
     }
 
+    override fun text(text: String){
+        super.setText(text)
+    }
+
 }

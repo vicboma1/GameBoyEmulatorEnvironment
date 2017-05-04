@@ -23,4 +23,8 @@ class RadioItemImpl internal constructor(private val _name: String, private val 
 
         this.addActionListener(action)
     }
+
+    override fun text(text: String){
+        super.setText(text)
+    }
 }

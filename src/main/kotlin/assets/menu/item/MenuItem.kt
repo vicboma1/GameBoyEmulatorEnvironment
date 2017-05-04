@@ -10,4 +10,6 @@ interface MenuItem : Serializable {
     companion object{
         val NONE = -1
     }
+
+    fun text(text: String)
 }

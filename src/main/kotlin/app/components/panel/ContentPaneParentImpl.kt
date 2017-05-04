@@ -33,7 +33,7 @@ import javax.swing.*
 /**
  * Created by vicboma on 12/02/17.
  */
-class ContentPaneParentImpl internal constructor(private val classLoader : ClassLoader, private val  frame : Frame, private val  statusBar: StatusBarImpl, completableFuture : CompletableFuture<Any?>) {
+class ContentPaneParentImpl internal constructor(private val classLoader : ClassLoader, private val  frame : Frame, private val  statusBar: StatusBarImpl, val properties : Map<String,Any?>) {
 
     private val listGames by lazy {
         ListGames.create(classLoader, "list/listGame.json")
@@ -72,7 +72,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
 
     companion object {
-        fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, completableFuture: CompletableFuture<Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,completableFuture)
+        fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, properties : Map<String,Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,properties)
     }
 
 
@@ -89,11 +89,11 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             addKeyListenerInput(TableRowKeyListener.create(frame, this, statusBar, tabbedPane))
         }
 
-        CacheGrid.delayLoadAsync = 1
-        coverScreen({ visiblePanelListView(false) }, true, 13, GRID_COVER.FOUR)
+      /*  coverScreen({ visiblePanelListView(false) }, true, 13, GRID_COVER.FOUR)
                 .thenRunAsync {
                     println("****** FIN COMPLETABLE FUTURES *******")
                 }
+                */
     }
 
     fun visiblePanelGridView(state : Boolean) = visiblePanelView(state,scrollGrid)
@@ -131,7 +131,8 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
 
         val sizeImage = CacheGrid.mapSizeImageCover.get(coverIndex)
         val bufferedImageDefault = ImageIcon().createBufferedImage(sizeImage!!.first,sizeImage!!.second, BufferedImage.TYPE_INT_ARGB)
-        return CacheGrid.createRefImage(listGames, classLoader, bufferedImageDefault, jtable,coverIndex)
+
+        return CacheGrid.createRefImage(listGames, classLoader, bufferedImageDefault, jtable,coverIndex,properties)
     }
 }
 

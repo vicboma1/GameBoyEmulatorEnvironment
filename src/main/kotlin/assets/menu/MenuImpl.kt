@@ -43,4 +43,8 @@ class MenuImpl internal constructor(private val _name: String ) : JMenu(_name) ,
     override fun putSeparator()  {
         this.addSeparator()
     }
+
+    override fun text(text: String){
+        super.setText(text)
+    }
 }

@@ -13,4 +13,7 @@ class CheckItemImpl internal constructor(private val _name: String, private val 
         this.isSelected = _isSelected
     }
 
+    override fun text(text: String){
+        super.setText(text)
+    }
 }
