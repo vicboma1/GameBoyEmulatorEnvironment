@@ -13,7 +13,7 @@ import javax.swing.JSlider
 fun MenuBarImpl.Companion.MenuBarOptions(frame: Frame, map: MutableMap<String,Any?>) : Menu {
 
     var labelAsync = "Async load time :"
-    var textAsync = "$labelAsync 500 ms"
+    var textAsync = "$labelAsync 5000 ms"
 
     var labelAPermits = "Set of permits :"
     var textPermits = "$labelAPermits 5 units"
@@ -21,7 +21,7 @@ fun MenuBarImpl.Companion.MenuBarOptions(frame: Frame, map: MutableMap<String,An
     val asyncLoadTimeLabel = MenuItemImpl.create(textAsync)
     val setOfPermits = MenuItemImpl.create(textPermits)
 
-    val sliderAsync = JSlider(JSlider.HORIZONTAL,0,10000,5000).apply{
+    val sliderAsync = JSlider(JSlider.HORIZONTAL,0,10000,map.get("sliderAsync") as Int).apply{
         setLabelTable(this@apply.createStandardLabels(5000))
         setMinorTickSpacing(1000)
         setMajorTickSpacing(2000)
@@ -35,7 +35,7 @@ fun MenuBarImpl.Companion.MenuBarOptions(frame: Frame, map: MutableMap<String,An
 
     }
 
-    val sliderPermits = JSlider(JSlider.HORIZONTAL,1,10,5).apply{
+    val sliderPermits = JSlider(JSlider.HORIZONTAL,1,11,map.get("sliderPermits") as Int).apply{
         setLabelTable(this@apply.createStandardLabels(5))
         setMinorTickSpacing(1)
         setMajorTickSpacing(2)

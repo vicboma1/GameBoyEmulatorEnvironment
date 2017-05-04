@@ -18,7 +18,12 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class ConfigurationImpl internal constructor(private val classLoader: ClassLoader, private val frame : Frame) {
 
-    val properties = ConcurrentHashMap<String,Any?>()
+    val properties = ConcurrentHashMap<String,Any?>(
+            mapOf(
+                    Pair("sliderAsync",5000),
+                    Pair("sliderPermits",5)
+            )
+    )
 
     /*************** SCREEN ***************/
 

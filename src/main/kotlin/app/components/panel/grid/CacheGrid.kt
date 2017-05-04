@@ -5,6 +5,7 @@ import main.kotlin.utils.image.BufferedImageMemoryFromComponent
 import main.kotlin.utils.image.createBufferedImage
 import main.kotlin.utils.image.scale
 import main.kotlin.utils.listGames.ListGames
+import utils.thread.DynamicSemaphore
 import java.awt.Color
 import java.awt.Component
 import java.awt.Container
@@ -27,7 +28,7 @@ object CacheGrid {
     fun createRefImage(listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, jTable:JTable, coverSize : GRID_COVER , properties : Map<String,Any?>) : CompletableFuture<Void> {
 
 
-        val semaphore = DynamicSemaphore()
+        val semaphore = DynamicSemaphore(0,true)
         val futures = ArrayList<CompletableFuture<Boolean>>()
 
         state = CacheState.LOADING
