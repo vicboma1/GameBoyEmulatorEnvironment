@@ -2,12 +2,11 @@
 
 Front-End developed with **Kotlin Experimental** for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
-#### Before :
-#### Thread Pool + ConcurrentQueue + CompletableFuture, 2546 covers [2670 - 3200] ms 
-#### Now, with coroutines!!!!
-#### Async + CompletableFuture-Deferred-, 2546 covers [60 - 92] ms (oh my god!) xD
-#### Launch + CompletableFuture-Job-, 2546 covers [80 - 160] ms
+#### Now, with coroutines Average Timing with 2546 covers
+#### Async + CompletableFuture-Deferred - [ 50 - 79 ] ms (oh my god!) xD
 
+
+###
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.3.gif)
 
@@ -41,7 +40,6 @@ Processing with Coroutine + async
 ## x1 Cover 
 
 ![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-6.png)
-
 
 
 # Resources
