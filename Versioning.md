@@ -30,7 +30,7 @@ Processing with Coroutine + async
 |         Job        	|     wait    	|     wait    	|                   	|                   	|
 |      Time [ms]     	| 70 - 110    	| 70 - 95     	|                   	|                   	|
 |      Deffered      	|             	|             	| CompletableFuture 	| CompletableFuture 	|
-|      Time [ms]     	|             	|             	|       65-80       	|       45-50       	|
+|      Time [ms]     	|             	|             	|       65-80       	|       50-79       	|
 
 
 #### version 0.2.2 
