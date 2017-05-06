@@ -1,16 +1,23 @@
-# [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic) Environment - GBEE  [v.0.2.2](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/Versioning.md#version-022----wip)
+# [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic) Environment - GBEE  [v.0.2.3](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/Versioning.md#version-023----wip)
 
-Front-End developed with Kotlin for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
+Front-End developed with **Kotlin Experimental** for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
-[WIP - version 0.2.3](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/Versioning.md#version-023----wip)
+#### Before :
+#### Thread Pool + ConcurrentQueue + CompletableFuture, 2546 covers [2670 - 3200] ms 
+#### Now, with coroutines!!!!
+#### Async + CompletableFuture-Deferred-, 2546 covers [60 - 92] ms (oh my god!) xD
+#### Launch + CompletableFuture-Job-, 2546 covers [80 - 160] ms
 
-![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.2-1.gif)
 
-#### version 0.2.2  - news
+![](https://github.com/vicboma1/GameBoyEmulatorEnvironment/blob/master/src/main/resources/version/GBEE_v.0.2.3.gif)
+
+#### version 0.2.3  - news
 ```
-Add MenuItemsView Grid by scale { 1x, 2x, 3x, 4x}
-Create Images in memory
-Asynchronous GridView
+MenuBar Options
+    MenuItemView { Delay load Async - Permits } / Dynamic configuration with sliderBar
+Custom Sempahore
+Add MenuItemsView Grid by Rom Name
+Processing with Coroutine + async
 ```
 
 # Grid Async
@@ -350,4 +357,5 @@ Automaticly will be generated the columns and rows of game list
 
 @Author : vicboma1
 
-# Note: This homebrew project does not contain ROMs & Images
+# Note: 
+# This homebrew project does not contain ROMs & Images
