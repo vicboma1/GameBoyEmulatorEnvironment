@@ -16,6 +16,7 @@ MenuBar Options
     MenuItemView { Delay load Async - Permits } / Dynamic configuration with sliderBar
 Custom Sempahore
 Add MenuItemsView Grid by Rom Name
+Processing with Coroutine + async
 ```
 
 #### version 0.2.2 
