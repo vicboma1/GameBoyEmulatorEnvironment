@@ -5,12 +5,13 @@ import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import javax.swing.ImageIcon
 
-
+import java.lang.*
 
 /**
  * Created by vbolinch on 04/01/2017.
  */
 fun ImageIcon.createBufferedImage(width: Int, height: Int, imageType: Int) = BufferedImage(width, height, imageType)
+
 
 fun ImageIcon.scale(
             bufferedImage: BufferedImage,

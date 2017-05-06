@@ -5,6 +5,7 @@ import assets.table.model.TableModelImpl
 import utils.thread.CustomExecutor
 import java.awt.Component
 import java.io.File
+import java.lang.Exception
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedDeque
 import javax.swing.Timer
@@ -83,7 +84,7 @@ class TableDaemon internal constructor(private val classLoader: ClassLoader) {
 
                             }
                     }
-                }catch(e:Exception){
+                }catch(e: Exception){
                     e.printStackTrace()
                 }
                 finally{

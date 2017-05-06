@@ -46,6 +46,7 @@ fun MenuBarImpl.Companion.MenuBarOptions(frame: Frame, map: MutableMap<String,An
             map["sliderPermits"]= source.value
             setOfPermits.text("$labelAPermits ${source.value} units ")
         }
+        isEnabled = false
     }
 
     return MenuImpl.create("View")

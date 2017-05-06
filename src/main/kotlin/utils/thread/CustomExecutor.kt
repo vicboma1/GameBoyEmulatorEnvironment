@@ -2,6 +2,7 @@ package utils.thread
 
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedDeque
+
 /**
  * Created by vicboma on 29/12/16.
  */

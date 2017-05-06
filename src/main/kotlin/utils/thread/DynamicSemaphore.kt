@@ -1,6 +1,8 @@
 package utils.thread
 
 import java.util.concurrent.Semaphore
+import java.lang.*
+
 
 /**
  * Created by vicboma on 02/05/17.

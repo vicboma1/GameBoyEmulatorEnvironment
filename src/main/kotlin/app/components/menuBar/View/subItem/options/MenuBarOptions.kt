@@ -6,15 +6,16 @@ import assets.progressBar.*
 import assets.table.GRID_COVER
 import utils.ThreadMain
 import java.awt.event.KeyEvent
+import javax.swing.JSlider
 
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : ContentPaneParentImpl) : Menu {
+fun MenuBarImpl.Companion.MenuBarOptions(frame: Frame, contentPaneParentImpl : ContentPaneParentImpl) : Menu {
 
     fun actionVisibility(frame: Frame, row : Int, cover: GRID_COVER) {
-        //frame.jMenuBar.visibility(false)
+        frame.jMenuBar.visibility(false)
         ThreadMain.asyncUI {
             contentPaneParentImpl
                     .coverScreen({
@@ -23,7 +24,7 @@ fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : 
                     },true,row,cover)
                     .thenRunAsync {
                         println("****** FIN COMPLETABLE FUTURES *******")
-             //           frame.jMenuBar.visibility(true)
+                        frame.jMenuBar.visibility(true)
                     }
         }
     }

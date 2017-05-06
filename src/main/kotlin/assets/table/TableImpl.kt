@@ -16,7 +16,7 @@ import javax.swing.table.TableCellRenderer
  */
 class TableImpl internal constructor(private val classLoader: ClassLoader,/*private val timer: TableDaemon, */private val dm: TableModelImpl?, private val dimension : Dimension) : JTable(dm) {
 
-    private val scrollSize by lazy { ScrollPane.create(this, dimension) }
+    private val scrollSize : ScrollPane
 
     companion object{
         fun create(classLoader: ClassLoader,  dm: TableModelImpl?, dimenasion : Dimension) = TableImpl(classLoader,/*timer,*/dm , dimenasion)
@@ -24,11 +24,12 @@ class TableImpl internal constructor(private val classLoader: ClassLoader,/*priv
 
     init {
 
-        this.apply {
-            showVerticalLines = false
-            showHorizontalLines = false
-            autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
-        }
+        scrollSize = ScrollPane.create(this, dimension)
+
+        showVerticalLines = false
+        showHorizontalLines = false
+        autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
+
     }
 
     override fun prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component {

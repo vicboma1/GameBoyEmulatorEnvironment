@@ -9,72 +9,58 @@ import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
 import assets.progressBar.MenuBarImpl
 import assets.progressBar.StatusBarImpl
-import main.kotlin.utils.listGames.ListGames
 import java.awt.BorderLayout
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Created by vicboma on 02/12/16.
  */
-class ConfigurationImpl internal constructor(private val classLoader: ClassLoader, private val frame : Frame) {
+class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : Frame) {
 
-    val properties = ConcurrentHashMap<String,Any?>(
-            mapOf(
-                    Pair("sliderAsync",5000),
-                    Pair("sliderPermits",5)
-            )
-    )
+    val properties : ConcurrentHashMap<String,Any?>
+    val statusBar : StatusBarImpl
+    val contentPaneParent : ContentPaneParentImpl
+    val menuBar : MenuBarImpl
+    val display : Display
 
-    /*************** SCREEN ***************/
-
-    val display: Display by lazy {
-        DisplayImpl.create(Display.KFRAME_JAVA, Display.WIDHT, Display.HEIGTH, Display.VISIBLE, BorderLayout())
+    companion object {
+        fun create(classLoader: ClassLoader, frame: Frame) = ConfigurationImpl(classLoader, frame)
     }
 
-    /*************** STATUS BAR ***************/
 
-    val statusBar: StatusBarImpl by lazy {
-         StatusBarImpl.create(Display.WIDHT)
-     }
+    init {
 
-    /*************** CONTENT PANE PANEL ***************/
+        properties = ConcurrentHashMap<String, Any?>(
+                mapOf(
+                        Pair("sliderAsync", 1),
+                        Pair("sliderPermits", 11)
+                )
+        )
 
-    val contentPaneParent : ContentPaneParentImpl by lazy {
-        ContentPaneParentImpl.create(
+        display =  DisplayImpl.create(Display.KFRAME_JAVA, Display.WIDHT, Display.HEIGTH, Display.VISIBLE, BorderLayout())
+
+        statusBar = StatusBarImpl.create(Display.WIDHT)
+
+        contentPaneParent = ContentPaneParentImpl(
                 classLoader,
                 frame,
                 statusBar,
                 properties
         )
-    }
 
-    /*************** MENU BAR ***************/
-
-    val menuBar: MenuBarImpl by lazy {
-        MenuBarImpl.create()
-                    .addMenu(
-                            listOf(
-                                    MenuBarImpl.MenuFile(frame),
-                                    MenuBarImpl.MenuDialog(frame),
-                                    MenuBarImpl.MenuChooser(frame),
-                                    MenuBarImpl.MenuView(frame, contentPaneParent ),
-                                    MenuBarImpl.MenuOptions(frame, properties )
-                            )
-                    )
+        menuBar = MenuBarImpl.create()
+                .addMenu(
+                        listOf(
+                                MenuBarImpl.MenuFile(frame),
+                                MenuBarImpl.MenuDialog(frame),
+                                MenuBarImpl.MenuChooser(frame),
+                                MenuBarImpl.MenuView(frame, contentPaneParent),
+                                MenuBarImpl.MenuOptions(frame, properties)
+                        )
+                )
 
     }
-
-    companion object {
-        fun create(classLoader:ClassLoader,frame : Frame) = ConfigurationImpl(classLoader,frame)
-    }
-
-    private val listGames by lazy {
-        ListGames.create(classLoader, "list/listGame.json")
-    }
-
-    init {
-
-    }
-
 }
+
+
 

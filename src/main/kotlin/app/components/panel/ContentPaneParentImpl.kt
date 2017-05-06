@@ -28,60 +28,51 @@ import java.awt.Container
 import java.awt.Dimension
 import java.awt.image.BufferedImage
 import java.util.concurrent.CompletableFuture
-import javax.swing.*
+import javax.swing.ImageIcon
+import javax.swing.JPanel
+import javax.swing.JScrollPane
+import javax.swing.UIManager
 
 /**
  * Created by vicboma on 12/02/17.
  */
-class ContentPaneParentImpl internal constructor(private val classLoader : ClassLoader, private val  frame : Frame, private val  statusBar: StatusBarImpl, val properties : Map<String,Any?>) {
+class ContentPaneParentImpl internal constructor(val classLoader : ClassLoader, val frame : Frame, val statusBar: StatusBarImpl, val properties : Map<String,Any?>) {
 
-    private val listGames by lazy {
-        ListGames.create(classLoader, "list/listGame.json")
-    }
+    private val listGames: ListGames
+    private val dimension : Dimension
+    private val tableModelImpl : TableModelImpl
+    private val table: TableImpl
+    private val tabbedPane: TabPane
+    private val panelListView: SplitImpl<Container>
 
-    private val dimension by lazy {
-        Dimension(Display.WIDHT, Display.HEIGTH)
-    }
-
-    private val tableModelImpl by lazy {
-        TableModelImpl.create(listGames.columnNames, listGames.rowNames)
-    }
-
-
-    private val table: TableImpl by lazy {
-        TableImpl.create( classLoader, tableModelImpl, dimension)
-    }
-
-    private val tabbedPane: TabPane by lazy {
-        TabPane(TabPaneListener.create(table))
-                .apply{
-                    add("Cover",    ImageIcon(), PanelCover(classLoader,"cover/_bg.png", "cover/addamsf.png"),            0)
-                    add("Snapshot", ImageIcon(), PanelSnapshot(classLoader,"snapshot/_bg.png", "snapshot/addamsf.png"),    1)
-                    add("Cartridge", ImageIcon(), PanelCartridge(classLoader,"cartridge/_bg.png", "cartridge/addamsf.png"), 2)
-                }
-    }
-
-    private val panelListView: SplitImpl<Container> by lazy {
-        SplitImpl.create(
-                Split.HORIZONTAL,
-                Frame.create(table.scrollPane(), BorderLayout.CENTER).contentPane,
-                Frame.create(tabbedPane.scrollPane(), BorderLayout.CENTER).contentPane,
-                UIManager.getBoolean("SplitPane.continuousLayout"),
-                Display.WIDHT/2)
-    }
-
+    private var scrollGrid = JScrollPane()
 
     companion object {
         fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, properties : Map<String,Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,properties)
     }
 
-
-    var scrollGrid = JScrollPane()
-    val panel = JPanel()
-    var tableModel = TableModelImpl(arrayOf<Any>(),Array<Array<Any>>(0) { arrayOf<Any>() })
-    var jtable = JTable(tableModel)
-
     init {
+
+        listGames = ListGames.create(classLoader, "list/listGame.json")
+        dimension = Dimension(Display.WIDHT, Display.HEIGTH)
+        tableModelImpl = TableModelImpl.create(listGames.columnNames, listGames.rowNames)
+        table =  TableImpl.create( classLoader, tableModelImpl, dimension)
+        tabbedPane =
+            TabPane(TabPaneListener.create(table))
+                    .apply{
+                        add("Cover",    ImageIcon(), PanelCover(classLoader,"cover/_bg.png", "cover/addamsf.png"),            0)
+                        add("Snapshot", ImageIcon(), PanelSnapshot(classLoader,"snapshot/_bg.png", "snapshot/addamsf.png"),    1)
+                        add("Cartridge", ImageIcon(), PanelCartridge(classLoader,"cartridge/_bg.png", "cartridge/addamsf.png"), 2)
+                    }
+
+        panelListView =
+            SplitImpl.create(
+                    Split.HORIZONTAL,
+                    Frame.create(table.scrollPane(), BorderLayout.CENTER).contentPane,
+                    Frame.create(tabbedPane.scrollPane(), BorderLayout.CENTER).contentPane,
+                    UIManager.getBoolean("SplitPane.continuousLayout"),
+                    Display.WIDHT/2)
+
 
         table.apply {
             addMouseListenerColumn(TableColumnHeaderAdapter.create(classLoader, this, TableHeaderComparator.create()))
@@ -89,11 +80,13 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
             addKeyListenerInput(TableRowKeyListener.create(frame, this, statusBar, tabbedPane))
         }
 
+        //visiblePanelListView(true)
+
       /*  coverScreen({ visiblePanelListView(false) }, true, 13, GRID_COVER.FOUR)
                 .thenRunAsync {
                     println("****** FIN COMPLETABLE FUTURES *******")
                 }
-                */
+*/
     }
 
     fun visiblePanelGridView(state : Boolean) = visiblePanelView(state,scrollGrid)
@@ -123,8 +116,8 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         val column = row
         componentVisible.invoke()
 
-        tableModel = TableModelImpl.create(column, recalculeSize(column), row)
-        jtable = TableGridImpl(classLoader, tableModel, coverIndex)
+        val tableModel = TableModelImpl.create(column, recalculeSize(column), row)
+        val jtable = TableGridImpl(classLoader, tableModel, coverIndex)
         scrollGrid = TableGridScrollPaneImpl(jtable)
 
         visiblePanelGridView(listGridVisible)
@@ -132,7 +125,7 @@ class ContentPaneParentImpl internal constructor(private val classLoader : Class
         val sizeImage = CacheGrid.mapSizeImageCover.get(coverIndex)
         val bufferedImageDefault = ImageIcon().createBufferedImage(sizeImage!!.first,sizeImage!!.second, BufferedImage.TYPE_INT_ARGB)
 
-        return CacheGrid.createRefImage(listGames, classLoader, bufferedImageDefault, jtable,coverIndex,properties)
+        return CacheGrid.createRefImage(statusBar,listGames, classLoader, bufferedImageDefault, jtable,coverIndex,properties)
     }
 }
 
