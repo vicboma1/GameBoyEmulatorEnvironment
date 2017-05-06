@@ -18,9 +18,9 @@ Custom Sempahore
 Add MenuItemsView Grid by Rom Name
 Processing with Coroutine + async
 ```
-## Averaging Time  - 12 executions [ version 0.2.3 ]
+## Averaging Time to load 2546 covers - 12 executions [ version 0.2.3 ] 
 
-|                    	|  Coroutine  	|  Coroutine  	|     Coroutine     	|     Coroutine     	|
+|                    	|  Coroutine  	|  Coroutine  	|     Coroutine     	|     Coroutine      	|
 |:------------------:	|:-----------:	|:-----------:	|:-----------------:	|:-----------------:	|
 |     RunBlocking    	|     True    	|     True    	|        True       	|        True       	|
 |                    	| launch<Job> 	| launch<Job> 	|  async<Deferred>  	|  async<Deferred>  	|
@@ -46,7 +46,7 @@ Add MenutItemView { Grid - List }
 Grid {View - Model - Scroll} based in Table with multiple rows cached
 Model { Image - NameRom }
 ```
-## Averaging Time  - 12 executions [ version 0.2.1 ]
+## Averaging Time to load 2546 - 12 executions [ version 0.2.1 ]
 
 |                        	|  ThreadPool  	|  ThreadPool 	|  ThreadPool 	|  ThreadPoolExecutor 	|       Thread      	|       Thread      	|
 |:----------------------:	|:------------:	|:-----------:	|:-----------:	|:-------------------:	|:-----------------:	|:-----------------:	|
