@@ -110,6 +110,7 @@ object CacheGrid {
                                     // println(delayLoadAsync)
                                    // Thread.sleep((random.nextInt(delay + 1)).toLong())
                                     kotlinx.coroutines.experimental.delay((random.nextInt(delay + 1)).toLong())
+                                    //yield()
                                     if (state != CacheState.STOP)
                                         jTable.setValueAt(imageIcon, row, col)
 
