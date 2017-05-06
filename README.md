@@ -2,7 +2,7 @@
 
 Front-End developed with **Kotlin Experimental** for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
-#### Now, with coroutines Averaging Time with 2546 covers
+#### Now, with coroutines Average Timing with 2546 covers
 #### Async + CompletableFuture-Deferred - [ 50 - 79 ] ms (oh my god!) xD
 
 
