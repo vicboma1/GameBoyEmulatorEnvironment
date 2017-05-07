@@ -4,6 +4,7 @@ import TableColumnHeaderAdapter
 import TableRowAdapter
 import app.components.panel.grid.CacheGrid
 import app.components.panel.grid.TableGridScrollPaneImpl
+import app.configuration.properties.Properties
 import assets.frame.Frame
 import assets.panel.multipleImages.PanelCartridge
 import assets.panel.multipleImages.PanelCover
@@ -36,7 +37,7 @@ import javax.swing.UIManager
 /**
  * Created by vicboma on 12/02/17.
  */
-class ContentPaneParentImpl internal constructor(val classLoader : ClassLoader, val frame : Frame, val statusBar: StatusBarImpl, val properties : Map<String,Any?>) {
+class ContentPaneParentImpl internal constructor(val classLoader : ClassLoader, val frame : Frame, val statusBar: StatusBarImpl, val properties : Properties) {
 
     private val listGames: ListGames
     private val dimension : Dimension
@@ -48,7 +49,7 @@ class ContentPaneParentImpl internal constructor(val classLoader : ClassLoader, 
     private var scrollGrid = JScrollPane()
 
     companion object {
-        fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, properties : Map<String,Any?>) = ContentPaneParentImpl(classLoader, frame, statusBar,properties)
+        fun create (classLoader: ClassLoader, frame: Frame, statusBar: StatusBarImpl, properties : Properties) = ContentPaneParentImpl(classLoader, frame, statusBar,properties)
     }
 
     init {

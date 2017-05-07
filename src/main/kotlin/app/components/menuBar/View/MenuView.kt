@@ -2,8 +2,7 @@ package app.components.menuBar.view
 
 import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
-import assets.menuBar.child.dialog.MenuBarViewGrid
-import assets.menuBar.child.dialog.MenuBarViewList
+import assets.menuBar.child.dialog.*
 import assets.progressBar.Menu
 import assets.progressBar.MenuBarImpl
 import assets.progressBar.MenuImpl

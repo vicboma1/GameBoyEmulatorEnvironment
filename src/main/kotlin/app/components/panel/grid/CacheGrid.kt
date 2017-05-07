@@ -1,5 +1,6 @@
 package app.components.panel.grid
 
+import app.configuration.properties.Properties
 import assets.progressBar.StatusBar
 import assets.table.GRID_COVER
 import kotlinx.coroutines.experimental.CommonPool
@@ -34,7 +35,7 @@ object CacheGrid {
     var state = CacheState.STOP
     val mutex = Mutex()
 
-    fun createRefImage(statusBar : StatusBar,listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, jTable:JTable, coverSize : GRID_COVER , properties : Map<String,Any?>) : CompletableFuture<Void> {
+    fun createRefImage(statusBar : StatusBar,listGames: ListGames, classLoader: ClassLoader, bufferedDefault : BufferedImage, jTable:JTable, coverSize : GRID_COVER , properties : Properties) : CompletableFuture<Void> {
         var job : CompletableFuture<Void>
 
         return runBlocking<CompletableFuture<Void>> {
@@ -64,8 +65,8 @@ object CacheGrid {
                         futures.add(CompletableFuture.supplyAsync {
 
                             async(CommonPool) {
-                                val permits = properties["sliderPermits"] as Int
-                                val delay = properties["sliderAsync"] as Int
+                                val permits = properties.get<Int>("sliderPermits")
+                                val delay = properties.get<Int>("sliderAsync")
 
                                 mutex.lock(this@async)
                    /*             semaphore.apply {

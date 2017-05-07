@@ -6,9 +6,11 @@ import app.components.MenuFile
 import app.components.menuBar.view.MenuOptions
 import app.components.menuBar.view.MenuView
 import app.components.panel.ContentPaneParentImpl
+import app.configuration.properties.Properties
 import assets.frame.Frame
 import assets.progressBar.MenuBarImpl
 import assets.progressBar.StatusBarImpl
+import src.configuration.properties.PropertiesImpl
 import java.awt.BorderLayout
 import java.util.concurrent.ConcurrentHashMap
 
@@ -17,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : Frame) {
 
-    val properties : ConcurrentHashMap<String,Any?>
+    val properties : Properties
     val statusBar : StatusBarImpl
     val contentPaneParent : ContentPaneParentImpl
     val menuBar : MenuBarImpl
@@ -30,12 +32,7 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
 
     init {
 
-        properties = ConcurrentHashMap<String, Any?>(
-                mapOf(
-                        Pair("sliderAsync", 1),
-                        Pair("sliderPermits", 11)
-                )
-        )
+        properties = PropertiesImpl.create()
 
         display =  DisplayImpl.create(Display.KFRAME_JAVA, Display.WIDHT, Display.HEIGTH, Display.VISIBLE, BorderLayout())
 
