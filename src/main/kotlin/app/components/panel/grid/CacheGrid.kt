@@ -1,6 +1,7 @@
 package app.components.panel.grid
 
 import app.configuration.properties.Properties
+import app.configuration.properties.PropertiesEnum
 import assets.progressBar.StatusBar
 import assets.table.GRID_COVER
 import kotlinx.coroutines.experimental.CommonPool
@@ -65,8 +66,8 @@ object CacheGrid {
                         futures.add(CompletableFuture.supplyAsync {
 
                             async(CommonPool) {
-                                val permits = properties.get<Int>("sliderPermits")
-                                val delay = properties.get<Int>("sliderAsync")
+                                val permits = properties.get<Int>(PropertiesEnum.SLIDER_PERMITS)
+                                val delay = properties.get<Int>(PropertiesEnum.SLIDER_ASYNC_TIME_LOAD)
 
                                 mutex.lock(this@async)
                    /*             semaphore.apply {
@@ -79,6 +80,7 @@ object CacheGrid {
                                     val pairSize = mapSizeImageCover.get(coverSize)
                                     val bufferImage = ImageIcon().createBufferedImage(pairSize!!.first, pairSize!!.second, BufferedImage.TYPE_INT_ARGB)
                                     val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
+                                    statusBar.text(nameRom)
                                     val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
                                     val resource = classLoader.getResource("cover/$nameImage")
                                     val image = when (resource) {

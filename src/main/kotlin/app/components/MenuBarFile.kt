@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent
 /**
  * Created by vicboma on 12/12/16.
  */
-fun MenuBarImpl.Companion.MenuFile(frame: Frame): Menu {
+fun JMenuBarImpl.Companion.MenuFile(frame: Frame): Menu {
 
     val radioButtonList = listOf(
             RadioItemImpl.create("Open", true),

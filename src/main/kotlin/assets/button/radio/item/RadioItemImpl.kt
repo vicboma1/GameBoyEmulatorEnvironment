@@ -10,7 +10,7 @@ import javax.swing.KeyStroke
 class RadioItemImpl internal constructor(private val _name: String, private val _isSelected : Boolean, private val shortCut : Int ,private val action :(ActionEvent) -> Unit) : javax.swing.JRadioButtonMenuItem(_name) , RadioItem {
 
     companion object {
-        fun create(name: String, isSelected : Boolean, shortCut : Int ,action :(ActionEvent) -> Unit) = RadioItemImpl(name, isSelected,shortCut,action)
+        fun create(name: String, isSelected : Boolean, shortCut : Int ,action :(ActionEvent) -> Unit) = RadioItemImpl(name, isSelected,shortCut,action) as RadioItem
         fun create(name: String, isSelected : Boolean) = RadioItemImpl(name, isSelected, MenuItem.NONE ,{})
 
     }

@@ -8,11 +8,12 @@ import app.components.menuBar.view.MenuView
 import app.components.panel.ContentPaneParentImpl
 import app.configuration.properties.Properties
 import assets.frame.Frame
-import assets.progressBar.MenuBarImpl
+import assets.progressBar.JMenuBarImpl
 import assets.progressBar.StatusBarImpl
 import src.configuration.properties.PropertiesImpl
 import java.awt.BorderLayout
-import java.util.concurrent.ConcurrentHashMap
+import java.awt.Menu
+import java.awt.MenuBar
 
 /**
  * Created by vicboma on 02/12/16.
@@ -22,13 +23,15 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
     val properties : Properties
     val statusBar : StatusBarImpl
     val contentPaneParent : ContentPaneParentImpl
-    val menuBar : MenuBarImpl
+    val jmenuBar: JMenuBarImpl
     val display : Display
+
+    val menuBar: MenuBar
+
 
     companion object {
         fun create(classLoader: ClassLoader, frame: Frame) = ConfigurationImpl(classLoader, frame)
     }
-
 
     init {
 
@@ -45,16 +48,20 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
                 properties
         )
 
-        menuBar = MenuBarImpl.create()
+        jmenuBar = JMenuBarImpl.create()
                 .addMenu(
                         listOf(
-                                MenuBarImpl.MenuFile(frame),
-                                MenuBarImpl.MenuDialog(frame),
-                                MenuBarImpl.MenuChooser(frame),
-                                MenuBarImpl.MenuView(frame, contentPaneParent),
-                                MenuBarImpl.MenuOptions(frame, properties)
+                                JMenuBarImpl.MenuFile(frame),
+                                JMenuBarImpl.MenuDialog(frame),
+                                JMenuBarImpl.MenuChooser(frame),
+                                JMenuBarImpl.MenuView(frame, contentPaneParent),
+                                JMenuBarImpl.MenuOptions(frame, properties)
                         )
                 )
+
+        menuBar  = MenuBar().apply {
+            add(Menu("File"))
+        }
 
     }
 }

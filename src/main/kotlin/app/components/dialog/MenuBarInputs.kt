@@ -12,7 +12,7 @@ import java.util.*
 /**
  * Created by vicboma on 12/12/16.
  */
-fun MenuBarImpl.Companion.MenuInput(frame: Frame): Menu {
+fun JMenuBarImpl.Companion.MenuInput(frame: Frame): Menu {
     val listButtons = listOf(
 
             MenuItemImpl.create("Basic", KeyEvent.VK_P, {

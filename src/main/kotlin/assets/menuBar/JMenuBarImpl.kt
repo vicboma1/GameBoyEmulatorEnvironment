@@ -1,14 +1,14 @@
 package assets.progressBar
 
-import java.awt.MenuBar
 import javax.swing.JComponent
 import javax.swing.JMenu
+import javax.swing.JMenuBar
 
 
 /**
  * Created by vicboma on 05/12/16.
  */
-class MenuBarImpl internal constructor(_name : String) : MenuBar() {
+class JMenuBarImpl internal constructor(_name : String) : JMenuBar(), IMenuBar {
 
     companion object {
         fun create(name: String) = JMenuBarImpl(name)
@@ -20,25 +20,30 @@ class MenuBarImpl internal constructor(_name : String) : MenuBar() {
         this.name = _name
     }
 
-     fun createSubMenu(parent: IMenuBar?, child: JComponent?)  {
+    override fun createSubMenu(parent: IMenuBar?, child: JComponent?)  {
         (parent as JMenu).add(child)
     }
 
-    fun createSubMenu(parent: IMenuBar?, child: MutableList<JComponent?>) {
+    override fun createSubMenu(parent: IMenuBar?, child: MutableList<JComponent?>) {
         for (it in child)
             (parent as JMenu).add(it)
     }
 
-    fun addMenu(menu: java.awt.Menu) {
-        this.add(menu)
+    override fun addMenu(menu: Menu) {
+        this.add(menu as MenuImpl)
     }
 
-    fun addMenu(menuList: List<java.awt.Menu>) : MenuBarImpl {
+    override fun addMenu(menuList: List<Menu>) : JMenuBarImpl {
         for (it in menuList)
             this.addMenu(it)
 
         return this
     }
 
+}
+
+
+fun JMenuBar.visibility(opc:Boolean) =  this.components.forEach {
+    it.isEnabled = opc
 }
 

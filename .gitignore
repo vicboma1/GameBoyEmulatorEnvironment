@@ -9,3 +9,6 @@
 /src/main/resources/cartridge/_bg.png
 /src/main/resources/cartridge/
 /src/main/resources/app
+/src/main/kotlin/app/components/menuBar/view/subItem/options/
+src/main/resources/font/
+target/

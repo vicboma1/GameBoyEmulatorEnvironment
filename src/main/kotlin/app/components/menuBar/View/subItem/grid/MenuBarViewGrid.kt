@@ -11,10 +11,10 @@ import java.awt.event.KeyEvent
 /**
  * Created by vicboma on 12/12/16.
  */
-fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : ContentPaneParentImpl) : Menu {
+fun JMenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : ContentPaneParentImpl) : Menu {
 
     fun actionVisibility(frame: Frame, row : Int, cover: GRID_COVER) {
-        //frame.jMenuBar.visibility(false)
+        frame.jMenuBar.visibility(false)
         ThreadMain.asyncUI {
             contentPaneParentImpl
                     .coverScreen({
@@ -23,7 +23,7 @@ fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : 
                     },true,row,cover)
                     .thenRunAsync {
                         println("****** FIN COMPLETABLE FUTURES *******")
-             //           frame.jMenuBar.visibility(true)
+                        frame.jMenuBar.visibility(true)
                     }
         }
     }
@@ -40,10 +40,8 @@ fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : 
             }),
             RadioItemImpl.create("4x cover", false, KeyEvent.VK_4, {
                 actionVisibility(frame, 4, GRID_COVER.FOUR)
-            }),
-            RadioItemImpl.create("Rom Name", false, KeyEvent.VK_5, {
-                actionVisibility(frame, 13, GRID_COVER.FOUR)
             })
+
     )
 
     val radioGroup = GroupImpl.create(radioButtonList)
@@ -51,6 +49,11 @@ fun MenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, contentPaneParentImpl : 
     return MenuImpl.create("Grid")
             .apply {
                 addMenuItem(radioButtonList)
+                addMenuItem(
+                        RadioItemImpl.create("Rom Name", false, KeyEvent.VK_5, {
+                             actionVisibility(frame, 13, GRID_COVER.FOUR)
+                        })
+                )
             }
 
 

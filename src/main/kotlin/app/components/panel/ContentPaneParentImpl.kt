@@ -119,7 +119,7 @@ class ContentPaneParentImpl internal constructor(val classLoader : ClassLoader, 
 
         val tableModel = TableModelImpl.create(column, recalculeSize(column), row)
         val jtable = TableGridImpl(classLoader, tableModel, coverIndex)
-        scrollGrid = TableGridScrollPaneImpl(jtable)
+        scrollGrid = TableGridScrollPaneImpl(jtable, properties)
 
         visiblePanelGridView(listGridVisible)
 

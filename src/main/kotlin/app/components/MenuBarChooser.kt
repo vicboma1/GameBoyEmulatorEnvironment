@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent
 /**
  * Created by vicboma on 12/12/16.
  */
-fun MenuBarImpl.Companion.MenuChooser(frame : Frame): Menu {
+fun JMenuBarImpl.Companion.MenuChooser(frame : Frame): Menu {
     return MenuImpl.create("Chooser")
             .apply{
                 addMenuItem(MenuItemImpl.create("Color", KeyEvent.VK_C,{

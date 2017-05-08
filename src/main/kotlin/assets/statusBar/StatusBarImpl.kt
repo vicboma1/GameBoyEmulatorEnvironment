@@ -1,6 +1,8 @@
 package assets.progressBar
 
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
+import utils.swing.delay
 import java.awt.BorderLayout
 import java.awt.Dimension
 import javax.swing.*
@@ -35,8 +37,9 @@ class StatusBarImpl internal constructor(private val _width : Int) : JPanel() , 
     }
 
     override fun  text (str:String) {
-        ThreadMain.asyncUI {
-            this.labelWEST.text = "    $str"
+        launch(Swing) {
+            labelWEST.text = "    $str"
+            Swing.delay(1)
         }
     }
 }
