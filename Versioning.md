@@ -27,7 +27,7 @@ Processing with Coroutine + async
 |       Context      	|  CommonPool 	|  CommonPool 	|     CommonPool    	|     CommonPool    	|
 | Mutex Optimization 	|    False    	|     True    	|       False       	|        True       	|
 |      Time [ms]     	|   70 - 90   	|   70 - 80   	|      65 - 90      	|      50 - 60      	|
-|         Job        	|     wait    	|     wait    	|                   	|                   	|
+|         Job        	|     join    	|     join    	|                   	|                   	|
 |      Time [ms]     	| 70 - 110    	| 70 - 95     	|                   	|                   	|
 |      Deffered      	|             	|             	| CompletableFuture 	| CompletableFuture 	|
 |      Time [ms]     	|             	|             	|       65-80       	|       50-79       	|
