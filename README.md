@@ -3,7 +3,7 @@
 Front-End developed with **Kotlin Experimental** for my [GameBoy Emulator](https://github.com/vicboma1/emulators/tree/master/gameboyclassic)
 
 #### Now, with coroutines Average Timing with 2546 covers
-#### Async + CompletableFuture-Deferred - [ 50 - 79 ] ms (oh my god!) xD
+#### Async + CompletableFuture-Deferred - [ 50 - 79 ] ms
 
 
 ###
@@ -90,6 +90,11 @@ where :
 "_fontGrid.png " is the font that represent the game cover
 ```
 
+## Tooling
+
+[Download Asynk Resource](https://github.com/kotlin-es/kotlin-asynk-resources)
+
+![](https://github.com/kotlin-es/kotlin-asynk-resources/blob/master/src/main/resource/Asynk-Resources.gif)
 
 ###
 # Game List
