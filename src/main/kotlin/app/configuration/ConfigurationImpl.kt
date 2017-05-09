@@ -9,6 +9,7 @@ import app.components.panel.ContentPaneParentImpl
 import app.configuration.properties.Properties
 import assets.frame.Frame
 import assets.progressBar.JMenuBarImpl
+import assets.progressBar.StatusBar
 import assets.progressBar.StatusBarImpl
 import src.configuration.properties.PropertiesImpl
 import java.awt.BorderLayout
@@ -21,7 +22,7 @@ import java.awt.MenuBar
 class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : Frame) {
 
     val properties : Properties
-    val statusBar : StatusBarImpl
+    val statusBar : StatusBar
     val contentPaneParent : ContentPaneParentImpl
     val jmenuBar: JMenuBarImpl
     val display : Display
@@ -51,11 +52,11 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
         jmenuBar = JMenuBarImpl.create()
                 .addMenu(
                         listOf(
-                                JMenuBarImpl.MenuFile(frame),
-                                JMenuBarImpl.MenuDialog(frame),
-                                JMenuBarImpl.MenuChooser(frame),
-                                JMenuBarImpl.MenuView(frame, contentPaneParent),
-                                JMenuBarImpl.MenuOptions(frame, properties)
+                                JMenuBarImpl.MenuFile(frame,statusBar),
+                                JMenuBarImpl.MenuDialog(frame,statusBar),
+                                JMenuBarImpl.MenuChooser(frame,statusBar),
+                                JMenuBarImpl.MenuView(frame, statusBar,contentPaneParent),
+                                JMenuBarImpl.MenuOptions(frame, statusBar,properties)
                         )
                 )
 

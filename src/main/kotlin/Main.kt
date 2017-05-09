@@ -2,9 +2,10 @@ package src
 
 
 import assets.frame.Frame
+import kotlinx.coroutines.experimental.launch
 import src.app.ApplicationImpl
 import src.configuration.ConfigurationImpl
-import utils.ThreadMain
+import utils.swing.Swing
 import java.util.concurrent.ExecutionException
 
 /**
@@ -12,7 +13,7 @@ import java.util.concurrent.ExecutionException
  */
 object Main {
 
-    val version = "v.0.2.2"
+    val version = "v.0.2.3"
 
   /*  fun log(msg: Any) = println("[${Thread.currentThread().name}] ${msg.toString()}")
 
@@ -113,7 +114,7 @@ object Main {
 
     */
   @JvmStatic fun main(args: Array<String>) {
-        ThreadMain.asyncUI {
+      launch(Swing) {
 
             try {
 

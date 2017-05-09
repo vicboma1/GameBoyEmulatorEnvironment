@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities
 /**
  * Created by vicboma on 05/12/16.
  */
+@Deprecated("Replacing by launch(Swing) -> Coroutine")
 object ThreadMain {
 
     fun asyncUI(runnable: () -> Unit) {

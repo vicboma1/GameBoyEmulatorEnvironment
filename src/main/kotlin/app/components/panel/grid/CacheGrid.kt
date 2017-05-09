@@ -80,7 +80,6 @@ object CacheGrid {
                                     val pairSize = mapSizeImageCover.get(coverSize)
                                     val bufferImage = ImageIcon().createBufferedImage(pairSize!!.first, pairSize!!.second, BufferedImage.TYPE_INT_ARGB)
                                     val nameRom = listGames.rowNames!![(row * cols) + col][1].toString()
-                                    statusBar.text(nameRom)
                                     val nameImage = nameRom.toLowerCase().split(".")[0].toString().plus(".png")
                                     val resource = classLoader.getResource("cover/$nameImage")
                                     val image = when (resource) {
@@ -140,7 +139,7 @@ object CacheGrid {
                 job = CompletableFuture.allOf(*futures.toTypedArray())
                 job.thenRunAsync {
                     println("****** ${System.currentTimeMillis() - timeInit} ms ******")
-                    statusBar.text("****** ${System.currentTimeMillis() - timeInit} ms ******")
+                    //statusBar.text("****** ${System.currentTimeMillis() - timeInit} ms ******")
                 }
             }
 

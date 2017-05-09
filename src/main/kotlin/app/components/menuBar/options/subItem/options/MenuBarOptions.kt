@@ -3,16 +3,13 @@ package app.components.menuBar.options.subItem.options
 import app.configuration.properties.Properties
 import app.configuration.properties.PropertiesEnum
 import assets.frame.Frame
-import assets.progressBar.Menu
-import assets.progressBar.JMenuBarImpl
-import assets.progressBar.MenuImpl
-import assets.progressBar.MenuItemImpl
+import assets.progressBar.*
 import javax.swing.JSlider
 
 /**
  * Created by vicboma on 01/05/17.
  */
-fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, properties : Properties) : Menu {
+fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Properties) : Menu {
 
     var labelAsync = "Async load time :"
     var textAsync = "$labelAsync 5000 ms"
@@ -24,9 +21,9 @@ fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, properties : Properties)
     var textIncrementGrid = "$labelIncremeteGrid 16 units"
 
 
-    val asyncLoadTimeLabel = MenuItemImpl.create(textAsync)
-    val setOfPermits = MenuItemImpl.create(textPermits)
-    val incrementGridLabel = MenuItemImpl.create(textIncrementGrid)
+    val asyncLoadTimeLabel = MenuItemImpl.create(textAsync,statusBar)
+    val setOfPermits = MenuItemImpl.create(textPermits,statusBar)
+    val incrementGridLabel = MenuItemImpl.create(textIncrementGrid,statusBar)
 
 
     val sliderAsync = JSlider(JSlider.HORIZONTAL,0,10000, properties.get<Int>(PropertiesEnum.SLIDER_ASYNC_TIME_LOAD)).apply{

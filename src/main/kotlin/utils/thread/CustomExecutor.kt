@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentLinkedDeque
 /**
  * Created by vicboma on 29/12/16.
  */
+@Deprecated("Replacing by coroutines")
 class CustomExecutor<K>{
 
     private val MILLISECONDS_THREAD_SLEEP  = 75

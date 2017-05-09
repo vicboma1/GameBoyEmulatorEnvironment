@@ -1,7 +1,8 @@
 package assets.progressBar
 
 import assets.Renderable
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
 import java.awt.Component
 import java.util.concurrent.CompletableFuture
 import javax.swing.JProgressBar
@@ -24,7 +25,7 @@ class ProgressBarImpl internal constructor(val min: Int, val max: Int) : JProgre
     }
 
     override fun asyncUI()  {
-        ThreadMain.asyncUI {
+        launch(Swing) {
             CompletableFuture.runAsync {
                 for (i in min..max) {
                     Thread.sleep(30)

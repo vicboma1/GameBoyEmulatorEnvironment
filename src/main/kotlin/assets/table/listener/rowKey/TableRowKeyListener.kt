@@ -3,7 +3,8 @@ package assets.table.listener.rowKey
 import assets.frame.Frame
 import assets.progressBar.StatusBar
 import assets.table.listener.BaseInpuTableList
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
 import java.awt.event.ActionEvent
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -30,7 +31,7 @@ class TableRowKeyListener internal constructor(private val frame: Frame, private
     }
 
     override fun keyPressed(e: KeyEvent?) {
-        ThreadMain.asyncUI {
+        launch(Swing) {
             when(e?.keyCode) {
 
                 KeyEvent.VK_UP -> BaseInpuTableList.executeX(table, statusBar, tab, 0)

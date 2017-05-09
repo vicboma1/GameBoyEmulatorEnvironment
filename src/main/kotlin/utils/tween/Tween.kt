@@ -1,7 +1,9 @@
 package main.kotlin.utils.tween
 
+import kotlinx.coroutines.experimental.launch
 import main.kotlin.utils.completable.CompletableCancelable
-import utils.ThreadMain
+import utils.swing.Swing
+import utils.swing.delay
 import java.awt.Color
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CopyOnWriteArrayList
@@ -14,20 +16,20 @@ fun JLabel.asyncSpel(str: String, delay: Long, sequence:Long) : CompletableCance
 
     var completableCancelable = CompletableCancelable<Boolean>(CompletableFuture<Boolean>(), CopyOnWriteArrayList<Boolean>().apply { add(false) })
 
-    ThreadMain.asyncUI {
+    launch(Swing) {
         CompletableFuture.runAsync {
             completableCancelable.completable
                     .thenAcceptAsync {
                         Thread.sleep(delay)
-                        this.text = ""
+                        text = ""
                         var i = 0
                         while (i < str.length - 1 && !completableCancelable.cancelable[0]) {
                             i++
                             Thread.sleep(sequence)
-                            this.text += str[i].toString()
+                            text += str[i].toString()
                         }
                         if(completableCancelable.cancelable[0])
-                            this.text = ""
+                            text = ""
                     }
         }
     }
@@ -43,20 +45,20 @@ fun JLabel.asyncFadeOn(str: String, increment : Int = 2, opacityTarget_255: Int 
 
     var completableCancelable = CompletableCancelable<Boolean>(CompletableFuture<Boolean>(), CopyOnWriteArrayList<Boolean>().apply { add(false) })
 
-    ThreadMain.asyncUI {
+    launch(Swing) {
         CompletableFuture.runAsync {
             completableCancelable.completable
                     .thenAcceptAsync {
                         Thread.sleep(delay)
-                        this.text = str
-                        this.foreground = COLOR_DEFAULT_UNMASK
-                        while ( this.foreground.alpha <= opacityTarget_255) {
+                        text = str
+                        foreground = COLOR_DEFAULT_UNMASK
+                        while ( foreground.alpha <= opacityTarget_255) {
                             Thread.sleep(sequence)
-                            val colorAlpha =  this.foreground.alpha.plus(increment)
-                            this.foreground = Color( this.foreground.red,  this.foreground.green,  this.foreground.blue, colorAlpha)
+                            val colorAlpha =  foreground.alpha.plus(increment)
+                            foreground = Color( foreground.red,  foreground.green,  foreground.blue, colorAlpha)
                         }
                         if(completableCancelable.cancelable[0])
-                            this.foreground = COLOR_DEFAULT_UNMASK
+                            foreground = COLOR_DEFAULT_UNMASK
                     }
         }
     }
@@ -68,20 +70,20 @@ fun JLabel.asyncFadeOff(str: String, decrement : Int = 2, opacityTarget_0: Int =
 
     var completableCancelable = CompletableCancelable<Boolean>(CompletableFuture<Boolean>(), CopyOnWriteArrayList<Boolean>().apply { add(false) })
 
-    ThreadMain.asyncUI {
+    launch(Swing) {
         CompletableFuture.runAsync {
             completableCancelable.completable
                     .thenAcceptAsync {
                         Thread.sleep(delay)
-                        this.text = str
-                        this.foreground = COLOR_DEFAULT_MASK
-                        while ( this.foreground.alpha >= opacityTarget_0) {
+                        text = str
+                        foreground = COLOR_DEFAULT_MASK
+                        while ( foreground.alpha >= opacityTarget_0) {
                             Thread.sleep(sequence)
-                            val colorAlpha =  this.foreground.alpha.minus(decrement)
-                            this.foreground = Color( this.foreground.red,  this.foreground.green,  this.foreground.blue, colorAlpha)
+                            val colorAlpha =  foreground.alpha.minus(decrement)
+                            foreground = Color( foreground.red,  foreground.green,  foreground.blue, colorAlpha)
                         }
                         if(completableCancelable.cancelable[0])
-                            this.foreground = COLOR_DEFAULT_MASK
+                            foreground = COLOR_DEFAULT_MASK
                     }
         }
     }

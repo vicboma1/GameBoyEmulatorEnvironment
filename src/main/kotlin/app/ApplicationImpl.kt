@@ -4,6 +4,7 @@ import src.configuration.ConfigurationImpl
 import java.awt.BorderLayout
 import java.util.concurrent.CompletableFuture
 import javax.swing.JFrame
+import javax.swing.JPanel
 
 /**
  * Created by vicboma on 02/12/16.
@@ -73,7 +74,7 @@ class ApplicationImpl internal constructor(private val frame: JFrame) : Applicat
     }
 
     private fun setStatusBar() {
-        frame.contentPane.add(configuration?.statusBar, BorderLayout.SOUTH);
+        frame.contentPane.add(configuration?.statusBar as JPanel, BorderLayout.SOUTH);
     }
 }
 

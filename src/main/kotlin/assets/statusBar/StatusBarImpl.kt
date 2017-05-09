@@ -1,6 +1,7 @@
 package assets.progressBar
 
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import utils.swing.Swing
 import utils.swing.delay
 import java.awt.BorderLayout
@@ -37,9 +38,11 @@ class StatusBarImpl internal constructor(private val _width : Int) : JPanel() , 
     }
 
     override fun  text (str:String) {
-        launch(Swing) {
-            labelWEST.text = "    $str"
-            Swing.delay(1)
+        runBlocking {
+            launch(Swing) {
+                labelWEST.text = "    $str"
+                Swing.delay(1)
+            }
         }
     }
 }

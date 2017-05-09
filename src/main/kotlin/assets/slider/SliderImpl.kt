@@ -1,7 +1,8 @@
 package assets.progressBar
 
 import assets.Renderable
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
 import java.awt.Component
 import java.util.concurrent.CompletableFuture
 import javax.swing.JSlider
@@ -29,7 +30,7 @@ class SliderImpl internal constructor(private val position : Int, private val mi
     }
 
     override fun asyncUI()  {
-        ThreadMain.asyncUI {
+        launch(Swing) {
             CompletableFuture.runAsync {
                 Thread.sleep(100)
                 for (i in min..max) {

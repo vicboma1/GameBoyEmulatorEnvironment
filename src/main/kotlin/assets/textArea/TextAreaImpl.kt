@@ -1,7 +1,8 @@
 package assets.progressBar
 
 import assets.Renderable
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
 import java.awt.Dimension
 import java.util.concurrent.CompletableFuture
 import javax.swing.JPanel
@@ -40,7 +41,7 @@ class TextAreaImpl internal constructor(val _text: String) : JScrollPane() , Tex
     }
 
     override fun asyncUI() {
-        ThreadMain.asyncUI {
+        launch(Swing) {
             CompletableFuture.runAsync {
                 Thread.sleep(1500)
                 textArea.text = ""

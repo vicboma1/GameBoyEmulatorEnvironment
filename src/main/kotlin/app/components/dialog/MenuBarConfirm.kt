@@ -4,51 +4,51 @@ import assets.dialog.confirm.ConfirmImpl
 import assets.dialog.message.EnumDialog
 import assets.dialog.message.MessageImpl
 import assets.frame.Frame
-import assets.progressBar.Menu
-import assets.progressBar.JMenuBarImpl
-import assets.progressBar.MenuImpl
-import assets.progressBar.MenuItemImpl
+import assets.progressBar.*
 import java.awt.event.KeyEvent
 import javax.swing.JOptionPane
-
 
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuConfirm(frame: Frame): Menu {
+fun JMenuBarImpl.Companion.MenuConfirm(frame: Frame,status:StatusBar): Menu {
 
     var listButtons = listOf(
 
-            MenuItemImpl.create("No - Yes", KeyEvent.VK_1, {
-                    ConfirmImpl(frame, Pair("Basic Confirm Dialog", "Dialog with 2 buttons\nNo - Yes"), JOptionPane.YES_NO_OPTION)
-                            .showDialog({
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed Yes button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            }, {
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed No button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            })
+            MenuItemImpl.create("No - Yes", KeyEvent.VK_1,status, {
+
+                ConfirmImpl(frame, Pair("Basic Confirm Dialog", "Dialog with 2 buttons\nNo - Yes"), JOptionPane.YES_NO_OPTION)
+                        .showDialog({
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed Yes button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        }, {
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed No button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        })
+
             }),
 
-            MenuItemImpl.create("Cancel - No", KeyEvent.VK_2, {
-                    ConfirmImpl(frame, Pair("Basic Confirm Dialog", "Dialog with 2 buttons\nCancel - Ok"), JOptionPane.OK_CANCEL_OPTION)
-                            .showDialog({
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed Ok button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            }, {
+            MenuItemImpl.create("Cancel - No", KeyEvent.VK_2, status, {
 
-                            }, {
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed Cancel button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            })
+                ConfirmImpl(frame, Pair("Basic Confirm Dialog", "Dialog with 2 buttons\nCancel - Ok"), JOptionPane.OK_CANCEL_OPTION)
+                        .showDialog({
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed Ok button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        }, {
+
+                        }, {
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed Cancel button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        })
+
             }),
 
-            MenuItemImpl.create("Cancel - No - Yes", KeyEvent.VK_3, {
-                    ConfirmImpl(frame, Pair("Basic Confirm Dialog", "Dialog with 3 buttons\nCancel - No - Yes"), JOptionPane.YES_NO_CANCEL_OPTION)
-                            .showDialog({
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed Yes button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            }, {
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed No button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            }, {
-                                MessageImpl.create(frame, Pair("Basic Message", "Pressed Cancel button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
-                            })
+            MenuItemImpl.create("Cancel - No - Yes", KeyEvent.VK_3, status, {
+                ConfirmImpl(frame, Pair("Basic Confirm Dialog", "Dialog with 3 buttons\nCancel - No - Yes"), JOptionPane.YES_NO_CANCEL_OPTION)
+                        .showDialog({
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed Yes button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        }, {
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed No button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        }, {
+                            MessageImpl.create(frame, Pair("Basic Message", "Pressed Cancel button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
+                        })
             }))
 
     return MenuImpl.create("Confirm")
@@ -56,7 +56,7 @@ fun JMenuBarImpl.Companion.MenuConfirm(frame: Frame): Menu {
                 addMenuItem(listButtons)
                 putSeparator()
                 addMenuItem(
-                        MenuItemImpl.create("No - Yes Custom Message", KeyEvent.VK_4, {
+                        MenuItemImpl.create("No - Yes Custom Message", KeyEvent.VK_4, status, {
                             ConfirmImpl(frame, Pair("Custom Confirm Dialog Message", "<html>The magic <span style='color:green'>color</span> </html>"), JOptionPane.YES_NO_OPTION)
                                     .showDialog({
                                         MessageImpl.create(frame, Pair("Basic Message", "Pressed Yes button!!!"), EnumDialog.PLAIN_MESSAGE).showDialog()
@@ -66,6 +66,7 @@ fun JMenuBarImpl.Companion.MenuConfirm(frame: Frame): Menu {
                         })
                 )
             }
-
 }
+
+
 

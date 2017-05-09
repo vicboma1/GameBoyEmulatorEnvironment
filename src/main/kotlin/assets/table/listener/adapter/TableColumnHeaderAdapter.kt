@@ -1,7 +1,8 @@
 
 import assets.table.comparator.TableHeaderComparator
 import assets.table.model.TableModelImpl
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.io.File
@@ -22,7 +23,7 @@ class TableColumnHeaderAdapter internal constructor(private val classLoader: Cla
      }
 
     private fun selectedColumnHeaderSort (selectedColumn:Int) {
-        ThreadMain.asyncUI {
+        launch(Swing) {
             val colModel = table.columnModel
             cmp.columnIndex = selectedColumn
             selectedColumnHeaderSort(colModel)

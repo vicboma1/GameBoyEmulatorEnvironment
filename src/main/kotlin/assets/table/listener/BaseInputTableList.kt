@@ -3,7 +3,8 @@ package assets.table.listener
 import assets.dialog.confirm.ConfirmImpl
 import assets.panel.multipleImages.base.PanelMultipleImages
 import assets.progressBar.StatusBar
-import utils.ThreadMain
+import kotlinx.coroutines.experimental.launch
+import utils.swing.Swing
 import java.awt.Frame
 import java.io.File
 import javax.swing.JFrame
@@ -25,7 +26,7 @@ class BaseInpuTableList internal constructor() {
 
             val pathRom = File("rom/$nameRom").absolutePath
 
-            ThreadMain.asyncUI {
+            launch(Swing) {
                 frame.setExtendedState(JFrame.ICONIFIED);
                 ConfirmImpl.create(Frame(),Pair("Load Rom", pathRom), JOptionPane.YES_NO_CANCEL_OPTION)
                         .showDialog({

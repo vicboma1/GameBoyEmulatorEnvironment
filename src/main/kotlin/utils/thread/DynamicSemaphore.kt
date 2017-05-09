@@ -1,13 +1,14 @@
 package utils.thread
 
+import java.lang.Exception
+import java.lang.IllegalArgumentException
 import java.util.concurrent.Semaphore
-import java.lang.*
 
 
 /**
  * Created by vicboma on 02/05/17.
  */
-
+@Deprecated("Replacing by Mutex -> Coroutine")
 class DynamicSemaphore constructor(permits: Int, val fair:Boolean)  {
 
     private val semaphore  = CustomSemaphore(permits,fair)
