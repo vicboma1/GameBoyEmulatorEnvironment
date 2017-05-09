@@ -16,7 +16,7 @@ class StatusBarImpl internal constructor(private val _width : Int) : JPanel() , 
 
 
     private var labelAEST = JLabel("  ")
-    private var labelWEST = JLabel("    adios")
+    private var labelWEST = JLabel("  Load async frame")
 
 
     companion object {
@@ -40,7 +40,7 @@ class StatusBarImpl internal constructor(private val _width : Int) : JPanel() , 
     override fun  text (str:String) {
         runBlocking {
             launch(Swing) {
-                labelWEST.text = "    $str"
+                labelWEST.text = "  $str"
                 Swing.delay(1)
             }
         }
