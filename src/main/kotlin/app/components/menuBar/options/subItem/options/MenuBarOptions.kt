@@ -37,7 +37,6 @@ fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, statusBar : StatusBar, p
             properties.put( PropertiesEnum.SLIDER_ASYNC_TIME_LOAD ,source.value)
             asyncLoadTimeLabel.text("$labelAsync ${source.value} ms ")
         }
-
     }
 
     val sliderPermits = JSlider(JSlider.HORIZONTAL,1,11,properties.get<Int>(PropertiesEnum.SLIDER_PERMITS)).apply{
@@ -76,7 +75,6 @@ fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, statusBar : StatusBar, p
                 addMenuItem(sliderPermits)
                 putSeparator()
                 addMenuItem(incrementGridLabel)
-                addMenuItem(sliderIncrementScrollGrid)
             }
 
 }

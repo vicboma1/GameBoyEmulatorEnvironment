@@ -38,6 +38,9 @@ fun JMenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, statusBar : StatusBar, 
             }),
             RadioItemImpl.create("4x cover",statusBar, false, KeyEvent.VK_4, {
                 actionVisibility(frame, 4, GRID_COVER.FOUR)
+            }),
+            RadioItemImpl.create("Rom Name", statusBar, false, KeyEvent.VK_5, {
+                actionVisibility(frame, 13, GRID_COVER.FOUR)
             })
 
     )
@@ -47,11 +50,6 @@ fun JMenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, statusBar : StatusBar, 
     return MenuImpl.create("Grid")
             .apply {
                 addMenuItem(radioButtonList)
-                addMenuItem(
-                        RadioItemImpl.create("Rom Name", statusBar, false, KeyEvent.VK_5, {
-                             actionVisibility(frame, 13, GRID_COVER.FOUR)
-                        })
-                )
             }
 
 

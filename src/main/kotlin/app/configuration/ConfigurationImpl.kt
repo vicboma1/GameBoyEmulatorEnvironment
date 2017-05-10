@@ -13,8 +13,6 @@ import assets.progressBar.StatusBar
 import assets.progressBar.StatusBarImpl
 import src.configuration.properties.PropertiesImpl
 import java.awt.BorderLayout
-import java.awt.Menu
-import java.awt.MenuBar
 
 /**
  * Created by vicboma on 02/12/16.
@@ -27,9 +25,6 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
     val jmenuBar: JMenuBarImpl
     val display : Display
 
-    val menuBar: MenuBar
-
-
     companion object {
         fun create(classLoader: ClassLoader, frame: Frame) = ConfigurationImpl(classLoader, frame)
     }
@@ -38,7 +33,7 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
 
         properties = PropertiesImpl.create()
 
-        display =  DisplayImpl.create(Display.KFRAME_JAVA, Display.WIDHT, Display.HEIGTH, Display.VISIBLE, BorderLayout())
+        display = DisplayImpl.create(Display.KFRAME_JAVA, Display.WIDHT, Display.HEIGTH, Display.VISIBLE, BorderLayout())
 
         statusBar = StatusBarImpl.create(Display.WIDHT)
 
@@ -49,22 +44,19 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame : F
                 properties
         )
 
+
         jmenuBar = JMenuBarImpl.create()
                 .addMenu(
                         listOf(
-                                JMenuBarImpl.MenuFile(frame,statusBar),
-                                JMenuBarImpl.MenuDialog(frame,statusBar),
-                                JMenuBarImpl.MenuChooser(frame,statusBar),
-                                JMenuBarImpl.MenuView(frame, statusBar,contentPaneParent),
-                                JMenuBarImpl.MenuOptions(frame, statusBar,properties)
+                                JMenuBarImpl.MenuFile(frame, statusBar),
+                                JMenuBarImpl.MenuDialog(frame, statusBar),
+                                JMenuBarImpl.MenuChooser(frame, statusBar),
+                                JMenuBarImpl.MenuView(frame, statusBar, contentPaneParent),
+                                JMenuBarImpl.MenuOptions(frame, statusBar, properties)
                         )
                 )
-
-        menuBar  = MenuBar().apply {
-            add(Menu("File"))
-        }
-
     }
+
 }
 
 

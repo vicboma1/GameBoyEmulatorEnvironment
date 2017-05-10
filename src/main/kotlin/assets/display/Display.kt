@@ -1,6 +1,6 @@
 package src.configuration
 
-import src.Main
+import src.GBEE
 import java.awt.Component
 import java.awt.GraphicsEnvironment
 import java.awt.LayoutManager
@@ -12,7 +12,7 @@ interface Display  {
 
      companion object {
          private val localGraphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
-         val KFRAME_JAVA = "GB Emulator Environment ${Main.version}"
+         val KFRAME_JAVA = "GB Emulator Environment ${GBEE.version}"
          val WIDHT = localGraphics.width // 1280
          val HEIGTH = localGraphics.height // 773
          val VISIBLE = true
