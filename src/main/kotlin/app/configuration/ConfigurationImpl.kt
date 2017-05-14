@@ -47,7 +47,6 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame: Fr
                 properties
         )
 
-
         jmenuBar = JMenuBar().apply {
             addMenu(
                     listOf(
