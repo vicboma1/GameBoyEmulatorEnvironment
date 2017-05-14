@@ -25,7 +25,7 @@ fun JMenuBar.addMenu(menuList: List<JMenu>) : JMenuBar {
     return this
 }
 
-fun JMenuBar.visibility(opc:Boolean) =  this.components.forEach {
+fun JMenuBar.visibilityAll(opc:Boolean) =  this.components.forEach {
     it.isEnabled = opc
 }
 

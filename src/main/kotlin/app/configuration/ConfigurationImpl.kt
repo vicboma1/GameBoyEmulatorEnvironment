@@ -1,9 +1,6 @@
 package src.configuration
 
 
-import app.components.MenuChooser
-import app.components.MenuDialog
-import app.components.MenuFile
 import app.components.menuBar.view.MenuOptions
 import app.components.menuBar.view.MenuView
 import app.components.panel.ContentPaneParentImpl
@@ -50,9 +47,6 @@ class ConfigurationImpl internal constructor(classLoader: ClassLoader, frame: Fr
         jmenuBar = JMenuBar().apply {
             addMenu(
                     listOf(
-                            JMenu().MenuFile(frame, statusBar),
-                            JMenu().MenuDialog(frame, statusBar),
-                            JMenu().MenuChooser(frame, statusBar),
                             JMenu().MenuView(frame, statusBar, contentPaneParent),
                             JMenu().MenuOptions(frame, statusBar, properties)
                     )

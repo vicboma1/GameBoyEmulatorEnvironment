@@ -3,10 +3,10 @@ package app.components.menuBar.options.subItem.options
 import app.configuration.properties.Properties
 import app.configuration.properties.PropertiesEnum
 import assets.frame.Frame
-import assets.progressBar.MenuItemImpl
 import assets.progressBar.StatusBar
 import assets.progressBar.addMenuItem
 import javax.swing.JMenu
+import javax.swing.JMenuItem
 import javax.swing.JSlider
 
 /**
@@ -24,9 +24,9 @@ fun JMenu.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Prope
     var textIncrementGrid = "$labelIncremeteGrid 16 units"
 
 
-    val asyncLoadTimeLabel = MenuItemImpl.create(textAsync,statusBar)
-    val setOfPermits = MenuItemImpl.create(textPermits,statusBar)
-    val incrementGridLabel = MenuItemImpl.create(textIncrementGrid,statusBar)
+    val asyncLoadTimeLabel = JMenuItem(textAsync)
+    val setOfPermits = JMenuItem(textPermits)
+    val incrementGridLabel = JMenuItem(textIncrementGrid)
 
 
     val sliderAsync = JSlider(JSlider.HORIZONTAL,0,10000, properties.get<Int>(PropertiesEnum.SLIDER_ASYNC_TIME_LOAD)).apply{
@@ -38,7 +38,7 @@ fun JMenu.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Prope
         addChangeListener {
             val source = it.source as JSlider
             properties.put( PropertiesEnum.SLIDER_ASYNC_TIME_LOAD ,source.value)
-            asyncLoadTimeLabel.text("$labelAsync ${source.value} ms ")
+            asyncLoadTimeLabel.text = "$labelAsync ${source.value} ms "
         }
     }
 
@@ -51,7 +51,7 @@ fun JMenu.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Prope
         addChangeListener {
             val source = it.source as JSlider
             properties.put(PropertiesEnum.SLIDER_PERMITS, source.value)
-            setOfPermits.text("$labelAPermits ${source.value} units ")
+            setOfPermits.text = "$labelAPermits ${source.value} units "
         }
         isEnabled = false
     }
@@ -65,7 +65,7 @@ fun JMenu.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Prope
         addChangeListener {
             val source = it.source as JSlider
             properties.put(PropertiesEnum.SLIDER_INCREMENT_SCROLL_GRID, source.value)
-            incrementGridLabel.text("$labelIncremeteGrid ${source.value} units ")
+            incrementGridLabel.text = "$labelIncremeteGrid ${source.value} units "
         }
     }
 
