@@ -2,21 +2,18 @@ package app.components.menuBar.view
 
 import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
-import assets.menuBar.child.dialog.MenuBarViewGrid
-import assets.menuBar.child.dialog.MenuBarViewList
-import assets.progressBar.JMenuBarImpl
-import assets.progressBar.Menu
-import assets.progressBar.MenuImpl
+import assets.menuBarExt.child.dialog.MenuBarViewGrid
+import assets.menuBarExt.child.dialog.MenuBarViewList
 import assets.progressBar.StatusBar
+import assets.progressBar.addMenuItem
+import javax.swing.JMenu
 
 /**
  * Created by vicboma on 02/01/17.
  */
-fun JMenuBarImpl.Companion.MenuView(frame : Frame, statusBar : StatusBar, contentPaneParentImpl : ContentPaneParentImpl): Menu {
-
-    return MenuImpl.create("View")
+fun JMenu.MenuView(frame : Frame, statusBar : StatusBar, contentPaneParentImpl : ContentPaneParentImpl) =
+     JMenu("View")
             .apply{
-                addMenuItem(JMenuBarImpl.MenuBarViewGrid(frame,statusBar,contentPaneParentImpl))
-                addMenuItem(JMenuBarImpl.MenuBarViewList(frame,statusBar,contentPaneParentImpl))
+                addMenuItem(MenuBarViewGrid(frame,statusBar,contentPaneParentImpl))
+                addMenuItem(MenuBarViewList(frame,statusBar,contentPaneParentImpl))
             }
-}

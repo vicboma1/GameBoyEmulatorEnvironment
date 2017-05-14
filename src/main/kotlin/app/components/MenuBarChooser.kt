@@ -6,12 +6,13 @@ import assets.frame.Frame
 import assets.progressBar.*
 import java.awt.Color
 import java.awt.event.KeyEvent
+import javax.swing.JMenu
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuChooser(frame: Frame, statusBar: StatusBar): Menu {
-    return MenuImpl.create("Chooser")
+fun JMenu.MenuChooser(frame: Frame, statusBar: StatusBar): JMenu {
+    return JMenu("Chooser")
             .apply {
                 addMenuItem(
                         MenuItemImpl.create("Color", KeyEvent.VK_C, statusBar,

@@ -1,15 +1,18 @@
-package assets.menuBar.child.dialog
+package assets.menuBarExt.child.dialog
 
 import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
-import assets.progressBar.*
+import assets.progressBar.MenuItem
+import assets.progressBar.MenuItemImpl
+import assets.progressBar.StatusBar
+import assets.progressBar.visibility
 import java.awt.event.KeyEvent
-
+import javax.swing.JMenu
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuBarViewList(frame: Frame, statusBar : StatusBar, contentPaneParentImpl: ContentPaneParentImpl): MenuItem {
+fun JMenu.MenuBarViewList(frame: Frame, statusBar : StatusBar, contentPaneParentImpl: ContentPaneParentImpl): MenuItem {
 
     return MenuItemImpl.create("List", KeyEvent.VK_L, statusBar, {
         frame.jMenuBar.visibility(false)

@@ -4,15 +4,18 @@ import assets.dialog.confirm.ConfirmImpl
 import assets.dialog.message.EnumDialog
 import assets.dialog.message.MessageImpl
 import assets.frame.Frame
-import assets.progressBar.*
+import assets.progressBar.MenuItemImpl
+import assets.progressBar.StatusBar
+import assets.progressBar.addMenuItem
 import java.awt.event.KeyEvent
+import javax.swing.JMenu
 import javax.swing.JOptionPane
 
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuConfirm(frame: Frame,status:StatusBar): Menu {
+fun JMenu.MenuConfirm(frame: Frame, status:StatusBar): JMenu {
 
     var listButtons = listOf(
 
@@ -51,10 +54,10 @@ fun JMenuBarImpl.Companion.MenuConfirm(frame: Frame,status:StatusBar): Menu {
                         })
             }))
 
-    return MenuImpl.create("Confirm")
+    return JMenu("Confirm")
             .apply {
                 addMenuItem(listButtons)
-                putSeparator()
+                addSeparator()
                 addMenuItem(
                         MenuItemImpl.create("No - Yes Custom Message", KeyEvent.VK_4, status, {
                             ConfirmImpl(frame, Pair("Custom Confirm Dialog Message", "<html>The magic <span style='color:green'>color</span> </html>"), JOptionPane.YES_NO_OPTION)

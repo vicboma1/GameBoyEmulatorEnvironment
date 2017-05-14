@@ -1,25 +1,25 @@
-package assets.menuBar.child.dialog
+package assets.menuBarExt.child.dialog
 
 import assets.dialog.message.EnumDialog
 import assets.dialog.message.MessageImpl
 import assets.frame.Frame
-import assets.progressBar.*
+import assets.progressBar.MenuItemImpl
+import assets.progressBar.StatusBar
+import assets.progressBar.addMenuItem
 import java.awt.event.KeyEvent
 import java.net.URL
 import java.util.*
-import javax.swing.ImageIcon
-import javax.swing.JOptionPane
-import javax.swing.JSpinner
-import javax.swing.SpinnerNumberModel
+import javax.swing.*
 
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuMessage(frame: Frame,statusBar:StatusBar): Menu {
-    return MenuImpl.create("Message")
+fun JMenu.MenuMessage(frame: Frame,statusBar:StatusBar) =
+        JMenu("Message")
             .apply {
-                addMenuItem(Arrays.asList(
+                addMenuItem(
+                        Arrays.asList(
 
                         MenuItemImpl.create("Basic", KeyEvent.VK_L, statusBar, {
                             MessageImpl.create(frame, Pair("Basic", "Basic Message"), EnumDialog.PLAIN_MESSAGE).showDialog()
@@ -38,7 +38,7 @@ fun JMenuBarImpl.Companion.MenuMessage(frame: Frame,statusBar:StatusBar): Menu {
 
                         })
                 ))
-                putSeparator()
+                addSeparator()
                 addMenuItem(listOf(
 
                         MenuItemImpl.create("Custom", KeyEvent.VK_G, statusBar, {
@@ -52,4 +52,3 @@ fun JMenuBarImpl.Companion.MenuMessage(frame: Frame,statusBar:StatusBar): Menu {
                         })
                 ))
             }
-}

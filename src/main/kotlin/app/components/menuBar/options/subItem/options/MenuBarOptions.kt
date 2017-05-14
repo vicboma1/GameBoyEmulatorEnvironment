@@ -3,13 +3,16 @@ package app.components.menuBar.options.subItem.options
 import app.configuration.properties.Properties
 import app.configuration.properties.PropertiesEnum
 import assets.frame.Frame
-import assets.progressBar.*
+import assets.progressBar.MenuItemImpl
+import assets.progressBar.StatusBar
+import assets.progressBar.addMenuItem
+import javax.swing.JMenu
 import javax.swing.JSlider
 
 /**
  * Created by vicboma on 01/05/17.
  */
-fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Properties) : Menu {
+fun JMenu.MenuBarOptions(frame: Frame, statusBar : StatusBar, properties : Properties) : JMenu {
 
     var labelAsync = "Async load time :"
     var textAsync = "$labelAsync 5000 ms"
@@ -66,14 +69,14 @@ fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, statusBar : StatusBar, p
         }
     }
 
-    return MenuImpl.create("View")
+    return JMenu("View")
             .apply {
                 addMenuItem(asyncLoadTimeLabel)
                 addMenuItem(sliderAsync)
-                putSeparator()
+                addSeparator()
                 addMenuItem(setOfPermits)
                 addMenuItem(sliderPermits)
-                putSeparator()
+                addSeparator()
                 addMenuItem(incrementGridLabel)
                 addMenuItem(sliderIncrementScrollGrid)
             }

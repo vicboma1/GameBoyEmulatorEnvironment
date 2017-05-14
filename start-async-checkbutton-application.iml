@@ -14,12 +14,12 @@
         <compilerSettings />
         <compilerArguments>
           <option name="jvmTarget" value="1.8" />
-          <option name="languageVersion" value="1.0" />
-          <option name="apiVersion" value="1.0" />
+          <option name="languageVersion" value="1.1" />
+          <option name="apiVersion" value="1.1" />
           <option name="pluginClasspaths">
             <array />
           </option>
-          <option name="coroutinesWarn" value="true" />
+          <option name="coroutinesEnable" value="true" />
           <option name="pluginOptions">
             <array />
           </option>
@@ -27,7 +27,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">

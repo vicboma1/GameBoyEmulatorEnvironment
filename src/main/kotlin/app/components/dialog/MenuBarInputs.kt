@@ -1,17 +1,21 @@
-package assets.menuBar.child.dialog
+package assets.menuBarExt.child.dialog
 
 import assets.dialog.confirm.InputImpl
 import assets.dialog.message.EnumDialog
 import assets.dialog.message.MessageImpl
 import assets.frame.Frame
-import assets.progressBar.*
+import assets.progressBar.MenuItemImpl
+import assets.progressBar.StatusBar
+import assets.progressBar.addMenuItem
+import assets.progressBar.visibility
 import java.awt.event.KeyEvent
 import java.util.*
+import javax.swing.JMenu
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuInput(frame: Frame,statusBar: StatusBar): Menu {
+fun JMenu.MenuInput(frame: Frame, statusBar: StatusBar): JMenu {
     val listButtons = listOf(
 
             MenuItemImpl.create("Basic", KeyEvent.VK_P,statusBar, {
@@ -60,7 +64,7 @@ fun JMenuBarImpl.Companion.MenuInput(frame: Frame,statusBar: StatusBar): Menu {
     )
 
 
-    return MenuImpl.create("Input")
+    return JMenu("Input")
             .apply {
                 addMenuItem(listButtons)
             }

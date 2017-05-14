@@ -1,16 +1,16 @@
-package assets.menuBar.child.dialog
+package assets.menuBarExt.child.dialog
 
 import app.components.panel.ContentPaneParentImpl
 import assets.frame.Frame
 import assets.progressBar.*
 import assets.table.GRID_COVER
 import java.awt.event.KeyEvent
-
+import javax.swing.JMenu
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, statusBar : StatusBar, contentPaneParentImpl : ContentPaneParentImpl) : Menu {
+fun JMenu.MenuBarViewGrid(frame: Frame, statusBar : StatusBar, contentPaneParentImpl : ContentPaneParentImpl) : JMenu {
 
     fun actionVisibility(frame: Frame, row : Int, cover: GRID_COVER) {
             frame.jMenuBar.visibility(false)
@@ -47,7 +47,7 @@ fun JMenuBarImpl.Companion.MenuBarViewGrid(frame: Frame, statusBar : StatusBar, 
 
     val radioGroup = GroupImpl.create(radioButtonList)
 
-    return MenuImpl.create("Grid")
+    return JMenu("Grid")
             .apply {
                 addMenuItem(radioButtonList)
             }

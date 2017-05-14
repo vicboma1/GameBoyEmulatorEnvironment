@@ -4,11 +4,9 @@
 /.idea
 /src/main/resources/snapshot
 /src/main/resources/rom
-/src/main/resources/list
+/src/main/resources/list/
 /src/main/resources/cover
-/src/main/resources/cartridge/_bg.png
 /src/main/resources/cartridge/
 /src/main/resources/app
-/src/main/kotlin/app/components/menuBar/view/subItem/options/
 src/main/resources/font/
 target/

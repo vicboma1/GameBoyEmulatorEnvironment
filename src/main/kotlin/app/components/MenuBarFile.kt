@@ -5,11 +5,12 @@ import assets.dialog.message.MessageImpl
 import assets.frame.Frame
 import assets.progressBar.*
 import java.awt.event.KeyEvent
+import javax.swing.JMenu
 
 /**
  * Created by vicboma on 12/12/16.
  */
-fun JMenuBarImpl.Companion.MenuFile(frame: Frame,statusBar : StatusBar): Menu {
+fun JMenu.MenuFile(frame: Frame, statusBar : StatusBar) : JMenu {
 
     val radioButtonList = listOf(
             RadioItemImpl.create("Open",statusBar, true),
@@ -25,13 +26,12 @@ fun JMenuBarImpl.Companion.MenuFile(frame: Frame,statusBar : StatusBar): Menu {
 
     val radioGroup = GroupImpl.create(radioButtonList)
 
-    return MenuImpl
-            .create("File")
+    return JMenu("File")
             .apply {
                 addMenuItem(radioButtonList)
-                putSeparator()
+                addSeparator()
                 addMenuItem(checkButtonList)
-                putSeparator()
+                addSeparator()
                 addMenuItem(MenuItemImpl.create("Exit", KeyEvent.VK_E, statusBar, {
                     MessageImpl.create(frame, Pair("Exit Message", "GoodBye"), EnumDialog.PLAIN_MESSAGE).showDialog()
                     System.exit(0)
