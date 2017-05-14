@@ -75,6 +75,7 @@ fun JMenuBarImpl.Companion.MenuBarOptions(frame: Frame, statusBar : StatusBar, p
                 addMenuItem(sliderPermits)
                 putSeparator()
                 addMenuItem(incrementGridLabel)
+                addMenuItem(sliderIncrementScrollGrid)
             }
 
 }
