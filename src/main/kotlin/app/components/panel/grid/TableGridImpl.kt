@@ -22,6 +22,20 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
             autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
             val rowH = getRowHeigthToCover(coverIndex)!!
             setRowHeight(rowH)
+            rowSelectionAllowed = false
+            cellSelectionEnabled = true
+            setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+            selectionModel.addListSelectionListener {
+
+                val selectedRowIndex = this.selectedRow
+                val selectedHeigthIndex = this.selectedColumn
+
+                val model = this.getModel()
+
+                val nameRom = model.getValueAt(selectedRowIndex + selectedHeigthIndex, 1).toString()
+
+                System.out.println("Selected: " + nameRom)
+            }
         }
     }
 
