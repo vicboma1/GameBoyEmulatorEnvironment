@@ -17,6 +17,7 @@ MenuBar Options
 Custom Sempahore
 Add MenuItemsView Grid by Rom Name
 Processing with Coroutine + async
+Selection cell in row (Grid)
 ```
 ## Averaging Time to load 2546 covers - 12 executions [ version 0.2.3 ] 
 
