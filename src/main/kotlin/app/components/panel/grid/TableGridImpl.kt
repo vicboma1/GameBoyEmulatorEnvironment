@@ -25,7 +25,7 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
             rowSelectionAllowed = false
             cellSelectionEnabled = true
             setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            selectionModel.addListSelectionListener {
+           /* selectionModel.addListSelectionListener {
 
                 val selectedRowIndex = this.selectedRow
                 val selectedHeigthIndex = this.selectedColumn
@@ -35,7 +35,7 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
                 val nameRom = model.getValueAt(selectedRowIndex + selectedHeigthIndex, 1).toString()
 
                 System.out.println("Selected: " + nameRom)
-            }
+            }*/
         }
     }
 

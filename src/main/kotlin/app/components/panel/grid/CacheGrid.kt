@@ -139,7 +139,7 @@ object CacheGrid {
                 job = CompletableFuture.allOf(*futures.toTypedArray())
                 job.thenRunAsync {
                     println("****** ${System.currentTimeMillis() - timeInit} ms ******")
-                    //statusBar.text("****** ${System.currentTimeMillis() - timeInit} ms ******")
+                    statusBar.text("Time to load process : ${System.currentTimeMillis() - timeInit} ms ******")
                 }
             }
 

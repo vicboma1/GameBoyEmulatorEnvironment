@@ -10,20 +10,26 @@ import kotlin.coroutines.experimental.ContinuationInterceptor
  * Created by vicboma on 08/05/17.
  */
 object Swing : AbstractCoroutineContextElement(ContinuationInterceptor), ContinuationInterceptor {
+
     override fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T> =
             SwingContinuation(continuation)
 }
 
-
-
 private class SwingContinuation<T>(val cont: Continuation<T>) : Continuation<T> by cont {
+
     override fun resume(value: T) {
-        if (SwingUtilities.isEventDispatchThread()) cont.resume(value)
-        else SwingUtilities.invokeLater { cont.resume(value) }
+        if (SwingUtilities.isEventDispatchThread())
+            cont.resume(value)
+        else SwingUtilities.invokeLater {
+            cont.resume(value)
+        }
     }
 
     override fun resumeWithException(exception: Throwable) {
-        if (SwingUtilities.isEventDispatchThread()) cont.resumeWithException(exception)
-        else SwingUtilities.invokeLater { cont.resumeWithException(exception) }
+        if (SwingUtilities.isEventDispatchThread())
+            cont.resumeWithException(exception)
+        else SwingUtilities.invokeLater {
+            cont.resumeWithException(exception)
+        }
     }
 }

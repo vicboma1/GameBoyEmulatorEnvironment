@@ -103,7 +103,6 @@ class BaseInpuTableList internal constructor() {
         }
 
         private fun isValid(selectedRowIndex: Int, table: JTable): Boolean = (selectedRowIndex == -1 || selectedRowIndex >= table.rowCount)
-
     }
 
 }
