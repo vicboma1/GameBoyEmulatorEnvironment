@@ -2,6 +2,10 @@ package assets.table
 
 import assets.table.model.TableModelImpl
 import javax.swing.JTable
+import javax.swing.event.ListSelectionEvent
+import javax.swing.event.ListSelectionListener
+
+
 
 /**
  * Created by vbolinch on 02/01/2017.
@@ -24,18 +28,19 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
             setRowHeight(rowH)
             rowSelectionAllowed = false
             cellSelectionEnabled = true
-            setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-           /* selectionModel.addListSelectionListener {
 
-                val selectedRowIndex = this.selectedRow
-                val selectedHeigthIndex = this.selectedColumn
+            selectionModel.addListSelectionListener(object: ListSelectionListener {
+                override fun valueChanged(event: ListSelectionEvent) {
+                    if(!selectionModel.isSelectionEmpty){
+                        val rowIndex = selectedRow
+                        val colIndex = selectedColumn
+                        val nameRom = model.getValueAt(rowIndex,colIndex)
+                        javax.swing.JOptionPane.showMessageDialog(null,nameRom)
+                    }
+                }
+            })
 
-                val model = this.getModel()
-
-                val nameRom = model.getValueAt(selectedRowIndex + selectedHeigthIndex, 1).toString()
-
-                System.out.println("Selected: " + nameRom)
-            }*/
+            setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION)
         }
     }
 

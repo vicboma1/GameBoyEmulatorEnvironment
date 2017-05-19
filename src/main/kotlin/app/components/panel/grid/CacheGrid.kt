@@ -31,6 +31,7 @@ import javax.swing.*
  */
 object CacheGrid {
 
+    val mapNameRom = mutableMapOf<Int,String>()
     val mapSizeImageCover = mapOf(Pair(GRID_COVER.FOUR,Pair(240,200)),Pair(GRID_COVER.THREE,Pair(320,300)),Pair(GRID_COVER.TWO,Pair(550,500)),Pair(GRID_COVER.ONE,Pair(680,650)))
     val random = SecureRandom()
     var state = CacheState.STOP
@@ -42,6 +43,8 @@ object CacheGrid {
         return runBlocking<CompletableFuture<Void>> {
 
             println("****** INIT LOAD ASYNC *******")
+
+            mapNameRom.clear()
 
             val semaphore = DynamicSemaphore(0, true)
             val futures = ArrayList<CompletableFuture<Deferred<Boolean>>>()
@@ -115,6 +118,8 @@ object CacheGrid {
                                     //yield()
                                     if (state != CacheState.STOP)
                                         jTable.setValueAt(imageIcon, row, col)
+
+                                    mapNameRom.put(index,nameRom)
 
                                     true
                                 } catch(e: Exception) {
