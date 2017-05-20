@@ -27,6 +27,7 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
             val rowH = getRowHeigthToCover(coverIndex)!!
             setRowHeight(rowH)
             rowSelectionAllowed = false
+            columnSelectionAllowed = false
             cellSelectionEnabled = true
 
             selectionModel.addListSelectionListener(object: ListSelectionListener {
@@ -34,9 +35,11 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
                     if(!selectionModel.isSelectionEmpty){
                         val rowIndex = selectedRow
                         val colIndex = selectedColumn
-                        val nameRom = model.getValueAt(rowIndex,colIndex)
-                        javax.swing.JOptionPane.showMessageDialog(null,nameRom)
+                        val image = model.getValueAt(rowIndex,colIndex)
+                        javax.swing.JOptionPane.showMessageDialog(null,image)
                     }
+
+                    selectionModel.clearSelection()
                 }
             })
 
@@ -44,18 +47,7 @@ class TableGridImpl internal constructor(val classLoader: ClassLoader, dm: Table
         }
     }
 
-   /* override fun prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component {
-        return super@TableGridImpl.prepareRenderer(renderer, row, column)
-
-        //val nameGame = this@TableGridImpl.model.getValueAt(row, 1).toString().toLowerCase().trim()
-       // val key = this.listGame.rowNames!![row][1].toString().trim()
-        //return CacheGrid.map[key] as Component
-
-    }*/
-
-
     private fun getRowHeigthToCover(coverIndex: GRID_COVER) = mapCover.get(coverIndex)
-
 
 }
 
