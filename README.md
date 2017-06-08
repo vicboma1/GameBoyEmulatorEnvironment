@@ -326,7 +326,7 @@ This is a list of 1049 games released for the Game Boy handheld video game syste
 "TURRICAN        "          "WARRIOR         "           "WWF SUPERSTARS  "            "ZOOL            "
 "TWIN            "          "WATER WORLD     "           "WWFKOR          "            "ZOOP            "
 "TWIN-BEE DA!!   "          "WAVERACE        "           "WWFKOR          "
-"ULTRA GOLF      "          "WAYNE'S WORLD   "           "X               "
+"ULTRA GOLF      "          "WAYNE'S WORLD   "           "XXZZ            "
 "ULTRAMAN        "          "WEREBACK BC     "           "XENON 2         "
 "ULTRAMAN BALL   "          "WH2JET          "           "XENON 2         "
 "ULTRAMAN GEKIDEN"          "WHEEL OF FORTUNE"           "XERD!!          "
