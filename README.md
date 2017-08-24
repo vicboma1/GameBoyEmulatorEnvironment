@@ -362,7 +362,7 @@ Automaticly will be generated the columns and rows of game list
 
 @Author : Victor Bolinches Marin
 
-@Author : vicboma1
+@Author : [vicboma1](https://twitter.com/vicboma1)
 
 # Note: 
 # This homebrew project does not contain ROMs & Images
