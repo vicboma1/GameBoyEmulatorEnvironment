@@ -360,6 +360,18 @@ Automaticly will be generated the columns and rows of game list
 ]
 ```
 
+
+--->>>  [Repo: Getting Started Kotlin](https://github.com/vicboma1/GettingStartedKotlin)   <<<---
+
+--->>>   [Repo Kotlin Koans](https://github.com/vicboma1/Kotlin-Koans)   <<<---
+
+--->>>   [Repo:Kotlin Problems](ttps://github.com/vicboma1/Kotlin-Examples-Problems)   <<<---
+
+--->>>   [Repo: Kotlin Mobile](https://github.com/vicboma1/KotlinMobilePoC_MasterUV2018)   <<<---
+
+--->>> [Repo: Kotlin JavaScript](https://github.com/vicboma1/kotlinJavaScript)  <<<
+
+
 @Author : Victor Bolinches Marin
 
 @Author : [vicboma1](https://twitter.com/vicboma1)
