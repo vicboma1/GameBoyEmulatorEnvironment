@@ -365,7 +365,7 @@ Automaticly will be generated the columns and rows of game list
 
 --->>>   [Repo Kotlin Koans](https://github.com/vicboma1/Kotlin-Koans)   <<<---
 
---->>>   [Repo:Kotlin Problems](ttps://github.com/vicboma1/Kotlin-Examples-Problems)   <<<---
+--->>>   [Repo:Kotlin Problems](https://github.com/vicboma1/Kotlin-Examples-Problems)   <<<---
 
 --->>>   [Repo: Kotlin Mobile](https://github.com/vicboma1/KotlinMobilePoC_MasterUV2018)   <<<---
 
