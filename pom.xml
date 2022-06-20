@@ -23,7 +23,7 @@
 
 
     <properties>
-        <kotlin.version>1.1.2</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <junit.version>4.12</junit.version>
         <main.class>kotlin.main</main.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
